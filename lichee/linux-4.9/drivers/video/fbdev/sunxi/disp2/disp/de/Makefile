@@ -22,9 +22,9 @@ ifeq ($(CONFIG_ARCH_SUN8IW7),y)
 sub_dir = lowlevel_v2x
 endif
 
-ifeq ($(CONFIG_ARCH_SUN50IW1),y)
+#ifeq ($(CONFIG_ARCH_SUN50IW1),y)
 sub_dir = lowlevel_sun50iw1
-endif
+#endif
 
 ifeq ($(CONFIG_ARCH_SUN50IW3),y)
 sub_dir = lowlevel_v3x
