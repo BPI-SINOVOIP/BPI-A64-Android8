@@ -1,0 +1,2 @@
+on init
+    insmod /ft5x16_ts.ko
