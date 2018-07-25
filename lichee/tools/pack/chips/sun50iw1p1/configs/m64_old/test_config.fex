@@ -42,9 +42,9 @@ activated   = 1
 program     = "memtester.sh"
 category    = 0
 run_type    = 1
-dram_size   = 1024 
+dram_size   = 1024
 test_size   = 8
-platform    = "sun50iw1p1"
+platform    = "a64"
 
 [rtc]
 display_name= "时钟"
@@ -54,8 +54,10 @@ category    = 0
 run_type    = 1
 
 ;-------------------------------------------------------------------------------
-; module_path: The full path of wifi module file
-; module_args: The arguments of wifi module (brcm module need this arg)
+; module_path
+;   The full path of wifi module file.
+; module_args
+;   The arguments of wifi module.
 ;-------------------------------------------------------------------------------
 [wifi]
 display_name= "网络"
@@ -64,8 +66,8 @@ program     = "wifitester.sh"
 category    = 0
 run_type    = 1
 module_count= 1
-module_path = "/system/vendor/modules/8723cs.ko"
-module_args =
+module_path = "/system/vendor/modules/bcmdhd.ko"
+module_args = "nvram_path=/system/vendor/modules/nvram_ap6335.txt"
 
 ;-------------------------------------------------------------------------------
 ; module_path
@@ -77,7 +79,7 @@ module_args =
 display_name= "重力感应器"
 activated   = 1
 program     = "gsensortester.sh"
-category    = 0
+category    = 0f
 run_type    = 1
 module_count= 1
 module1_path= "/system/vendor/modules/bma250.ko"
@@ -91,7 +93,7 @@ device_name = "bma250"
 ;-------------------------------------------------------------------------------
 [gyro]
 display_name= "陀螺仪"
-activated   = 0
+activated   = 1
 program     = "gyrotester.sh"
 category    = 0
 run_type    = 1
@@ -107,12 +109,12 @@ device_name = "lsm9ds0_gyr"
 ;-------------------------------------------------------------------------------
 [compass]
 display_name= "指南针"
-activated   = 0
+activated   = 1
 program     = "compasstester.sh"
 category    = 0
 run_type    = 1
 module_count= 1
-module1_path= 
+module1_path=
 device_name = "lsm9ds0_mag"
 
 ;-------------------------------------------------------------------------------
@@ -121,7 +123,7 @@ device_name = "lsm9ds0_mag"
 ;-------------------------------------------------------------------------------
 [nand]
 display_name= "闪存"
-activated   = 0
+activated   = 1
 program     = "nandtester.sh"
 category    = 0
 run_type    = 1
@@ -130,20 +132,12 @@ test_size   = 16
 
 [emmc]
 display_name= "emmc闪存"
-activated   = 1 
+activated   = 0
 program     = "emmctester.sh"
 category    = 0
 run_type    = 1
 test_size   = 128
 
-;-------------------------------------------------------------------------------
-; dst_bt:      The destination bt device to search when run test (not essential)
-; module_path: The full path of bt module file (brcm module need this arg)
-; device_node: The AP's hardware communication port to bt module
-; baud_rate:   The baud_rate of bt module when run test (not essential)
-; bt_vnd:      The bt module vendor, support broadcom/realtek
-; rtk_bt_chip: The bt chip name (rtk module need this arg)
-;-------------------------------------------------------------------------------
 [bluetooth]
 display_name= "蓝牙"
 activated   = 1
@@ -152,18 +146,17 @@ test_time   = 3
 category    = 0
 dst_bt      = ":"
 run_type    = 1
-module_path =
+module_path = "/system/vendor/modules/bcm4339a0.hcd"
 device_node = "/dev/ttyS1"
-baud_rate   =
-bt_vnd      = "realtek"
-rtk_bt_chip = "rtl8723cs_xx"
+baud_rate   = 1500000
 
 [mmc]
-display_name= "SDCard"
+display_name= "SD卡"
 activated   = 1
 program     = "mmctester.sh"
 category    = 1
 run_type    = 1
+nr          = 1
 
 [udisk]
 display_name= "U盘"
@@ -198,10 +191,10 @@ run_type    = 1
 ; samplerate
 ;   The samplerate of sound file.
 ; support_mode
-;   0 : 480I    
-;   1 : 576I    
-;   2 : 480P    
-;   3 : 576P    
+;   0 : 480I
+;   1 : 576I
+;   2 : 480P
+;   3 : 576P
 ;   4 : 720P 50HZ
 ;   5 : 720P 60HZ
 ;   6 : 1080I 50HZ
@@ -220,7 +213,7 @@ sound_file  = "/dragonboard/data/test48000.pcm"
 samplerate  = 48000
 support_mode= 2
 module_count= 1
-module1_path= "/system/vendor/modules/hdmi.ko"
+module1_path= "/system/vendor/modules/hdcp.ko"
 ;-------------------------------------------------------------------------------
 ; module_path
 ;   The full path of key module file.
@@ -231,7 +224,6 @@ activated   = 1
 program     = "keytester"
 category    = 1
 run_type    = 1
-module_path = "/system/vendor/modules/sunxi-keyboard.ko"
 
 ;-------------------------------------------------------------------------------
 ; module_path
@@ -278,9 +270,9 @@ samplerate  = 48000
 mic1_used   = 1
 mic2_used   = 0
 mic1_gain   = 1
-mic2_gain   = 1 
-mic1_threshold =8191
-mic2_threshold =8191
+mic2_gain   = 1
+mic1_threshold =16383
+mic2_threshold =16383
 ;-------------------------------------------------------------------------------
 ; type
 ;   0: rtp
@@ -291,8 +283,8 @@ mic2_threshold =8191
 [tp]
 display_name= "触摸"
 type        = 1
-module_path = "/system/vendor/modules/ft5x16_ts.ko"
-device_name = "ft5x_ts"
+module_path = "/system/vendor/modules/gt82x.ko"
+device_name = "gt82x"
 
 ;-------------------------------------------------------------------------------
 ; module_count
@@ -303,17 +295,17 @@ device_name = "ft5x_ts"
 [camera]
 activated   = 1
 module_count= 8
-module1_path= "/system/vendor/modules/videobuf2-core.ko"
-module2_path= "/system/vendor/modules/videobuf2-memops.ko"
-module3_path= "/system/vendor/modules/videobuf2-v4l2.ko"
-module4_path= "/system/vendor/modules/videobuf2-dma-contig.ko"
-module5_path= "/system/vendor/modules/vfe_io.ko"
-module6_path= "/system/vendor/modules/gc0328c.ko"
-module7_path= "/system/vendor/modules/gc2145.ko"
+module1_path= "/system/vendor/modules/videobuf-core.ko"
+module2_path= "/system/vendor/modules/videobuf-dma-contig.ko"
+module3_path= "/system/vendor/modules/cci.ko"
+module4_path= "/system/vendor/modules/vfe_os.ko"
+module5_path= "/system/vendor/modules/vfe_subdev.ko"
+module6_path= "/system/vendor/modules/hi253.ko"
+module7_path= "/system/vendor/modules/ov8858_4lane.ko"
 module8_path= "/system/vendor/modules/vfe_v4l2.ko"
 dev_cnt     = 2
 csi_cnt     = 1
-fps         = 10
+fps         = 15
 
 ;-------------------------------------------------------------------------------
 ; manual_menu_name
