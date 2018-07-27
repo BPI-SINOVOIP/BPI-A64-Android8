@@ -43,10 +43,6 @@
 #include <linux/uaccess.h>
 #include "../../init-input.h"
 
-
-
-#define CONFIG_SUPPORT_FTS_CTP_UPG
-
 #define FOR_TSLIB_TEST
 #ifdef TOUCH_KEY_SUPPORT
 #define TOUCH_KEY_FOR_EVB13
@@ -131,6 +127,7 @@ enum{
 
 #define dprintk(level_mask,fmt,arg...)    if(unlikely(debug_mask & level_mask)) \
         printk("***CTP***"fmt, ## arg)
+        
 module_param_named(debug_mask,debug_mask,int,S_IRUGO | S_IWUSR | S_IWGRP);
 /*********************************************************************************************/
 /*------------------------------------------------------------------------------------------*/
@@ -1873,7 +1870,9 @@ static long aw_ioctl(struct file *file, unsigned int cmd,unsigned long arg )
 	switch (cmd) {
 	case UPGRADE:
 	        dprintk(DEBUG_OTHERS_INFO,"==UPGRADE_WORK=\n");
+#ifdef CONFIG_SUPPORT_FTS_CTP_UPG
 		fts_ctpm_fw_upgrade_with_i_file();
+#endif
 		// calibrate();
 		break;
 	default:
@@ -1943,7 +1942,8 @@ static int __init ft5x_ts_init(void)
 	input_set_power_enable(&(config_info.input_type), 1);
 	msleep(10);
 	ctp_wakeup(0, 10);
-
+	
+	msleep(10);
 	ft5x_ts_driver.detect = ctp_detect;
 
 	ret= register_chrdev(I2C_MAJOR,"aw_i2c_ts",&aw_i2c_ts_fops );
