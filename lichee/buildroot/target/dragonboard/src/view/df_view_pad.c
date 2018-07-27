@@ -67,15 +67,13 @@ static int poweroff_button_init(void);
 #define FONT16_HEIGHT                   16
 #define FONT20_HEIGHT                   20
 #define FONT24_HEIGHT                   24
-#define FONT28_HEIGHT                   28
-#define FONT48_HEIGHT                   48
 #define DEFAULT_FONT_SIZE               FONT20_HEIGHT
 
-#define MENU_HEIGHT                     48
-#define ITEM_HEIGHT                     48
+#define MENU_HEIGHT                     32
+#define ITEM_HEIGHT                     28
 
 #define BUTTON_WIDTH                    96
-#define BUTTON_HEIGHT                   48
+#define BUTTON_HEIGHT                   32
 
 #define HEIGHT_ADJUST                   (2 * ITEM_HEIGHT)
 
@@ -107,8 +105,6 @@ DFBGraphicsDeviceDescription    gdesc;
 IDirectFBFont                  *font16;
 IDirectFBFont                  *font20;
 IDirectFBFont                  *font24;
-IDirectFBFont                  *font28;
-IDirectFBFont                  *font48;
 IDirectFBFont                  *font;
 
 static int font_size;
@@ -307,13 +303,13 @@ static int auto_window_init(void)
                                            color_table[auto_window_menu.bgcolor].g,
                                            color_table[auto_window_menu.bgcolor].b, 0xff));
     DFBCHECK(auto_window.surface->FillRectangle(auto_window.surface, 0, 0, auto_window_menu.width, auto_window_menu.height));
-    DFBCHECK(auto_window.surface->SetFont(auto_window.surface, font48));
+    DFBCHECK(auto_window.surface->SetFont(auto_window.surface, font24));
     DFBCHECK(auto_window.surface->SetColor(auto_window.surface,
                                            color_table[auto_window_menu.fgcolor].r,
                                            color_table[auto_window_menu.fgcolor].g,
                                            color_table[auto_window_menu.fgcolor].b, 0xff));
     DFBCHECK(auto_window.surface->DrawString(auto_window.surface, auto_window_menu.name, -1, 4,
-                MENU_HEIGHT / 2 + FONT48_HEIGHT / 2 - FONT48_HEIGHT / 8, DSTF_LEFT));
+                MENU_HEIGHT / 2 + FONT24_HEIGHT / 2 - FONT24_HEIGHT / 8, DSTF_LEFT));
 
     auto_window.surface->Flip(auto_window.surface, NULL, 0);
 
@@ -365,13 +361,13 @@ static int clear_button_init(void)
                                                                          clear_button.width - 2,
                                                                          clear_button.height - 2));
 
-    DFBCHECK(manual_window.surface->SetFont(manual_window.surface, font48));
+    DFBCHECK(manual_window.surface->SetFont(manual_window.surface, font24));
     DFBCHECK(manual_window.surface->SetColor(manual_window.surface,
                                              color_table[clear_button.fgcolor].r,
                                              color_table[clear_button.fgcolor].g,
                                              color_table[clear_button.fgcolor].b, 0xff));
     DFBCHECK(manual_window.surface->DrawString(manual_window.surface, clear_button.name, -1, clear_button.x + (clear_button.width >> 1),
-                MENU_HEIGHT / 2 + FONT48_HEIGHT / 2 - FONT48_HEIGHT / 8, DSTF_CENTER));
+                MENU_HEIGHT / 2 + FONT24_HEIGHT / 2 - FONT24_HEIGHT / 8, DSTF_CENTER));
 
     manual_window.surface->Flip(manual_window.surface, NULL, 0);
 
@@ -389,13 +385,13 @@ static int clear_button_redraw(color)
                                                                          clear_button.width - 2,
                                                                          clear_button.height - 2));
 
-    DFBCHECK(manual_window.surface->SetFont(manual_window.surface, font48));
+    DFBCHECK(manual_window.surface->SetFont(manual_window.surface, font24));
     DFBCHECK(manual_window.surface->SetColor(manual_window.surface,
                                              color_table[clear_button.fgcolor].r,
                                              color_table[clear_button.fgcolor].g,
                                              color_table[clear_button.fgcolor].b, 0xff));
     DFBCHECK(manual_window.surface->DrawString(manual_window.surface, clear_button.name, -1, clear_button.x + (clear_button.width >> 1),
-                MENU_HEIGHT / 2 + FONT48_HEIGHT / 2 - FONT48_HEIGHT / 8, DSTF_CENTER));
+                MENU_HEIGHT / 2 + FONT24_HEIGHT / 2 - FONT24_HEIGHT / 8, DSTF_CENTER));
 
     manual_window.surface->Flip(manual_window.surface, NULL, 0);
 
@@ -469,13 +465,13 @@ static int manual_window_init(void)
                                              color_table[manual_window_menu.bgcolor].g,
                                              color_table[manual_window_menu.bgcolor].b, 0xff));
     DFBCHECK(manual_window.surface->FillRectangle(manual_window.surface, 0, 0, manual_window_menu.width, manual_window_menu.height));
-    DFBCHECK(manual_window.surface->SetFont(manual_window.surface, font48));
+    DFBCHECK(manual_window.surface->SetFont(manual_window.surface, font24));
     DFBCHECK(manual_window.surface->SetColor(manual_window.surface,
                                              color_table[manual_window_menu.fgcolor].r,
                                              color_table[manual_window_menu.fgcolor].g,
                                              color_table[manual_window_menu.fgcolor].b, 0xff));
     DFBCHECK(manual_window.surface->DrawString(manual_window.surface, manual_window_menu.name, -1, 4,
-                MENU_HEIGHT / 2 + FONT48_HEIGHT / 2 - FONT48_HEIGHT / 8, DSTF_LEFT));
+                MENU_HEIGHT / 2 + FONT24_HEIGHT / 2 - FONT24_HEIGHT / 8, DSTF_LEFT));
 
     /* draw clear button */
     if(disp_output_type_t==DISP_OUTPUT_TYPE_LCD){
@@ -534,13 +530,13 @@ static int switch_button_init(void)
                                                                      switch_button.width - 2,
                                                                      switch_button.height - 2));
 
-    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font48));
+    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font24));
     DFBCHECK(misc_window.surface->SetColor(misc_window.surface,
                                            color_table[switch_button.fgcolor].r,
                                            color_table[switch_button.fgcolor].g,
                                            color_table[switch_button.fgcolor].b, 0xff));
     DFBCHECK(misc_window.surface->DrawString(misc_window.surface, switch_button.name, -1, switch_button.x + (switch_button.width >> 1),
-                MENU_HEIGHT / 2 + FONT48_HEIGHT / 2 - FONT48_HEIGHT / 8, DSTF_CENTER));
+                MENU_HEIGHT / 2 + FONT24_HEIGHT / 2 - FONT24_HEIGHT / 8, DSTF_CENTER));
 
     misc_window.surface->Flip(misc_window.surface, NULL, 0);
 
@@ -559,13 +555,13 @@ static int switch_button_redraw(int color)
                                                                      switch_button.width - 2,
                                                                      switch_button.height - 2));
 
-    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font48));
-    DFBCHECK(misc_window.surface->SetColor(misc_window.surface,
-                                           color_table[switch_button.fgcolor].r,
-                                           color_table[switch_button.fgcolor].g,
+    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font24));
+    DFBCHECK(misc_window.surface->SetColor(misc_window.surface, 
+                                           color_table[switch_button.fgcolor].r, 
+                                           color_table[switch_button.fgcolor].g, 
                                            color_table[switch_button.fgcolor].b, 0xff));
     DFBCHECK(misc_window.surface->DrawString(misc_window.surface, switch_button.name, -1, switch_button.x + (switch_button.width >> 1),
-                MENU_HEIGHT / 2 + FONT48_HEIGHT / 2 - FONT48_HEIGHT / 8, DSTF_CENTER));
+                MENU_HEIGHT / 2 + FONT24_HEIGHT / 2 - FONT24_HEIGHT / 8, DSTF_CENTER));
 
     misc_window.surface->Flip(misc_window.surface, NULL, 0);
 
@@ -620,13 +616,13 @@ static int reboot_button_init(void)
                                                                      reboot_button.width - 2,
                                                                      reboot_button.height - 2));
 
-    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font48));
-    DFBCHECK(misc_window.surface->SetColor(misc_window.surface,
-                                           color_table[reboot_button.fgcolor].r,
-                                           color_table[reboot_button.fgcolor].g,
+    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font24));
+    DFBCHECK(misc_window.surface->SetColor(misc_window.surface, 
+                                           color_table[reboot_button.fgcolor].r, 
+                                           color_table[reboot_button.fgcolor].g, 
                                            color_table[reboot_button.fgcolor].b, 0xff));
     DFBCHECK(misc_window.surface->DrawString(misc_window.surface, reboot_button.name, -1, reboot_button.x + (reboot_button.width >> 1),
-                MENU_HEIGHT / 2 + FONT48_HEIGHT / 2 - FONT48_HEIGHT / 8, DSTF_CENTER));
+                MENU_HEIGHT / 2 + FONT24_HEIGHT / 2 - FONT24_HEIGHT / 8, DSTF_CENTER));
 
     misc_window.surface->Flip(misc_window.surface, NULL, 0);
 
@@ -645,13 +641,13 @@ static int reboot_button_redraw(int color)
                                                                      reboot_button.width - 2,
                                                                      reboot_button.height - 2));
 
-    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font48));
-    DFBCHECK(misc_window.surface->SetColor(misc_window.surface,
-                                           color_table[reboot_button.fgcolor].r,
-                                           color_table[reboot_button.fgcolor].g,
+    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font24));
+    DFBCHECK(misc_window.surface->SetColor(misc_window.surface, 
+                                           color_table[reboot_button.fgcolor].r, 
+                                           color_table[reboot_button.fgcolor].g, 
                                            color_table[reboot_button.fgcolor].b, 0xff));
     DFBCHECK(misc_window.surface->DrawString(misc_window.surface, reboot_button.name, -1, reboot_button.x + (reboot_button.width >> 1),
-                MENU_HEIGHT / 2 + FONT48_HEIGHT / 2 - FONT48_HEIGHT / 8, DSTF_CENTER));
+                MENU_HEIGHT / 2 + FONT24_HEIGHT / 2 - FONT24_HEIGHT / 8, DSTF_CENTER));
 
     misc_window.surface->Flip(misc_window.surface, NULL, 0);
 
@@ -706,13 +702,13 @@ static int poweroff_button_init(void)
                                                                      poweroff_button.width - 2,
                                                                      poweroff_button.height - 2));
 
-    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font48));
-    DFBCHECK(misc_window.surface->SetColor(misc_window.surface,
-                                           color_table[poweroff_button.fgcolor].r,
-                                           color_table[poweroff_button.fgcolor].g,
+    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font24));
+    DFBCHECK(misc_window.surface->SetColor(misc_window.surface, 
+                                           color_table[poweroff_button.fgcolor].r, 
+                                           color_table[poweroff_button.fgcolor].g, 
                                            color_table[poweroff_button.fgcolor].b, 0xff));
     DFBCHECK(misc_window.surface->DrawString(misc_window.surface, poweroff_button.name, -1, poweroff_button.x + (poweroff_button.width >> 1),
-                MENU_HEIGHT / 2 + FONT48_HEIGHT / 2 - FONT48_HEIGHT / 8, DSTF_CENTER));
+                MENU_HEIGHT / 2 + FONT24_HEIGHT / 2 - FONT24_HEIGHT / 8, DSTF_CENTER));
 
     misc_window.surface->Flip(misc_window.surface, NULL, 0);
 
@@ -731,13 +727,13 @@ static int poweroff_button_redraw(int color)
                                                                      poweroff_button.width - 2,
                                                                      poweroff_button.height - 2));
 
-    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font48));
-    DFBCHECK(misc_window.surface->SetColor(misc_window.surface,
-                                           color_table[poweroff_button.fgcolor].r,
-                                           color_table[poweroff_button.fgcolor].g,
+    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font24));
+    DFBCHECK(misc_window.surface->SetColor(misc_window.surface, 
+                                           color_table[poweroff_button.fgcolor].r, 
+                                           color_table[poweroff_button.fgcolor].g, 
                                            color_table[poweroff_button.fgcolor].b, 0xff));
     DFBCHECK(misc_window.surface->DrawString(misc_window.surface, poweroff_button.name, -1, poweroff_button.x + (poweroff_button.width >> 1),
-                MENU_HEIGHT / 2 + FONT48_HEIGHT / 2 - FONT48_HEIGHT / 8, DSTF_CENTER));
+                MENU_HEIGHT / 2 + FONT24_HEIGHT / 2 - FONT24_HEIGHT / 8, DSTF_CENTER));
 
     misc_window.surface->Flip(misc_window.surface, NULL, 0);
 
@@ -942,7 +938,7 @@ get_wifi_point_data:
       DFBCHECK(surface->FillRectangle(surface, p_hot_point->x, p_hot_point->y,\
         p_hot_point->width, p_hot_point->height));
 
-       DFBCHECK(surface->SetFont(surface, font24));
+       DFBCHECK(surface->SetFont(surface, font20));
 
        DFBCHECK(surface->SetColor(surface,
                                   color_table[p_hot_point->fgcolor].r,
@@ -951,12 +947,12 @@ get_wifi_point_data:
 
 
        //draw ssid
-       DFBCHECK(surface->DrawString(surface,p_hot_point->ssid, -1,p_hot_point->x,
-                   p_hot_point->y + p_hot_point->height-FONT24_HEIGHT/4 , DSTF_LEFT));
+       DFBCHECK(surface->DrawString(surface,p_hot_point->ssid, -1,p_hot_point->x, 
+                   p_hot_point->y + p_hot_point->height-FONT20_HEIGHT/4 , DSTF_LEFT));
        //draw single level dB
        sprintf(buffer, "%s dB",p_hot_point->single_level_db);
-       DFBCHECK(surface->DrawString(surface,buffer, -1,p_hot_point->x+(wifi_window.desc.width>>1),
-                   p_hot_point->y + p_hot_point->height-FONT24_HEIGHT/4 , DSTF_LEFT));
+       DFBCHECK(surface->DrawString(surface,buffer, -1,p_hot_point->x+(wifi_window.desc.width>>1), 
+                   p_hot_point->y + p_hot_point->height-FONT20_HEIGHT/4 , DSTF_LEFT));
        //draw single level
 
       // db_msg("wifi_window.desc.width=%d\n",wifi_window.desc.width);
@@ -1069,13 +1065,13 @@ static int wifi_window_init(void)
                                              color_table[wifi_window_menu.bgcolor].g,
                                              color_table[wifi_window_menu.bgcolor].b, 0xff));
     DFBCHECK(wifi_window.surface->FillRectangle(wifi_window.surface, 0, 0, wifi_window_menu.width, wifi_window_menu.height));
-    DFBCHECK(wifi_window.surface->SetFont(wifi_window.surface, font48));
-    DFBCHECK(wifi_window.surface->SetColor(wifi_window.surface,
+    DFBCHECK(wifi_window.surface->SetFont(wifi_window.surface, font24));
+    DFBCHECK(wifi_window.surface->SetColor(wifi_window.surface, 
                                              color_table[wifi_window_menu.fgcolor].r,
-                                             color_table[wifi_window_menu.fgcolor].g,
+                                             color_table[wifi_window_menu.fgcolor].g, 
                                              color_table[wifi_window_menu.fgcolor].b, 0xff));
-    DFBCHECK(wifi_window.surface->DrawString(wifi_window.surface, wifi_window_menu.name, -1, 4,
-                MENU_HEIGHT / 2 + FONT48_HEIGHT / 2 - FONT48_HEIGHT / 8, DSTF_LEFT));
+    DFBCHECK(wifi_window.surface->DrawString(wifi_window.surface, wifi_window_menu.name, -1, 4, 
+                MENU_HEIGHT / 2 + FONT24_HEIGHT / 2 - FONT24_HEIGHT / 8, DSTF_LEFT));
 
     wifi_window.surface->DrawLine(wifi_window.surface,0,0,0,wifi_window.desc.height);
     wifi_window.surface->Flip(wifi_window.surface, NULL, 0);
@@ -1145,10 +1141,10 @@ static int misc_window_init(void)
     DFBCHECK(misc_window.surface->FillRectangle(misc_window.surface, bxpos, 0, bwidth, misc_window.desc.height));
 
     /* draw copryright */
-    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font24));
+    DFBCHECK(misc_window.surface->SetFont(misc_window.surface, font16));
     DFBCHECK(misc_window.surface->SetColor(misc_window.surface, 0, 0, 0, 0xff));
     DFBCHECK(misc_window.surface->DrawString(misc_window.surface, COPYRIGHT, -1, misc_window.desc.width - 4,
-                misc_window.desc.height - FONT24_HEIGHT / 4, DSTF_RIGHT));
+                misc_window.desc.height - FONT16_HEIGHT / 4, DSTF_RIGHT));
 
     misc_window.surface->Flip(misc_window.surface, NULL, 0);
 
@@ -1363,8 +1359,8 @@ static int df_font_init(void)
 {
     DFBFontDescription font_desc;
 
-    if (script_fetch("df_view", "font_size", &font_size, 1)) {
-        printf("get font_size fail\n");
+    if (script_fetch("df_view", "font_size", &font_size, 1) || 
+            (font_size != FONT20_HEIGHT && font_size != FONT24_HEIGHT)) {
         font_size = DEFAULT_FONT_SIZE;
     }
 
@@ -1383,22 +1379,10 @@ static int df_font_init(void)
     font_desc.height = FONT24_HEIGHT;
     DFBCHECK(dfb->CreateFont(dfb, DATADIR"/wqy-zenhei.ttc", &font_desc, &font24));
 
-    /* create font 28 pixel */
-    font_desc.flags  = DFDESC_HEIGHT;
-    font_desc.height = FONT28_HEIGHT;
-    DFBCHECK(dfb->CreateFont(dfb, DATADIR"/wqy-zenhei.ttc", &font_desc, &font28));
-
-    /* create font 48 pixel */
-    font_desc.flags  = DFDESC_HEIGHT;
-    font_desc.height = FONT48_HEIGHT;
-    DFBCHECK(dfb->CreateFont(dfb, DATADIR"/wqy-zenhei.ttc", &font_desc, &font48));
     if (font_size == FONT24_HEIGHT) {
         font = font24;
-    }else if(font_size == FONT28_HEIGHT){
-        font = font28;
-    }else if(font_size == FONT48_HEIGHT){
-        font = font48;
-    }else {
+    }
+    else {
         font = font20;
     }
 
@@ -1584,7 +1568,7 @@ static int df_windows_init(void)
     INIT_LIST_HEAD(&auto_tc_list);
     INIT_LIST_HEAD(&manual_tc_list);
     INIT_LIST_HEAD(&wifi_list);
-
+#if 0
     printf("------------- to open video node\n");
     while((access("/dev/video0",F_OK)) == -1)
     {
@@ -1595,7 +1579,7 @@ static int df_windows_init(void)
 		}
     }
     video_window_init();
-
+#endif
     return 0;
 }
 
@@ -1969,10 +1953,9 @@ static void show_mouse_event(DFBInputEvent *evt)
     if (mouse_x == 0 && mouse_y == 0) {
         tp_data.status = 0;
         snprintf(tp_data.exdata, 64, "(%d, %d)", tp_x, tp_y);
-		if (tp_x >= 0 && tp_y >= 0) {
-			df_update_item(BUILDIN_TC_ID_TP, &tp_data);
-		}
+        df_update_item(BUILDIN_TC_ID_TP, &tp_data);
         button_handle(tp_x, tp_y);
+
         if (press) {
             /* draw last point anyway */
             tp_track_draw(tp_x, tp_y, -1);
