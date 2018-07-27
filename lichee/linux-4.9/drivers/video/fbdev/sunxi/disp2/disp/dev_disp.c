@@ -1607,7 +1607,7 @@ static s32 disp_init(struct platform_device *pdev)
 		g_disp_drv.disp_init.output_aspect_ratio[para->boot_info.disp];
 
 	if (para->boot_info.sync == 1) {
-		__wrn("smooth display screen:%d type:%d", para->boot_info.disp,
+		__wrn("smooth display screen:%d type:%d\n", para->boot_info.disp,
 		      para->boot_info.type);
 		g_disp_drv.disp_init.disp_mode = para->boot_info.disp;
 		g_disp_drv.disp_init.output_type[para->boot_info.disp] =

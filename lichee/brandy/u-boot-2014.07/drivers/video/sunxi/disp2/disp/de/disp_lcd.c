@@ -660,6 +660,7 @@ static void lcd_get_sys_config(u32 disp, disp_lcd_cfg *lcd_cfg)
     ret = disp_sys_script_get_item(primary_key,"lcd_bl_en", (int *)gpio_info, 3);
     if (ret == 3)
     {
+    	lcd_cfg->lcd_bl_hdl = disp_sys_gpio_request(gpio_info, 1);
         lcd_cfg->lcd_bl_en_used = 1;
     }
 
@@ -1284,6 +1285,8 @@ s32 disp_lcd_set_bright(struct disp_device *lcd, u32 bright)
 	}
 	smbl = mgr->smbl;
 
+	printf("set_bright %d\n", bright);
+
 	spin_lock_irqsave(&lcd_data_lock, flags);
 	backlight_bright = (backlight_bright > 255)? 255:backlight_bright;
 	if (lcdp->lcd_cfg.backlight_bright != backlight_bright) {
@@ -1506,6 +1509,8 @@ static s32 disp_lcd_post_enable(struct disp_device* lcd)
 	unsigned bl;
 	int ret = 0;
 
+	printf("%s\n", __func__);
+
 	if ((NULL == lcd) || (NULL == lcdp)) {
 		DE_WRN("NULL hdl!\n");
 		return DIS_FAIL;
@@ -1517,6 +1522,8 @@ static s32 disp_lcd_post_enable(struct disp_device* lcd)
 	spin_unlock_irqrestore(&lcd_data_lock, flags);
 	bl = disp_lcd_get_bright(lcd);
 	disp_lcd_set_bright(lcd, bl);
+
+	disp_sys_gpio_set_value(lcdp->lcd_cfg.lcd_bl_hdl, 1, "lcd_bl_en");
 
 	return ret;
 }

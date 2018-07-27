@@ -57,6 +57,7 @@ eldo2_vol                  = 1800
 eldo3_vol                  = 1500
 fldo2_vol                  = 1001100
 gpio0_vol                  = 3300
+dc1sw_vol                  = 1002500
 
 [card_boot]
 logical_start   = 40960
@@ -492,8 +493,8 @@ nand0_p3 = 0x55aaaa55
 disp_init_enable         = 1
 disp_mode                = 0
 
-screen0_output_type      = 3
-screen0_output_mode      = 5
+screen0_output_type      = 1
+screen0_output_mode      = 4
 
 screen1_output_type      = 3
 screen1_output_mode      = 5
@@ -540,27 +541,27 @@ fb1_height               = 0
 [lcd0]
 lcd_used            = 1
 
-lcd_driver_name     = "WilliamLcd"
+lcd_driver_name     = "S070WV20_MIPI_RGB"
 ;lcd_model_name= "LT080B21BA94"
-lcd_backlight       = 50
+lcd_backlight       = 100
 lcd_if              = 4
 lcd_x               = 800
-lcd_y               = 1280
-lcd_width           = 108
-lcd_height          = 172
-lcd_dclk_freq       = 96
+lcd_y               = 480
+lcd_width           = 86
+lcd_height          = 154
+lcd_dclk_freq       = 30
 lcd_pwm_used        = 1
-lcd_pwm_ch          = 0
-lcd_pwm_freq        = 10000
-lcd_bl_0_percent   = 10
+lcd_pwm_ch          = 16
+lcd_pwm_freq        = 50000
+lcd_bl_0_percent   = 50
 lcd_pwm_pol         = 1
 lcd_pwm_max_limit   = 255
-lcd_hbp             = 36
-lcd_ht              = 1200
-lcd_hspw            = 20
-lcd_vbp             = 15
-lcd_vt              = 1330
-lcd_vspw            = 5
+lcd_hbp             = 88
+lcd_ht              = 928
+lcd_hspw            = 48
+lcd_vbp             = 32
+lcd_vt              = 525
+lcd_vspw            = 3
 lcd_lvds_if         = 0
 lcd_lvds_colordepth = 0
 lcd_lvds_mode       = 0
@@ -575,15 +576,16 @@ lcd_gamma_en        = 0
 lcd_bright_curve_en = 0
 lcd_cmap_en         = 0
 
-lcd_gpio_0          = port:PD24<1><0><default><1>
+;rst
+lcd_gpio_0          = port:PD6<1><0><default><0>
 
 ;power enable
-lcd_gpio_1          = port:PD21<1><0><default><1>
-lcd_bl_en           = port:PD23<1><0><default><1>
+lcd_gpio_1          = port:PD7<1><0><default><0>
+lcd_bl_en           = port:PD5<1><0><default><0>
 
-lcd_power     = "vcc-mipi"
-lcd_power1    = "vcc-lcd"
-lcd_fix_power = "vcc-dsi-33"
+lcd_power     = "vcc-dsi-33"
+;lcd_power1    = "vcc-lcd"
+;lcd_fix_power = "vcc-dsi-33"
 lcd_pin_power = "vcc-pd"
 
 
@@ -603,17 +605,17 @@ pwm_positive        = port:PD22<2><0><default><default>
 [pwm0_suspend]
 pwm_positive        = port:PD22<7><0><default><default>
 
-[pwm16]
-s_pwm0_used         = 0
+[spwm0]
+s_pwm_used         = 1
 pwm_positive        = port:PL10<2><0><default><default>
 
-[pwm16_suspend]
+[spwm0_suspend]
 pwm_positive        = port:PL10<7><0><default><default>
 
 [boot_disp]
 output_disp = 0
-output_type = 3
-output_mode = 5
+output_type = 1
+output_mode = 4
 
 ;--------------------------------------------------------------------------------
 ;csi (COMS Sensor Interface) configuration
@@ -1440,7 +1442,7 @@ pmu_powkey_on_time         = 1000
 [regulator0]
 compatible      = "axp803-regulator"
 regulator_count = 23
-regulator1      = "axp803_dcdc1 none vcc-nand vcc-emmc vcc-sdc vcc-usb-30 vcc-io vcc-pd vcc-emmcv vcc-emmcvq33 vcc-sdcvq33 vcc-sdcv vcc-sdcvd  vcc-wifi"
+regulator1      = "axp803_dcdc1 none vcc-nand vcc-emmc vcc-sdc vcc-usb-30 vcc-io vcc-emmcv vcc-emmcvq33 vcc-sdcvq33 vcc-sdcv vcc-sdcvd  vcc-wifi"
 regulator2      = "axp803_dcdc2 none vdd-cpua"
 regulator3      = "axp803_dcdc3 none"
 regulator4      = "axp803_dcdc4 none"
@@ -1456,13 +1458,13 @@ regulator13     = "axp803_dldo2 none vcc-lcd"
 regulator14     = "axp803_dldo3 none avdd-csi"
 regulator15     = "axp803_dldo4 none vcc-wifi-io vcc-pg"
 regulator16     = "axp803_eldo1 none vcc-cpvdd vcc-pc vcc-emmcvq18"
-regulator17     = "axp803_eldo2 none vcc-mipi vcc-lcd-0"
+regulator17     = "axp803_eldo2 none vcc-lcd-0"
 regulator18     = "axp803_eldo3 none dvdd-csi-18"
 regulator19     = "axp803_fldo1 none vcc-hsic-12"
 regulator20     = "axp803_fldo2 none vdd-cpus";
 regulator21     = "axp803_gpio0ldo none vcc-ctp"
 regulator22     = "axp803_gpio1ldo none "
-regulator23     = "axp803_dc1sw none"
+regulator23     = "axp803_dc1sw none vcc-pd"
 
 ;--------------------------------------------------------------------------------------------------------
 ;compatible                  ---axp_gpio0 name, support:axp803-gpio

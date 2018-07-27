@@ -847,8 +847,7 @@ static s32 disp_lcd_pin_cfg(struct disp_device *lcd, u32 bon)
 			    ((!strcmp(lcdp->lcd_cfg.lcd_pin_power[i], ""))
 			     ||
 			     (!strcmp(lcdp->lcd_cfg.lcd_pin_power[i], "none"))))
-				disp_sys_power_enable(lcdp->lcd_cfg.
-						      lcd_pin_power[i]);
+				disp_sys_power_enable(lcdp->lcd_cfg.lcd_pin_power[i]);
 		}
 	}
 
@@ -865,8 +864,7 @@ static s32 disp_lcd_pin_cfg(struct disp_device *lcd, u32 bon)
 			    ((!strcmp(lcdp->lcd_cfg.lcd_pin_power[i], ""))
 			     ||
 			     (!strcmp(lcdp->lcd_cfg.lcd_pin_power[i], "none"))))
-				disp_sys_power_disable(lcdp->lcd_cfg.
-						       lcd_pin_power[i]);
+				disp_sys_power_disable(lcdp->lcd_cfg.lcd_pin_power[i]);
 		}
 	}
 
@@ -1883,6 +1881,8 @@ static s32 disp_lcd_sw_enable(struct disp_device *lcd)
 	struct disp_manager *mgr = NULL;
 	struct disp_gpio_set_t gpio_info[1];
 
+	pr_info("%s\n", __func__);
+
 	if ((lcd == NULL) || (lcdp == NULL)) {
 		DE_WRN("NULL hdl!\n");
 		return DIS_FAIL;
@@ -1893,6 +1893,7 @@ static s32 disp_lcd_sw_enable(struct disp_device *lcd)
 		DE_WRN("mgr is NULL!\n");
 		return DIS_FAIL;
 	}
+	
 	if (mgr->sw_enable)
 		mgr->sw_enable(mgr);
 
@@ -1903,7 +1904,9 @@ static s32 disp_lcd_sw_enable(struct disp_device *lcd)
 	ret = cal_real_frame_period(lcd);
 	if (ret)
 		DE_WRN("cal_real_frame_period fail:%d\n", ret);
-
+	
+/* bpi, vcc-pd and vcc-dsi-3v3 always on, no power control here */
+#if 0
 	/* init fix power */
 	for (i = 0; i < LCD_POWER_NUM; i++) {
 		if (lcdp->lcd_cfg.lcd_fix_power_used[i] == 1)
@@ -1953,6 +1956,7 @@ static s32 disp_lcd_sw_enable(struct disp_device *lcd)
 		lcdp->lcd_cfg.lcd_bl_gpio_hdl =
 		    disp_sys_gpio_request(&lcdp->lcd_cfg.lcd_bl_en, 1);
 	}
+#endif
 
 	spin_lock_irqsave(&lcd_data_lock, flags);
 	lcdp->enabled = 1;
