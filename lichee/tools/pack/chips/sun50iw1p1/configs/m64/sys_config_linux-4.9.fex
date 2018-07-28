@@ -995,8 +995,8 @@ wlan_hostwake       = port:PL03<6><default><default><0>
 ;--------------------------------------------------------------------------------
 [bt]
 compatible           = "allwinner,sunxi-bt"
-bt_used             = 0
-clocks              =
+bt_used             = 1
+;clocks              =
 bt_power            = "vcc-wifi"
 bt_io_regulator     = "vcc-wifi-io"
 bt_rst_n            = port:PL04<1><default><default><0>
@@ -1010,7 +1010,7 @@ bt_rst_n            = port:PL04<1><default><default><0>
 ;--------------------------------------------------------------------------------
 [btlpm]
 compatible          = "allwinner,sunxi-btlpm"
-btlpm_used          = 0
+btlpm_used          = 1
 uart_index          = 1
 bt_wake             = port:PL06<1><default><default><1>
 bt_hostwake         = port:PL05<6><default><default><0>

@@ -155,17 +155,17 @@ test_size   = 128
 ;-------------------------------------------------------------------------------
 [bluetooth]
 display_name= "蓝牙"
-activated   = 0
+activated   = 1
 program     = "bttester.sh"
 test_time   = 3
 category    = 0
 dst_bt      = ":"
 run_type    = 1
-module_path =
+module_path = "/system/vendor/modules/bcm43438a1.hcd"
 device_node = "/dev/ttyS1"
-baud_rate   =
-bt_vnd      = "realtek"
-rtk_bt_chip = "rtl8723cs_xx"
+baud_rate   = 1500000
+bt_vnd      = "broadcom"
+;rtk_bt_chip = "rtl8723cs_xx"
 
 [mmc]
 display_name= "SDCard"
