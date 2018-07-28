@@ -275,7 +275,7 @@ module_path = "/system/vendor/modules/sunxi-ir-rx.ko"
 ;------------------------------------------------------------------------------------
 [mic]
 display_name= "录音耳机"
-activated   = 0
+activated   = 1
 program     = "mictester"
 category    = 1
 run_type    = 1
@@ -310,17 +310,16 @@ device_name = "ft5x_ts"
 ;   'x' is the index of module, starts from 0.
 ;-------------------------------------------------------------------------------
 [camera]
-activated   = 0
-module_count= 8
+activated   = 1
+module_count= 7
 module1_path= "/system/vendor/modules/videobuf2-core.ko"
 module2_path= "/system/vendor/modules/videobuf2-memops.ko"
 module3_path= "/system/vendor/modules/videobuf2-v4l2.ko"
 module4_path= "/system/vendor/modules/videobuf2-dma-contig.ko"
 module5_path= "/system/vendor/modules/vfe_io.ko"
-module6_path= "/system/vendor/modules/gc0328c.ko"
-module7_path= "/system/vendor/modules/gc2145.ko"
-module8_path= "/system/vendor/modules/vfe_v4l2.ko"
-dev_cnt     = 2
+module6_path= "/system/vendor/modules/ov5640.ko"
+module7_path= "/system/vendor/modules/vfe_v4l2.ko"
+dev_cnt     = 1
 csi_cnt     = 1
 fps         = 10
 

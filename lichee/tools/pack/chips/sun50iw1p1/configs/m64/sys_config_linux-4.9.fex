@@ -642,8 +642,8 @@ output_mode = 4
 ;--------------------------------------------------------------------------------
 
 [csi0]
-csi0_used		= 0
-csi0_sensor_list	= 0
+csi0_used		= 1
+csi0_sensor_list	= 1
 csi0_pck             	= port:PE00<2><default><default><default>
 csi0_mck           	= port:PE01<2><default><default><default>
 csi0_hsync           	= port:PE02<2><default><default><default>
@@ -660,15 +660,15 @@ csi0_sck           	= port:PE12<2><default><default><default>
 csi0_sda           	= port:PE13<2><default><default><default>
 
 [csi0/csi0_dev0]
-csi0_dev0_used          = 0
-csi0_dev0_mname         = "gc2145"
+csi0_dev0_used          = 1
+csi0_dev0_mname         = "ov5640"
 csi0_dev0_twi_addr      = 0x78
 csi0_dev0_pos           = "rear"
 csi0_dev0_isp_used      = 1
 csi0_dev0_fmt           = 0
 csi0_dev0_stby_mode     = 0
-csi0_dev0_vflip         = 0
-csi0_dev0_hflip         = 0
+csi0_dev0_vflip         = 1
+csi0_dev0_hflip         = 1
 csi0_dev0_iovdd         = "iovdd-csi"
 csi0_dev0_iovdd_vol     = 2800000
 csi0_dev0_avdd          = "avdd-csi"
@@ -679,8 +679,8 @@ csi0_dev0_afvdd         = "afvcc-csi"
 csi0_dev0_afvdd_vol     = 2800000
 ;csi0_dev0_power_en     = port:PB04<1><0><1><0>
 csi0_dev0_power_en      =
-csi0_dev0_reset         = port:PE14<1><0><1><0>
-csi0_dev0_pwdn          = port:PE15<1><0><1><0>
+csi0_dev0_reset         = port:PE16<1><0><1><0>
+csi0_dev0_pwdn          = port:PE17<1><0><1><0>
 csi0_dev0_flash_used    = 0
 csi0_dev0_flash_type    = 2
 csi0_dev0_flash_en      =
@@ -688,7 +688,7 @@ csi0_dev0_flash_mode    =
 csi0_dev0_flvdd	    	= ""
 csi0_dev0_flvdd_vol	=
 csi0_dev0_af_pwdn       =
-csi0_dev0_act_used      = 0
+csi0_dev0_act_used      = 1
 csi0_dev0_act_name      = "ad5820_act"
 csi0_dev0_act_slave     = 0x18
 
@@ -1208,7 +1208,7 @@ sndcodec_used = 0x1
 aif2fmt = 0x3
 aif3fmt = 0x3
 aif2master = 0x1
-hp_detect_case = 0x0
+hp_detect_case = 0x1
 ;------------------------------------------------------------------------------
 [i2s]
 i2s_used = 0x1
@@ -1232,7 +1232,7 @@ aif1_lrlk_div = 0x40
 aif2_lrlk_div = 0x40
 pa_sleep_time = 0x0a
 dac_digital_vol = 0xa0a0
-gpio-spk = port:PH07<2><1><default><default>
+gpio-spk = port:PD14<1><0><default><0>
 
 ;----------------------------------------------------------------------------------
 ;ir --- infra remote configuration

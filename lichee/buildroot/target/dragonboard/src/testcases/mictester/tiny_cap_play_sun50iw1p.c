@@ -97,6 +97,7 @@ void sigint_handler(int sig)
 
 void close_speaker()
 {
+	fprintf(stderr, "close_to_speaker\n");
 	tinymix_set_value_byname(mixer,"External Speaker Switch",0);
 	tinymix_set_value_byname(mixer,"SPK_R Mux",0);
 	tinymix_set_value_byname(mixer,"SPK_L Mux",0);
@@ -104,6 +105,8 @@ void close_speaker()
 
 void set_to_speaker()
 {
+    fprintf(stderr, "set_to_speaker\n");
+
     tinymix_set_value_byname(mixer,"AIF1IN0R Mux", (unsigned int)"AIF1_DA0R");
     tinymix_set_value_byname(mixer,"AIF1IN0L Mux", (unsigned int)"AIF1_DA0L");
     tinymix_set_value_byname(mixer,"DACR Mixer AIF1DA0R Switch",1);
@@ -125,11 +128,14 @@ void set_to_speaker()
 
 void close_jack()
 {
+	fprintf(stderr, "close_to_jack\n");
 	tinymix_set_value_byname(mixer,"Headphone Switch", 0);
 }
 
 void set_to_jack()
 {
+	fprintf(stderr, "set_to_jack\n");
+
 	tinymix_set_value_byname(mixer,"AIF1IN0R Mux", (unsigned int)"AIF1_DA0R");
 	tinymix_set_value_byname(mixer,"AIF1IN0L Mux", (unsigned int)"AIF1_DA0L");
 	tinymix_set_value_byname(mixer,"DACR Mixer AIF1DA0R Switch",1);

@@ -1568,7 +1568,7 @@ static int df_windows_init(void)
     INIT_LIST_HEAD(&auto_tc_list);
     INIT_LIST_HEAD(&manual_tc_list);
     INIT_LIST_HEAD(&wifi_list);
-#if 0
+#if 1
     printf("------------- to open video node\n");
     while((access("/dev/video0",F_OK)) == -1)
     {
