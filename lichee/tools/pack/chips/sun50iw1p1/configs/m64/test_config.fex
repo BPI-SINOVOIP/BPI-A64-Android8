@@ -176,7 +176,7 @@ run_type    = 1
 
 [udisk]
 display_name= "U盘"
-activated   = 0
+activated   = 1
 program     = "udisktester.sh"
 category    = 1
 run_type    = 1
