@@ -26,6 +26,7 @@ all:
 	make -C otgtester
 	make -C 2gtester
 	make -C bluetooth
+	make -C nettester
 	make -C gyrotester
 	make -C gyroiiotester
 	make -C vrcmptester

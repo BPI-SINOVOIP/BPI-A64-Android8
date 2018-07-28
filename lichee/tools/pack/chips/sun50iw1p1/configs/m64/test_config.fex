@@ -59,12 +59,21 @@ run_type    = 1
 ;-------------------------------------------------------------------------------
 [wifi]
 display_name= "网络"
-activated   = 1
+activated   = 0
 program     = "wifitester.sh"
 category    = 0
 run_type    = 1
 module_count= 1
 module_path = "/system/vendor/modules/8723cs.ko"
+module_args =
+
+[ethernet]
+display_name= "乙太網"
+activated   = 1
+program     = "nettester.sh"
+category    = 0
+run_type    = 1
+module_path =
 module_args =
 
 ;-------------------------------------------------------------------------------
