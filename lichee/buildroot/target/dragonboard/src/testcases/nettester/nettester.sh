@@ -15,8 +15,8 @@ if ifconfig -a | grep eth0; then
 		exit 1
     fi	
 
-	/etc/init.d/auto_config_network &	
-	sleep 10
+	/etc/init.d/auto_config_network	
+	#sleep 10
 	
 	ping_address=$(ping -c 4 www.baidu.com);
 
