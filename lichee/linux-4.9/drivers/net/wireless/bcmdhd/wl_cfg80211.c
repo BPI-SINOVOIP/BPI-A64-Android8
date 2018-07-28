@@ -5062,7 +5062,7 @@ wl_cfg80211_get_key(struct wiphy *wiphy, struct net_device *dev,
 	swap_key_to_BE(&key);
 	memset(&params, 0, sizeof(params));
 	params.key_len = (u8) min_t(u8, DOT11_MAX_KEY_SIZE, key.len);
-	memcpy(params.key, key.data, params.key_len);
+	memcpy((void *)params.key, key.data, params.key_len);
 
 	err = wldev_iovar_getint_bsscfg(dev, "wsec", &wsec, bssidx);
 	if (unlikely(err)) {
@@ -12946,13 +12946,15 @@ static s32 __wl_cfg80211_down(struct bcm_cfg80211 *cfg)
 	defined(WL_NEWCFG_PRIVCMD_SUPPORT))
 	struct net_device *p2p_net = cfg->p2p_net;
 #endif /* WL_CFG80211 && (WL_ENABLE_P2P_IF || WL_NEWCFG_PRIVCMD_SUPPORT) */
-	u32 bssidx = 0;
 #ifdef PROP_TXSTATUS_VSDB
 #if defined(BCMSDIO)
 	dhd_pub_t *dhd =  (dhd_pub_t *)(cfg->pub);
 #endif
 #endif /* PROP_TXSTATUS_VSDB */
 	WL_DBG(("In\n"));
+	
+	u32 bssidx = 0;
+	
 	/* Delete pm_enable_work */
 	wl_add_remove_pm_enable_work(cfg, FALSE, WL_HANDLER_DEL);
 

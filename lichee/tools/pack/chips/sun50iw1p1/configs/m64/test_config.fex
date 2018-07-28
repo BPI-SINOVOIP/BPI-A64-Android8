@@ -59,13 +59,13 @@ run_type    = 1
 ;-------------------------------------------------------------------------------
 [wifi]
 display_name= "网络"
-activated   = 0
+activated   = 1
 program     = "wifitester.sh"
 category    = 0
 run_type    = 1
 module_count= 1
-module_path = "/system/vendor/modules/8723cs.ko"
-module_args =
+module_path = "/system/vendor/modules/bcmdhd.ko"
+module_args = "nvram_path=/system/vendor/modules/nvram_ap6212.txt"
 
 [ethernet]
 display_name= "乙太網"

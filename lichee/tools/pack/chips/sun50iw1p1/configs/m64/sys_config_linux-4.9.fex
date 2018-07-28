@@ -977,9 +977,9 @@ mir3da                    = 1
 ;--------------------------------------------------------------------------------
 [wlan]
 compatible          = "allwinner,sunxi-wlan"
-wlan_used           = 0
+wlan_used           = 1
 wlan_busnum         = 1
-clocks              =
+;clocks              =
 wlan_power          = "vcc-wifi"
 wlan_io_regulator   = "vcc-wifi-io"
 wlan_regon          = port:PL02<1><default><default><0>
@@ -1442,7 +1442,7 @@ pmu_powkey_on_time         = 1000
 [regulator0]
 compatible      = "axp803-regulator"
 regulator_count = 23
-regulator1      = "axp803_dcdc1 none vcc-nand vcc-emmc vcc-sdc vcc-usb-30 vcc-io vcc-emmcv vcc-emmcvq33 vcc-sdcvq33 vcc-sdcv vcc-sdcvd  vcc-wifi"
+regulator1      = "axp803_dcdc1 none vcc-nand vcc-emmc vcc-sdc vcc-usb-30 vcc-io vcc-emmcv vcc-emmcvq33 vcc-sdcvq33 vcc-sdcv vcc-sdcvd"
 regulator2      = "axp803_dcdc2 none vdd-cpua"
 regulator3      = "axp803_dcdc3 none"
 regulator4      = "axp803_dcdc4 none"
@@ -1454,7 +1454,7 @@ regulator9      = "axp803_aldo1 none vdd-csi-led afvcc-csi iovdd-csi "
 regulator10     = "axp803_aldo2 none vcc-pl"
 regulator11     = "axp803_aldo3 none vcc-avcc vcc-pll"
 regulator12     = "axp803_dldo1 none vcc-hdmi-33 vcc-dsi-33 vcc-io2"
-regulator13     = "axp803_dldo2 none vcc-lcd"
+regulator13     = "axp803_dldo2 none vcc-wifi"
 regulator14     = "axp803_dldo3 none avdd-csi"
 regulator15     = "axp803_dldo4 none vcc-wifi-io vcc-pg"
 regulator16     = "axp803_eldo1 none vcc-cpvdd vcc-pc vcc-emmcvq18"
