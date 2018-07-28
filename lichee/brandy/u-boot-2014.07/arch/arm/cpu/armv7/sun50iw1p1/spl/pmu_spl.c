@@ -53,6 +53,24 @@ int pwrok_restart_enable(void)
 static int axp_probe(void)
 {
 	u8  pmu_type;
+	u8  acin_path;
+
+	/* bpi, set VBUS current limit from 1500mA to 3500mA */
+	if(axp_i2c_read(AXP81X_ADDR, BOOT_POWER81X_ACIN_PATH, &acin_path))
+	{
+		printf("axp read error\n");
+		return -1;
+	}
+
+	printf("[BPI] set ac cur limit to 3500mA\n");
+	
+	acin_path &= 0xf8;
+	acin_path |= 0x04;
+	if(axp_i2c_write(AXP81X_ADDR, BOOT_POWER81X_ACIN_PATH, acin_path))
+	{
+		printf("axp write error\n");
+		return -1;
+	}
 
 	if(axp_i2c_read(AXP81X_ADDR, 0x3, &pmu_type))
 	{

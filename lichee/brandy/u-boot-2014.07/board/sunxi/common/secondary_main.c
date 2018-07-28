@@ -225,7 +225,7 @@ static int sunxi_probe_power_state(void)
 
 	if (pmu_bat_unused  || (__bat_exist <= 0))
 	{
-		pr_notice("no battery exist\n");
+		printf("no battery exist, boot normal\n");
 		return SUNXI_STATE_NORMAL_BOOT;
 	}
 
