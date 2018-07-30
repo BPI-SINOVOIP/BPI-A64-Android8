@@ -23,7 +23,7 @@ PRODUCT_PROPERTY_OVERRIDES += dalvik.vm.foreground-heap-growth-multiplier=2.0
 PRODUCT_DEX_PREOPT_PROFILE_DIR := device/softwinner/tulip-m64/configs/profiles
 
 # secure config
-BOARD_HAS_SECURE_OS := true
+BOARD_HAS_SECURE_OS := false
 
 # drm config
 BOARD_WIDEVINE_OEMCRYPTO_LEVEL := 3
@@ -93,6 +93,7 @@ PRODUCT_COPY_FILES += \
     device/softwinner/tulip-m64/configs/camera.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/camera.cfg \
     device/softwinner/tulip-m64/configs/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml \
     device/softwinner/tulip-m64/configs/tp.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/ft5x_ts.idc \
+    device/softwinner/tulip-m64/configs/axp803-powerkey.kl:$(TARGET_COPY_OUT_VENDOR)/usr/idc/axp803-powerkey.kl \
     device/softwinner/tulip-m64/configs/gsensor.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/gsensor.cfg \
     device/softwinner/common/config/awbms_config:$(TARGET_COPY_OUT_VENDOR)/etc/awbms_config \
 
