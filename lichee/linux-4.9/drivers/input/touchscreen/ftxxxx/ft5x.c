@@ -1943,7 +1943,7 @@ static int __init ft5x_ts_init(void)
 	msleep(10);
 	ctp_wakeup(0, 10);
 	
-	msleep(10);
+	msleep(100);
 	ft5x_ts_driver.detect = ctp_detect;
 
 	ret= register_chrdev(I2C_MAJOR,"aw_i2c_ts",&aw_i2c_ts_fops );
