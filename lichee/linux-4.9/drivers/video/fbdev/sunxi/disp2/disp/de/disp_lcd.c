@@ -1704,6 +1704,8 @@ static s32 disp_lcd_enable(struct disp_device *lcd)
 	unsigned bl;
 	int ret;
 
+	pr_info("%s\n", __func__);
+
 	if ((lcd == NULL) || (lcdp == NULL)) {
 		DE_WRN("NULL hdl!\n");
 		return DIS_FAIL;
@@ -1807,6 +1809,8 @@ static s32 disp_lcd_disable(struct disp_device *lcd)
 	struct disp_manager *mgr = NULL;
 	int i;
 
+	pr_info("%s\n", __func__);
+	
 	if ((lcd == NULL) || (lcdp == NULL)) {
 		DE_WRN("NULL hdl!\n");
 		return DIS_FAIL;
@@ -1948,6 +1952,7 @@ static s32 disp_lcd_sw_enable(struct disp_device *lcd)
 		     || (!strcmp(lcdp->lcd_cfg.lcd_pin_power[i], "none"))))
 			disp_sys_power_enable(lcdp->lcd_cfg.lcd_pin_power[i]);
 	}
+#endif
 
 	/* init bl */
 	if (lcdp->lcd_cfg.lcd_bl_en_used) {
@@ -1956,10 +1961,10 @@ static s32 disp_lcd_sw_enable(struct disp_device *lcd)
 		    ((!strcmp(lcdp->lcd_cfg.lcd_bl_en_power, ""))
 		     || (!strcmp(lcdp->lcd_cfg.lcd_bl_en_power, "none"))))
 			disp_sys_power_enable(lcdp->lcd_cfg.lcd_bl_en_power);
+		
 		lcdp->lcd_cfg.lcd_bl_gpio_hdl =
 		    disp_sys_gpio_request(&lcdp->lcd_cfg.lcd_bl_en, 1);
 	}
-#endif
 
 	spin_lock_irqsave(&lcd_data_lock, flags);
 	lcdp->enabled = 1;
@@ -2484,7 +2489,7 @@ static s32 disp_lcd_init(struct disp_device *lcd)
 		DE_WRN("NULL hdl!\n");
 		return DIS_FAIL;
 	}
-	DE_INF("lcd %d\n", lcd->disp);
+	pr_info("%s: lcd %d\n", __func__, lcd->disp);
 
 	lcd_get_sys_config(lcd->disp, &lcdp->lcd_cfg);
 	if (disp_lcd_is_used(lcd)) {

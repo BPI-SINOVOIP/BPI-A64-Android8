@@ -112,8 +112,6 @@ static void LCD_power_on(u32 sel)
 	sunxi_lcd_delay_ms(30);
 	panel_reset(1);
 	sunxi_lcd_delay_ms(10);
-	
-	
 }
 
 static void LCD_power_off(u32 sel)
