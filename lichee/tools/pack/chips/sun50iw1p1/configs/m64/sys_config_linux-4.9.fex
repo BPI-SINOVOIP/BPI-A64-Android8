@@ -1341,6 +1341,7 @@ pmu_inshort                = 0
 ;--------------------------------------------------------------------------------------------------------
 [charger0]
 compatible                 = "axp803-charger"
+pmu_bat_unused		   = 1
 pmu_chg_ic_temp            = 0
 pmu_battery_rdc            = 125
 pmu_battery_cap            = 3700
