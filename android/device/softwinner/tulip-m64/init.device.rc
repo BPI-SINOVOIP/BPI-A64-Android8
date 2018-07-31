@@ -15,7 +15,7 @@ on boot
     #insmod gsensor module
     #insmod /vendor/modules/bma250.ko
 #tp
-    chown system system /sys/devices/platform/soc/twi0/i2c-0/0-0040/input/input3/runtime_suspend
+    chown system system /sys/devices/platform/soc/twi0/i2c-0/0-0038/input/input3/runtime_suspend
 
 ### csi module
     insmod /vendor/modules/videobuf2-core.ko
@@ -23,8 +23,7 @@ on boot
     insmod /vendor/modules/videobuf2-v4l2.ko
     insmod /vendor/modules/videobuf2-dma-contig.ko
     insmod /vendor/modules/vfe_io.ko
-    insmod /vendor/modules/gc2145.ko
-    insmod /vendor/modules/gc0312.ko
+    insmod /vendor/modules/ov5640.ko
     insmod /vendor/modules/vfe_v4l2.ko
 
 on property:sys.boot_completed=1
