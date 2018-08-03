@@ -291,6 +291,7 @@ static void fw_free_buf(struct firmware_buf *buf)
 static char fw_path_para[256];
 static const char * const fw_path[] = {
 	fw_path_para,
+	"/vendor/etc/firmware/",
 	"/lib/firmware/updates/" UTS_RELEASE,
 	"/lib/firmware/updates",
 	"/lib/firmware/" UTS_RELEASE,
@@ -334,6 +335,8 @@ fw_get_filesystem_firmware(struct device *device, struct firmware_buf *buf)
 	if (!path)
 		return -ENOMEM;
 
+	pr_info("%s, path=%s\n", __func__, path);
+
 	for (i = 0; i < ARRAY_SIZE(fw_path); i++) {
 		/* skip the unset customized path */
 		if (!fw_path[i][0])
@@ -345,6 +348,8 @@ fw_get_filesystem_firmware(struct device *device, struct firmware_buf *buf)
 			rc = -ENAMETOOLONG;
 			break;
 		}
+
+		pr_info("%s, path=%s\n", __func__, path);
 
 		buf->size = 0;
 		rc = kernel_read_file_from_path(path, &buf->data, &size, msize,

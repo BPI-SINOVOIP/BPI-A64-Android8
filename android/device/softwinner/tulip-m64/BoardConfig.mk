@@ -72,8 +72,8 @@ ifeq ($(BOARD_WIFI_VENDOR), realtek)
     BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_rtl
     include hardware/realtek/wlan/config/config.mk
     BOARD_WLAN_DEVICE           := realtek
-    WIFI_DRIVER_MODULE_NAME     := "8723cs"
-    WIFI_DRIVER_MODULE_PATH     := "/vendor/modules/8723cs.ko"
+    WIFI_DRIVER_MODULE_NAME     := "8723bu"
+    WIFI_DRIVER_MODULE_PATH     := "/vendor/modules/8723bu.ko"
     WIFI_DRIVER_MODULE_ARG      := "ifname=wlan0 if2name=p2p0"
 endif
 
@@ -109,7 +109,7 @@ ifeq ($(BOARD_BLUETOOTH_VENDOR), realtek)
     BOARD_HAVE_BLUETOOTH := true
     BOARD_HAVE_BLUETOOTH_RTK := true
     BOARD_HAVE_BLUETOOTH_RTK_COEX := true
-    BOARD_HAVE_BLUETOOTH_NAME := rtl8723cs
+    BOARD_HAVE_BLUETOOTH_NAME := rtl8723bu
     BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(TOP_DIR)device/softwinner/$(basename $(TARGET_DEVICE))/configs/bluetooth/
     include hardware/realtek/bluetooth/firmware/rtlbtfw_cfg.mk
 endif
