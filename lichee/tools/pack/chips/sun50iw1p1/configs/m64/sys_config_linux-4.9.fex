@@ -403,7 +403,7 @@ ctp_exchange_x_y_flag = 0
 
 ctp_int_port        = port:PH04<6><default><default><default>
 ctp_wakeup          = port:PH08<1><default><default><default>
-ctp_power_ldo       = "vcc-ctp"
+ctp_power_ldo       = ""
 ctp_power_ldo_vol   = 3300
 ctp_power_io        =
 
@@ -1238,9 +1238,12 @@ gpio-spk = port:PD14<1><0><default><0>
 ;ir --- infra remote configuration
 ;----------------------------------------------------------------------------------
 [s_cir0]
-s_cir0_used         = 0
-ir_power_key_code   = 0x0
-ir_addr_code        = 0x0
+s_cir0_used         = 1
+supply		    = "vcc-cir"
+supply_vol	    = 3300000 
+ir_protocol_used    = 0
+ir_power_key_code   = 116
+ir_addr_code        = 0x17c612
 
 ;--------------------------------------------------------------------------------------------------------
 ;compatible                  ---pmu0 name, support:axp803
@@ -1463,7 +1466,7 @@ regulator17     = "axp803_eldo2 none vcc-lcd-0"
 regulator18     = "axp803_eldo3 none dvdd-csi-18"
 regulator19     = "axp803_fldo1 none vcc-hsic-12"
 regulator20     = "axp803_fldo2 none vdd-cpus";
-regulator21     = "axp803_gpio0ldo none vcc-ctp"
+regulator21     = "axp803_gpio0ldo none vcc-cir"
 regulator22     = "axp803_gpio1ldo none "
 regulator23     = "axp803_dc1sw none vcc-pd vcc-gmac-33"
 

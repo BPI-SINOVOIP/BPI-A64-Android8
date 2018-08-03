@@ -248,7 +248,7 @@ module_path = "/system/vendor/modules/sunxi-keyboard.ko"
 ;-------------------------------------------------------------------------------
 [ir]
 display_name= "红外"
-activated   = 0
+activated   = 1
 program     = "irtester"
 category    = 1
 run_type    = 1

@@ -19,7 +19,16 @@ static u32 match_addr[MAX_ADDR_NUM];
 static u32 match_num;
 #endif
 static struct rc_map_table sunxi_nec_scan[] = {
-	{ KEY_ESC, KEY_ESC },
+	{ 0xc61712, KEY_POWER },
+	{ 0xc61701, KEY_UP },
+	{ 0xc61719, KEY_LEFT },
+	{ 0xc61711, KEY_RIGHT },
+	{ 0xc61709, KEY_DOWN },
+	{ 0xc61740, KEY_ENTER },
+	{ 0xc6170f, KEY_HOME },
+	{ 0xc6170d, KEY_MENU },
+	{ 0xc6171c, KEY_VOLUMEUP },
+	{ 0xc6177f, KEY_VOLUMEDOWN },
 };
 
 #ifdef CONFIG_SUNXI_KEYMAPPING_SUPPORT
