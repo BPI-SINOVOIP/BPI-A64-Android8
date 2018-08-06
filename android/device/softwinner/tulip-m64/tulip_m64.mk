@@ -93,7 +93,8 @@ PRODUCT_COPY_FILES += \
     device/softwinner/tulip-m64/configs/camera.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/camera.cfg \
     device/softwinner/tulip-m64/configs/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml \
     device/softwinner/tulip-m64/configs/tp.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/ft5x_ts.idc \
-    device/softwinner/tulip-m64/configs/axp803-powerkey.kl:$(TARGET_COPY_OUT_VENDOR)/usr/idc/axp803-powerkey.kl \
+    device/softwinner/tulip-m64/configs/axp803-powerkey.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/axp803-powerkey.kl \
+    device/softwinner/tulip-m64/configs/sunxi-ir.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/sunxi-ir.kl \
     device/softwinner/tulip-m64/configs/gsensor.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/gsensor.cfg \
     device/softwinner/common/config/awbms_config:$(TARGET_COPY_OUT_VENDOR)/etc/awbms_config \
 
