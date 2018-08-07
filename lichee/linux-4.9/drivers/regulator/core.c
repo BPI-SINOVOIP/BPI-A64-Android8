@@ -2727,6 +2727,8 @@ int regulator_enable(struct regulator *regulator)
 	axp_add_enabler(rdev, regulator->supply_name);
 #endif
 
+	pr_info("%s:%s\n", __func__, regulator->supply_name);
+
 	if (rdev->supply) {
 		ret = regulator_enable(rdev->supply);
 		if (ret != 0)
@@ -2848,6 +2850,8 @@ int regulator_disable(struct regulator *regulator)
 	}
 	axp_del_enabler(rdev, regulator->supply_name);
 #endif
+
+	pr_info("%s:%s\n", __func__, regulator->supply_name);
 
 	mutex_lock(&rdev->mutex);
 	ret = _regulator_disable(rdev);
