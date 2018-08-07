@@ -33,3 +33,4 @@ on property:sys.boot_completed=1
 
 #insmod ir module
     insmod /vendor/modules/sunxi-ir-rx.ko
+    insmod /vendor/modules/ir-nec-decoder.ko
