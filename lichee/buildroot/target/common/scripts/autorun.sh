@@ -38,6 +38,15 @@ if [ $nand_activated -eq 1 ]; then
 
 fi
 
+display_type=`script_fetch "df_view" "display_type"`
+echo "got display type is $display_type"
+if [ $display_type -eq 1 ]; then
+	echo "got hdmi display type"
+	insmod /system/vendor/modules/hdmi.ko
+else
+	echo "got lcd display type"
+fi
+
 # insmod touchscreen driver
 tp_module_path=`script_fetch "tp" "module_path"`
 if [ -n "$tp_module_path" ]; then

@@ -366,6 +366,7 @@ fps         = 10
 ;   The string display after test case display_name when test Fail.
 ;-------------------------------------------------------------------------------
 [df_view]
+display_type	    = 1
 tv_scale_factor     = 95
 manual_menu_name    = "手动测试项"
 auto_menu_name      = "自动测试项"

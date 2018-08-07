@@ -2033,13 +2033,25 @@ static int buildin_tc_init(void)
 int df_view_init(void)
 {
     int ret;
+	int display_type;
 
     db_msg("directfb view init...\n");
     df_windows_init();
     df_view_id = register_view("directfb", &df_view_ops);
     if (df_view_id == 0)
         return -1;
-	disp_output_type_t=DISP_OUTPUT_TYPE_LCD;
+    
+	if (script_fetch("df_view", "display_type", &display_type, 1)){
+       display_type=0;
+    }
+	
+	db_error("display_type is %d\n", display_type);
+	
+	if(display_type)
+		disp_output_type_t=DISP_OUTPUT_TYPE_HDMI;
+	else
+		disp_output_type_t=DISP_OUTPUT_TYPE_LCD;
+		
     if(disp_output_type_t==DISP_OUTPUT_TYPE_LCD){
          db_msg("buildin_tc_init...\n");
          buildin_tc_init();
