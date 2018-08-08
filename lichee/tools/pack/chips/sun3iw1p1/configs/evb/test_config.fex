@@ -1,0 +1,376 @@
+;-------------------------------------------------------------------------------
+; How to config a test module
+;
+; [example]
+; display_name= "Example"
+; activated   = 1
+; program     = "example.sh"
+; category    = 0
+; run_type    = 1
+;
+; display_name
+;   The name show in the interface,it is a string.If you need to show the "",you can config it in this way:
+;       display_name= string:"Example"
+;   All the characters after "string:" will be show.
+;   No more then 64 characters or 32 chinese in this item.
+;   If no display_name , the test program will not run.
+;
+; activated
+;   0: not test
+;   1: test
+;
+; program
+;   The program to test the module,no more then 16 characters
+;
+; category
+;   0: automated testing
+;   1: manual testing
+;
+; run_type
+;   0: Start the next program after this program is completed
+;   1: Start the next program ,do not need to wait for this program
+;   Note:If category = 1, this item will be ignore
+;-------------------------------------------------------------------------------
+
+
+;-------------------------------------------------------------------------------
+; test_size
+;   unit: MB
+;-------------------------------------------------------------------------------
+[dram]
+display_name= "DRAM"
+activated   = 1
+program     = "memtester.sh"
+category    = 0
+run_type    = 1
+dram_size   = 2048
+test_size   = 8
+
+[rtc]
+display_name= "RTC"
+activated   = 1
+program     = "rtctester.sh"
+category    = 0
+run_type    = 1
+
+;-------------------------------------------------------------------------------
+; module_path
+;   The full path of wifi module file.
+; module_args
+;   The arguments of wifi module.
+;-------------------------------------------------------------------------------
+[wifi]
+display_name= "WIFI"
+activated   = 1
+program     = "wifitester.sh"
+category    = 0
+run_type    = 1
+module_count= 1
+module_path = "/system/vendor/modules/bcmdhd.ko"
+module_args =
+
+;-------------------------------------------------------------------------------
+; module_path
+;   The full path of g-sensor module file.
+; device_name
+;   The name of g-sensor device.
+;-------------------------------------------------------------------------------
+[gsensor]
+display_name= "G-SENSOR"
+activated   = 1
+program     = "gsensortester.sh"
+category    = 0
+run_type    = 1
+module_count= 1
+module1_path= "/system/vendor/modules/bma250.ko"
+device_name = "bma250"
+
+;-------------------------------------------------------------------------------
+; module_path
+;   The full path of gyro module file.
+; device_name
+;   The name of gyro device.
+;-------------------------------------------------------------------------------
+[gyro]
+display_name= "GYRO"
+activated   = 1
+program     = "gyrotester.sh"
+category    = 0
+run_type    = 1
+module_count= 1
+module1_path= "/system/vendor/modules/bmg160.ko"
+device_name = "bmg160"
+
+;-------------------------------------------------------------------------------
+; module_path
+;   The full path of e-compass module file.
+; device_name
+;   The name of e-compass device.
+;-------------------------------------------------------------------------------
+[compass]
+display_name= "COMPASS"
+activated   = 0
+program     = "compasstester.sh"
+category    = 0
+run_type    = 1
+module_count= 1
+module1_path= "/system/vendor/modules/lsm303d.ko"
+device_name = "lsm303d_mag"
+
+;-------------------------------------------------------------------------------
+; test_size
+;   Test size for nand read and write test.
+;-------------------------------------------------------------------------------
+[nand]
+display_name= "NAND"
+activated   = 1
+program     = "nandtester.sh"
+category    = 0
+run_type    = 1
+module_path= "/system/vendor/modules/nand.ko"
+test_size   = 16
+
+[emmc]
+display_name= "EMMC"
+activated   = 0
+program     = "emmctester.sh"
+category    = 0
+run_type    = 1
+test_size   = 128
+
+[bluetooth]
+display_name= "BLUETOOTH"
+activated   = 1
+program     = "bttester.sh"
+test_time   = 3
+category    = 0
+dst_bt      = ":"
+run_type    = 1
+module_path = "/system/vendor/modules/bcm40183b2.hcd"
+device_node = "/dev/ttyS2"
+
+[mmc]
+display_name= "MMC"
+activated   = 1
+program     = "mmctester.sh"
+category    = 1
+run_type    = 1
+
+[udisk]
+display_name= "UDISK"
+activated   = 1
+program     = "udisktester.sh"
+category    = 1
+run_type    = 1
+
+[Usb_HOST1]
+display_name= "USB_HOST1"
+activated   = 1
+program     = "host1tester.sh"
+category    = 1
+run_type    = 1
+
+[Usb_HOST2]
+display_name= "USB_HOST2"
+activated   = 0
+program     = "host2tester.sh"
+category    = 1
+run_type    = 1
+
+[Usb_OTG]
+display_name= "USB_OTG"
+activated   = 1
+program     = "otgtester.sh"
+category    = 1
+run_type    = 1
+;-------------------------------------------------------------------------------
+; sound_file
+;   The full path of sound file.
+; samplerate
+;   The samplerate of sound file.
+; support_mode
+;   0 : 480I
+;   1 : 576I
+;   2 : 480P
+;   3 : 576P
+;   4 : 720P 50HZ
+;   5 : 720P 60HZ
+;   6 : 1080I 50HZ
+;   7 : 1080I 60HZ
+;   8 : 1080P 24HZ
+;   9 : 1080P 50HZ
+;   10: 1080P 60HZ
+;-------------------------------------------------------------------------------
+[hdmi]
+display_name= "HDMI"
+activated   = 1
+program     = "hdmitester"
+category    = 1
+run_type    = 1
+sound_file  = "/dragonboard/data/test48000.pcm"
+samplerate  = 48000
+support_mode= 2
+module_count= 1
+module1_path= "/system/vendor/modules/hdcp.ko"
+;-------------------------------------------------------------------------------
+; module_path
+;   The full path of key module file.
+;-------------------------------------------------------------------------------
+[key]
+display_name= "KEY"
+activated   = 1
+program     = "keytester"
+category    = 1
+run_type    = 1
+
+;-------------------------------------------------------------------------------
+; module_path
+;   The full path of ir module file.
+;-------------------------------------------------------------------------------
+[ir]
+display_name= "IR"
+activated   = 0
+program     = "irtester"
+category    = 1
+run_type    = 1
+module_path = "/system/vendor/modules/sunxi-ir-rx.ko"
+
+;-------------------------------------------------------------------------------
+; delay
+;   delay ? second before recording
+; volume:
+;   the output volume,range from 0 to 63
+; music_playtime:
+; music playback time in secend before recording
+; sound_file:
+; the sound_file you want to play
+; samplerate:
+; the sound file samplerate
+; micx_gain:
+;  input gain for mic1 or mic2
+;  0:0db,1:35db;2:38db;3:41db
+; micx_used:
+; the mic you want to test
+; micx_threshold:
+; the mic data threshold.the test will be pass when the capture data above this value
+;------------------------------------------------------------------------------------
+[mic]
+display_name= "MIC"
+activated   = 1
+program     = "mictester"
+category    = 1
+run_type    = 1
+delay       = 3
+volume      = 40
+music_playtime =10
+music_file  = "/dragonboard/data/test48000.pcm"
+samplerate  = 48000
+mic1_used   = 1
+mic2_used   = 0
+mic1_gain   = 1
+mic2_gain   = 1
+mic1_threshold =16383
+mic2_threshold =16383
+;-------------------------------------------------------------------------------
+; type
+;   0: rtp
+;   1: ctp
+; module_path
+;   The full path of tp module.
+;-------------------------------------------------------------------------------
+[tp]
+display_name= "TP"
+type        = 1
+module_path = "/system/vendor/modules/gt9xx_ts.ko"
+
+;-------------------------------------------------------------------------------
+; module_count
+;   The number of module need to be insmod.
+; modulex_path
+;   'x' is the index of module, starts from 0.
+;-------------------------------------------------------------------------------
+[camera]
+activated   = 1
+module_count= 8
+module1_path= "/system/vendor/modules/videobuf-core.ko"
+module2_path= "/system/vendor/modules/videobuf-dma-contig.ko"
+module3_path= "/system/vendor/modules/cci.ko"
+module4_path= "/system/vendor/modules/vfe_os.ko"
+module5_path= "/system/vendor/modules/vfe_subdev.ko"
+module6_path= "/system/vendor/modules/ov5640.ko"
+module7_path= "/system/vendor/modules/gc2035.ko"
+module8_path= "/system/vendor/modules/vfe_v4l2.ko"
+dev_cnt     = 2
+csi_cnt     = 1
+fps         = 15
+
+;-------------------------------------------------------------------------------
+; manual_menu_name
+;   manual test case menu name, 32bytes.
+; auto_menu_name
+;   auto test case menu name, 32bytes.
+; clear_button_name
+;   clear screen button name, 8bytes.
+; font_size
+;   test case font display size, valid value: 20pixel(default), 24pixel.
+;
+; Color Index
+;   0: White
+;   1: Yellow
+;   2: Green
+;   3: Cyan
+;   4: Magenta
+;   5: Red
+;   6: Blue
+;   7: Black
+;   8: Beauty
+; menu_bgcolor
+;   The background color index of test case category menu.
+; menu_fgcolor
+;   The foreground color index of test case category menu.
+; item_init_bgcolor
+;   The background color index of test case item init status.
+; item_init_fgcolor
+;   The foreground color index of test case item init status.
+; item_ok_bgcolor
+;   The background color index of test case item OK status.
+; item_ok_fgcolor
+;   The foreground color index of test case item OK status.
+; item_fail_bgcolor
+;   The background color index of test case item fail status.
+; item_fail_fgcolor
+;   The foreground color index of test case item fail status.
+;
+; pass_str
+;   The string display after test case display_name when test OK.
+; fail_str
+;   The string display after test case display_name when test Fail.
+;-------------------------------------------------------------------------------
+[df_view]
+tv_scale_factor     = 95
+manual_menu_name    = "Automated"
+auto_menu_name      = "Manual"
+clear_button_name   = "Clear"
+wifi_menu_name      = "Wifi"
+font_size           = 20
+menu_bgcolor        = 1
+menu_fgcolor        = 7
+
+item_init_bgcolor   = 7
+item_init_fgcolor   = 0
+item_ok_bgcolor     = 7
+item_ok_fgcolor     = 6
+item_fail_bgcolor   = 7
+item_fail_fgcolor   = 5
+tp_draw_color       = 0
+
+;item_init_bgcolor   = 0
+;item_init_fgcolor   = 7
+;item_ok_bgcolor     = 0
+;item_ok_fgcolor     = 6
+;item_fail_bgcolor   = 0
+;item_fail_fgcolor   = 5
+;tp_draw_color       = 7
+
+pass_str            = "Pass"
+fail_str            = "Fail"

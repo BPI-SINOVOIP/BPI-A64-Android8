@@ -1,0 +1,66 @@
+;---------------------------------------------------------------------------------------------------------
+; You can modify the number after the "=", but do not change the string before "="
+;---------------------------------------------------------------------------------------------------------
+
+
+;--------------------------------------------------------------------------------------------------
+;                                   Parameters for download files
+;--------------------------------------------------------------------------------------------------
+;****************************************************
+;    the size of mbr(Kbyte)
+;****************************************************
+[mbr]
+size = 16384
+
+;********************************************************************************************************
+;                                       How to config a partition
+;
+;
+;  partition demo:
+;    [partition]                ;
+;    name        = USERFS2      ; //the name, sholud be unique, and not more then 12 characters
+;    size        = 16384        ; //the number of sectors .The maximum size is 2^31 * 512 = 2T.
+;    downloadfile = "123.fex"   ; //file to download, path can be relative or absolute
+;    keydata     = 1            ; //private data partition, date will not lose when download next time
+;    encrypt     = 1            ; //set 1 to enable encrypt, and the download speed will slow
+;    user_type   = ?            ; //for private
+;    verify      = 1            ; //verity after download
+;
+; Note:
+;     size = 0 will create a partition with no size
+;     It is more efficiency and safe to set the size in a multiple of 16M bytes(32 sectors).
+;********************************************************************************************************
+[partition_start]
+
+[partition]
+    name         = boot-res
+    size         = 32768
+    downloadfile = "boot-resource.fex"
+    user_type    = 0x8000
+
+[partition]
+    name         = env
+    size         = 32768
+    downloadfile = "env.fex"
+    user_type    = 0x8000
+
+[partition]
+    name         = boot
+    size         = 32768
+    downloadfile = "boot.fex"
+    user_type    = 0x8000
+
+[partition]
+    name         = rootfs
+    size         = 1048576
+    downloadfile = "rootfs.fex"
+    user_type    = 0x8000
+
+[partition]
+    name         = klog
+    size         = 32768
+    user_type    = 0x8000
+
+[partition]
+    name         = UDISK
+    user_type    = 0x8100

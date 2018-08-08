@@ -1,0 +1,308 @@
+;-------------------------------------------------------------------------------
+; 测试模块配置示例
+;
+; [example]
+; display_name= "Example"
+; activated   = 1
+; program     = "example.sh"
+; category    = 0
+; run_type    = 1
+;
+; display_name
+;   显示到界面的名称，字符串类型，如果需要显示双引号，可以使用以下语法：
+;       display_name= string:"Example"
+;   区别在于后者会显示"string:"后面所有的字符，包括空格和制表符。该项能够容纳
+;   64个英文字符，32个中文字符。如果display_name为空，测试程序不会运行。
+;
+; activated
+;   0: 不测试该模块
+;   1: 测试该模块
+;
+; program
+;   模块的测试程序，该项能够容纳16个英文字符。
+;
+; category
+;   0: 自动化测试模块
+;   1: 手动测试模块
+;
+; run_type
+;   0: 等待当前模块的测试程序执行完毕再运行下一个模块的测试程序
+;   1: 不等待当前模块的测试程序执行完毕
+;   一般为了提高整体的测试速度，对于耗时较长的测试程序建议填0，反之填1；注意，当
+;   category = 1，即手动测试模块时，该项无效。
+;-------------------------------------------------------------------------------
+
+;-------------------------------------------------------------------------------
+; test_size
+;   unit: MB
+;-------------------------------------------------------------------------------
+[dram]
+display_name= "内存"
+activated   = 1
+program     = "memtester.sh"
+category    = 0
+run_type    = 1
+dram_size   = 2048
+test_size   = 8
+platform    = "sun50iw3p1"
+
+[rtc]
+display_name= "时钟"
+activated   = 1
+program     = "rtctester.sh"
+category    = 0
+run_type    = 1
+
+;-------------------------------------------------------------------------------
+; module_path: The full path of wifi module file
+; module_args: The arguments of wifi module (brcm module need this arg)
+;-------------------------------------------------------------------------------
+[wifi]
+display_name= "网络"
+activated   = 1
+program     = "wifitester.sh"
+category    = 0
+run_type    = 1
+module_count= 1
+module_path = "/system/vendor/modules/bcmdhd.ko"
+module_args = "nvram_path=/system/vendor/modules/nvram_ap6255.txt"
+
+;-------------------------------------------------------------------------------
+; TODO:需要重新实现重力传感器的测试用例
+;-------------------------------------------------------------------------------
+[gsensor]
+display_name= "重力感应器"
+activated   = 1
+program     = "gsensortester.sh"
+category    = 1
+run_type    = 1
+module_count= 1
+module1_path= "/system/vendor/modules/mxc622x.ko"
+device_name = "mxc622x"
+;-------------------------------------------------------------------------------
+; TODO:需要重新实现陀螺仪的测试用例
+;-------------------------------------------------------------------------------
+[gyro]
+display_name= "陀螺仪"
+activated   = 1
+program     = "gyrotester.sh"
+category    = 0
+run_type    = 1
+module_count= 1
+module1_path= "/system/vendor/modules/lsm9ds0_gyr.ko"
+device_name = "lsm9ds0_gyr"
+
+;-------------------------------------------------------------------------------
+; TODO:需要重新实现距离传感器的测试用例
+;-------------------------------------------------------------------------------
+[compass]
+display_name= "地磁"
+activated   = 1
+program     = "compasstester.sh"
+category    = 0
+run_type    = 1
+module_count= 1
+module1_path=
+device_name = "lsm9ds0_mag"
+
+[sensorhub]
+display_name = "sensorhub"
+activated   = 1
+program     = "sensorhub.sh"
+category    = 0
+run_type    = 1
+
+[lightsensor]
+display_name= "光传感器"
+activated   = 1
+program     = "vrlstester.sh"
+category    = 0
+run_type    = 1
+module_count= 1
+module1_path=
+device_name = "stk3x1x_ls"
+
+[pxsensor]
+display_name= "距离传感器"
+activated   = 1
+program     = "vrpstester.sh"
+category    = 0
+run_type    = 1
+module_count= 1
+module1_path=
+device_name = "stk3x1x_ps"
+
+
+;-------------------------------------------------------------------------------
+; test_size
+;   Test size for nand read and write test.
+;-------------------------------------------------------------------------------
+[nand]
+display_name= "闪存"
+activated   = 0
+program     = "nandtester.sh"
+category    = 0
+run_type    = 1
+module_path= "/system/vendor/modules/nand.ko"
+test_size   = 16
+
+[emmc]
+display_name= "emmc闪存"
+activated   = 1
+program     = "emmctester.sh"
+category    = 0
+run_type    = 1
+test_size   = 128
+
+;-------------------------------------------------------------------------------
+; dst_bt:      The destination bt device to search when run test (not essential)
+; module_path: The full path of bt module file (brcm module need this arg)
+; device_node: The AP's hardware communication port to bt module
+; baud_rate:   The baud_rate of bt module when run test (not essential)
+; bt_vnd:      The bt module vendor, support broadcom/realtek
+;-------------------------------------------------------------------------------
+[bluetooth]
+display_name= "蓝牙"
+activated   = 1
+program     = "bttester.sh"
+test_time   = 3
+category    = 0
+dst_bt      = ":"
+run_type    = 1
+module_path = "/system/vendor/modules/bcm4345c0.hcd"
+device_node = "/dev/ttyS1"
+baud_rate   = 1500000
+bt_vnd      = "broadcom"
+
+[mmc]
+display_name= "SD卡"
+activated   = 1
+program     = "mmctester.sh"
+category    = 1
+run_type    = 1
+
+[udisk]
+display_name= "U盘"
+activated   = 1
+program     = "udisktester.sh"
+category    = 1
+run_type    = 1
+
+;-------------------------------------------------------------------------------
+; module_path
+;   The full path of key module file.
+;-------------------------------------------------------------------------------
+[key]
+display_name= "按键"
+activated   = 1
+program     = "keytester"
+category    = 1
+run_type    = 1
+
+;-------------------------------------------------------------------------------
+; delay
+;   delay ? second before recording
+; volume:
+;	the output volume,range from 0 to 63
+; music_playtime:
+; music playback time in secend before recording
+; sound_file:
+; the sound_file you want to play
+; samplerate:
+; the sound file samplerate
+; micx_gain:
+;  input gain for mic1 or mic2
+;  0:0db,1:35db;2:38db;3:41db
+; micx_used:
+; the mic you want to test
+; micx_threshold:
+; the mic data threshold.the test will be pass when the capture data above this value
+;------------------------------------------------------------------------------------
+[mic]
+display_name= "录音耳机"
+activated   = 1
+program     = "mictester"
+category    = 1
+run_type    = 1
+delay       = 3
+volume      = 40
+music_playtime =10
+music_file  = "/dragonboard/data/test48000.pcm"
+samplerate  = 48000
+mic1_used   = 1
+mic2_used   = 0
+mic1_gain   = 1
+mic2_gain   = 1
+mic1_threshold =16383
+mic2_threshold =16383
+
+;-------------------------------------------------------------------------------
+; manual_menu_name
+;   manual test case menu name, 32bytes.
+; auto_menu_name
+;   auto test case menu name, 32bytes.
+; clear_button_name
+;   clear screen button name, 8bytes.
+; font_size
+;   test case font display size, valid value: 20pixel(default), 24pixel.
+;
+; Color Index
+;   0: White
+;   1: Yellow
+;   2: Green
+;   3: Cyan
+;   4: Magenta
+;   5: Red
+;   6: Blue
+;   7: Black
+;   8: Beauty
+; menu_bgcolor
+;   The background color index of test case category menu.
+; menu_fgcolor
+;   The foreground color index of test case category menu.
+; item_init_bgcolor
+;   The background color index of test case item init status.
+; item_init_fgcolor
+;   The foreground color index of test case item init status.
+; item_ok_bgcolor
+;   The background color index of test case item OK status.
+; item_ok_fgcolor
+;   The foreground color index of test case item OK status.
+; item_fail_bgcolor
+;   The background color index of test case item fail status.
+; item_fail_fgcolor
+;   The foreground color index of test case item fail status.
+;
+; pass_str
+;   The string display after test case display_name when test OK.
+; fail_str
+;   The string display after test case display_name when test Fail.
+;-------------------------------------------------------------------------------
+[df_view]
+tv_scale_factor     = 95
+manual_menu_name    = "手动测试项"
+auto_menu_name      = "自动测试项"
+clear_button_name   = "清屏"
+wifi_menu_name      = "wifi热点列表"
+font_size           = 48
+menu_bgcolor        = 1
+menu_fgcolor        = 7
+
+item_init_bgcolor   = 7
+item_init_fgcolor   = 0
+item_ok_bgcolor     = 7
+item_ok_fgcolor     = 2
+item_fail_bgcolor   = 7
+item_fail_fgcolor   = 5
+tp_draw_color       = 0
+
+;item_init_bgcolor   = 0
+;item_init_fgcolor   = 7
+;item_ok_bgcolor     = 0
+;item_ok_fgcolor     = 6
+;item_fail_bgcolor   = 0
+;item_fail_fgcolor   = 5
+;tp_draw_color       = 7
+
+pass_str            = "通过"
+fail_str            = "失败"
