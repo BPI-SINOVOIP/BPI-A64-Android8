@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2015 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<favorites xmlns:launcher="http://schemas.android.com/apk/res-auto/com.android.launcher3">
+    <!-- Google Folder -->
+    <folder
+        launcher:title="@string/naming_is_Google"
+        launcher:screen="0"
+        launcher:x="0"
+        launcher:y="-1" >
+
+<!-- for Go GMS package -->
+        <favorite
+            launcher:className="com.google.android.apps.searchlite.ui.SearchActivity"
+            launcher:packageName="com.google.android.apps.searchlite" />
+        <favorite
+            launcher:className="com.google.android.apps.youtube.lite.frontend.activities.SplashActivity"
+            launcher:packageName="com.google.android.apps.youtube.mango" />
+        <favorite
+            launcher:className="com.google.android.gm.ConversationListActivityGmail"
+            launcher:packageName="com.google.android.gm.lite" />
+        <favorite
+            launcher:className="com.google.android.apps.assistant.go.MainActivity"
+            launcher:packageName="com.google.android.apps.assistant" />
+        <favorite
+            launcher:className="org.chromium.webapk.shell_apk.MainActivity"
+            launcher:packageName="com.google.android.apps.mapslite" />
+
+<!-- for normal GMS package
+        <favorite
+            launcher:className="com.google.android.apps.gsa.searchnow.SearchNowActivity"
+            launcher:packageName="com.google.android.googlequicksearchbox" />
+        <favorite
+            launcher:className="com.google.android.apps.chrome.Main"
+            launcher:packageName="com.android.chrome" />
+        <favorite
+            launcher:className="com.google.android.gm.ConversationListActivityGmail"
+            launcher:packageName="com.google.android.gm" />
+        <favorite
+            launcher:className="com.google.android.maps.MapsActivity"
+            launcher:packageName="com.google.android.apps.maps" />
+        <favorite
+            launcher:className="com.google.android.youtube.app.honeycomb.Shell$HomeActivity"
+            launcher:packageName="com.google.android.youtube" />
+        <favorite
+            launcher:className="com.google.android.apps.docs.app.NewMainProxyActivity"
+            launcher:packageName="com.google.android.apps.docs" />
+        <favorite
+            launcher:className="com.android.music.activitymanagement.TopLevelActivity"
+            launcher:packageName="com.google.android.music" />
+        <favorite
+            launcher:className="com.google.android.youtube.videos.EntryPoint"
+            launcher:packageName="com.google.android.videos" />
+        <favorite
+            launcher:className="com.google.android.talk.SigningInActivity"
+            launcher:packageName="com.google.android.talk" />
+        <favorite
+            launcher:className="com.google.android.apps.photos.home.HomeActivity"
+            launcher:packageName="com.google.android.apps.photos" />
+-->
+    </folder>
+</favorites>

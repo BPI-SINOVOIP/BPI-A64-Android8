@@ -1,0 +1,2 @@
+type cedar_device, dev_type;
+type private_block_device, dev_type;

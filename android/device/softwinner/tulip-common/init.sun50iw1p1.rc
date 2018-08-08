@@ -1,0 +1,65 @@
+import /vendor/etc/init/hw/init.common.rc
+import /vendor/etc/init/hw/init.device.rc
+import /vendor/etc/init/hw/init.sun50iw1p1.usb.rc
+
+on init
+    # Set permissions for persist partition
+    mkdir /persist 0771 system system
+    mkdir /firmware 0771 system system
+
+    # Support legacy paths
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard0
+
+    # Setup zram options
+    write /sys/block/zram0/comp_algorithm lz4
+    mkdir /oem 0550 system system
+    export PATH /vendor/xbin:/sbin:/system/sbin:/system/bin:/system/xbin:/vendor/bin
+
+on early-fs
+    wait /dev/block/by-name/media_data
+    mount vfat /dev/block/by-name/media_data /oem ro nosuid nodev utf8,context=u:object_r:oemfs:s0
+
+on fs
+    mount_all /vendor/etc/fstab.sun50iw1p1
+    swapon_all /vendor/etc/fstab.sun50iw1p1
+    restorecon_recursive /persist
+
+on late-fs
+    # gpu
+    insmod /vendor/modules/mali.ko
+    write /sys/devices/platform/soc/cpu_budget_cooling/roomage "1152000 4 0 0 1152000 4 0 0"
+    # mkdir for optee
+    mkdir /data/tee 0770 system system
+    restorecon_recursive /data/tee
+
+on post-fs-data
+    # Set indication (checked by vold) that we have finished this action
+    setprop vold.post_fs_data_done 1
+on boot
+    chown system system /sys/kernel/autohotplug/enable
+    chmod 0660 /sys/kernel/autohotplug/enable
+    chown system system /sys/devices/platform/soc/twi0/i2c-0/0-0040/input/input4/runtime_suspend
+    chmod 0660 /sys/devices/platform/soc/twi0/i2c-0/0-0040/input/input4/runtime_suspend
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chown system system /sys/devices/platform/soc/cpu_budget_cooling/roomage
+    chmod 0660 /sys/devices/platform/soc/cpu_budget_cooling/roomage
+    write /sys/devices/platform/soc/cpu_budget_cooling/roomage "1152000 4 0 0 1152000 4 0 0"
+    chown system system /sys/class/devfreq/dramfreq/adaptive/pause
+    chmod 0660 /sys/class/devfreq/dramfreq/adaptive/pause
+
+    chown system system /sys/class/thermal/thermal_zone0/emul_temp
+    chmod 0660 /sys/class/thermal/thermal_zone0/emul_temp
+
+    write /sys/class/disp/disp/attr/runtime_enable 1
+    write /sys/kernel/mm/ksm/pages_to_scan 100
+    write /sys/kernel/mm/ksm/sleep_millisecs 500
+    write /sys/kernel/mm/ksm/run 1
+
+    chown system system /sys/kernel/debug/sync/sw_sync
+    chmod 0777 /sys/kernel/debug/sync/sw_sync
+
+on post-fs-data
+    # create file for audio dump data
+    mkdir /data/audio_d 0777 audio audio

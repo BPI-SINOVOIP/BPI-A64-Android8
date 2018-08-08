@@ -1,0 +1,17 @@
+#============= hal_graphics_composer_default ==============
+allow hal_graphics_composer_default vndbinder_device:chr_file { ioctl open read write };
+#allow hal_graphics_composer_default device:chr_file { read write };
+allow hal_graphics_composer_default hal_graphics_allocator_hwservice:hwservice_manager find;
+allow hal_graphics_composer_default hal_graphics_allocator_default:binder call;
+allow hal_graphics_composer_default ion_device:chr_file write;
+allow hal_graphics_composer_default self:netlink_kobject_uevent_socket create;
+allow hal_graphics_composer_default self:netlink_kobject_uevent_socket setopt;
+allow hal_graphics_composer_default self:netlink_kobject_uevent_socket bind;
+allow hal_graphics_composer_default self:netlink_kobject_uevent_socket read;
+allow hal_graphics_composer_default init:unix_stream_socket connectto;
+allow hal_graphics_composer_default property_socket:sock_file write;
+allow hal_graphics_composer_default sysfs:file read;
+allow hal_graphics_composer_default sysfs:file open;
+allow hal_graphics_composer_default sysfs:file write;
+type sysfs_debugfs_swsync, fs_type, debugfs_type;
+allow hal_graphics_composer_default sysfs_debugfs_swsync:file { ioctl open read write };

@@ -1,0 +1,25 @@
+#============= kernel ==============
+allow kernel rootfs:file execute;
+#allow kernel rootfs:file execute_no_trans;
+allow kernel device:dir write;
+allow kernel device:dir add_name;
+allow kernel device:chr_file create;
+allow kernel device:chr_file setattr;
+allow kernel self:capability mknod;
+allow kernel kernel:netlink_route_socket create;
+allow kernel device:dir create;
+#==== for rild & radio_monitor =====
+allow kernel device:blk_file create;
+allow kernel device:blk_file getattr;
+allow kernel device:blk_file setattr;
+allow kernel device:blk_file unlink;
+allow kernel device:chr_file create;
+allow kernel device:chr_file getattr;
+allow kernel device:chr_file setattr;
+allow kernel device:chr_file unlink;
+allow kernel device:dir remove_name;
+allow kernel device:dir rmdir;
+
+#==== for wifi driver access /data/misc/wifi/wifimac.txt =====
+allow kernel wifi_data_file:file { open read };
+allow kernel wifi_data_file:dir search;

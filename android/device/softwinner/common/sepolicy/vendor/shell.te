@@ -1,0 +1,7 @@
+allow shell vendor_file:file { r_file_perms execute execute_no_trans};
+allow shell background_service:service_manager add;
+allow shell sysfs_cma_readable:file { read getattr open };
+allow shell sysfs_zram:dir search;
+allow shell sysfs_zram:file { read getattr open };
+allow shell hal_memtrack_default:binder call;
+allow shell untrusted_app_25:process getsched;

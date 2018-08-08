@@ -1,0 +1,71 @@
+import /vendor/etc/init/hw/init.common.rc
+import /vendor/etc/init/hw/init.device.rc
+import /vendor/etc/init/hw/init.sun50iw3p1.usb.rc
+
+on init
+    # Set permissions for persist partition
+    mkdir /persist 0771 system system
+    mkdir /firmware 0771 system system
+
+    # Support legacy paths
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard0
+
+    mkdir /oem 0550 system system
+
+on early-fs
+    insmod nand.ko
+
+    wait /dev/block/by-name/media_data
+    mount vfat /dev/block/by-name/media_data /oem ro nosuid nodev utf8,context=u:object_r:oemfs:s0
+
+on fs
+    mount_all /vendor/etc/fstab.sun50iw3p1
+    swapon_all /vendor/etc/fstab.sun50iw3p1
+    restorecon_recursive /persist
+
+on late-fs
+    # gpu
+    insmod /vendor/modules/mali_kbase.ko
+
+on post-fs-data
+    # Set indication (checked by vold) that we have finished this action
+    setprop vold.post_fs_data_done 1
+
+on boot
+    chown system system /sys/kernel/autohotplug/enable
+    chmod 0660 /sys/kernel/autohotplug/enable
+
+    chown system system /sys/kernel/autohotplug/boost_all
+    chmod 0660 /sys/kernel/autohotplug/boost_all
+
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/boot_lock
+    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/boot_lock
+
+    chown system system /sys/devices/platform/soc/twi0/i2c-0/0-0040/input/input6/runtime_suspend
+    chmod 0660 /sys/devices/platform/soc/twi0/i2c-0/0-0040/input/input6/runtime_suspend
+
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
+    chown system system /sys/devices/platform/soc/cpu_budget_cooling/roomage
+    chmod 0660 /sys/devices/platform/soc/cpu_budget_cooling/roomage
+    write /sys/devices/platform/soc/cpu_budget_cooling/roomage "1800000 4 0 0 1800000 4 0 0"
+
+    chown system system /sys/devices/platform/gpu/scenectrl/command
+    chmod 0660 /sys/devices/platform/gpu/scenectrl/command
+
+    chown system system /sys/class/devfreq/dramfreq/adaptive/pause
+    chmod 0660 /sys/class/devfreq/dramfreq/adaptive/pause
+
+    write /sys/class/disp/disp/attr/runtime_enable 1
+    write /sys/kernel/autohotplug/enable 1
+    write /sys/kernel/autohotplug/boost_all 0
+    write /proc/irq/223/smp_affinity_list 1-3
+
+on post-fs-data
+    # mkdir for optee
+    mkdir /data/tee 0770 system system
+    # create file for audio dump data
+    mkdir /data/audio_d 0777 audio audio
+    restorecon_recursive /data/tee

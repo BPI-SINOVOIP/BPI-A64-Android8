@@ -1,0 +1,3 @@
+#============= webview_zygote ==============
+allow webview_zygote proc:file read;
+allow webview_zygote tombstoned_crash_socket:sock_file write;

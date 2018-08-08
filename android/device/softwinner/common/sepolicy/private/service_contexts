@@ -1,0 +1,2 @@
+background                                u:object_r:background_service:s0
+aw_display                                u:object_r:surfaceflinger_service:s0

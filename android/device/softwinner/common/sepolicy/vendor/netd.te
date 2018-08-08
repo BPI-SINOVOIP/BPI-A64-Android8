@@ -1,0 +1,6 @@
+#============= netd ==============
+allow netd kernel:system module_request;
+allow netd self:capability sys_module;
+allow netd proc:file write;
+allow netd proc_net:dir create_dir_perms;
+allow netd proc_net:file create;

@@ -1,0 +1,14 @@
+
+#============= hal_bluetooth_default ==============
+#allow hal_bluetooth_default self:udp_socket create;
+allow hal_bluetooth_default serial_device:chr_file { read write open };
+allow hal_bluetooth_default sysfs:file rw_file_perms;
+allow hal_bluetooth_default media_rw_data_file:dir { write search create add_name };
+allow hal_bluetooth_default media_rw_data_file:file { write create open };
+allow hal_bluetooth_default storage_stub_file:dir getattr;
+allow hal_bluetooth_default tmpfs:dir { write };
+allow hal_bluetooth_default bluetooth_data_file:dir search;
+allow hal_bluetooth_default bluetooth_data_file:file open;
+allow hal_bluetooth_default bluetooth_data_file:file read;
+allow hal_bluetooth_default proc:file open;
+allow hal_bluetooth_default proc:file write;

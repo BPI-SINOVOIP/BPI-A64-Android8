@@ -1,0 +1,3 @@
+#============= adbd ==============
+allow adbd vendor_file:file { execute getattr open read };
+

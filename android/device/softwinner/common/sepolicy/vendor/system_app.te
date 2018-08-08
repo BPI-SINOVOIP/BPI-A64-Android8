@@ -1,0 +1,4 @@
+allow system_app { cache_file cache_recovery_file }:dir create_dir_perms;
+allow system_app { cache_file cache_recovery_file }:file create_file_perms;
+allow system_app vendor_file:file { execute getattr open read execute_no_trans };
+allow system_app unlabeled:filesystem getattr;

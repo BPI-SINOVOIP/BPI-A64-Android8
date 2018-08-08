@@ -1,0 +1,8 @@
+#============= hal_wifi_default ==============
+allow hal_wifi_default kernel:system module_request;
+allow hal_wifi_default self:capability sys_module;
+allow hal_wifi_default vendor_file:system module_load;
+allow hal_wifi_default wifi_data_file:file {open read write create setattr};
+allow hal_wifi_default sysfs:file write;
+allow hal_wifi_default hal_wifi_default:netlink_kobject_uevent_socket {read create setopt bind};
+allow hal_wifi_default wifi_data_file:dir {search write add_name remove_name};

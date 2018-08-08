@@ -1,0 +1,8 @@
+#============= e2fs ==============
+#allow e2fs block_device:blk_file read;
+allow e2fs cache_block_device:blk_file { getattr ioctl open read write };
+allow e2fs userdata_block_device:blk_file  { getattr ioctl read write };
+allow e2fs devpts:chr_file { getattr ioctl read write };
+allow e2fs sysfs_fs_ext4_features:dir search;
+allow e2fs system_block_device:blk_file getattr;
+allow e2fs dm_device:blk_file getattr;

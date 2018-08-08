@@ -1,0 +1,3 @@
+#============= zygote ==============
+allow zygote cgroup:file create;
+allow zygote vendor_file:file { execute getattr open read };

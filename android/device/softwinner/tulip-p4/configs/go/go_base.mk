@@ -1,0 +1,48 @@
+#
+# Copyright (C) 2009 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# This is a build configuration for a full-featured build of the
+# Open-Source part of the tree. It's geared toward a US-centric
+# build of the emulator, but all those aspects can be overridden
+# in inherited configurations.
+
+PRODUCT_PROPERTY_OVERRIDES := \
+    ro.config.ringtone=Ring_Synth_04.ogg \
+    ro.config.notification_sound=pixiedust.ogg
+
+# Put en_US first in the list, so make it default.
+PRODUCT_LOCALES := en_US
+
+# Get some sounds
+$(call inherit-product-if-exists, frameworks/base/data/sounds/AudioPackageGo.mk)
+PRODUCT_COPY_FILES += \
+    frameworks/base/data/sounds/effects/ogg/Dock.ogg:system/media/audio/ui/Dock.ogg \
+    frameworks/base/data/sounds/effects/ogg/Undock.ogg:system/media/audio/ui/Undock.ogg \
+    frameworks/base/data/sounds/effects/ogg/Lock.ogg:system/media/audio/ui/Lock.ogg \
+    frameworks/base/data/sounds/effects/ogg/Unlock.ogg:system/media/audio/ui/Unlock.ogg \
+    frameworks/base/data/sounds/effects/ogg/LowBattery.ogg:system/media/audio/ui/LowBattery.ogg \
+    frameworks/base/data/sounds/effects/ogg/Trusted.ogg:system/media/audio/ui/Trusted.ogg \
+    frameworks/base/data/sounds/effects/ogg/VideoRecord.ogg:system/media/audio/ui/VideoRecord.ogg \
+    frameworks/base/data/sounds/effects/ogg/VideoStop.ogg:system/media/audio/ui/VideoStop.ogg \
+    frameworks/base/data/sounds/effects/ogg/WirelessChargingStarted.ogg:system/media/audio/ui/WirelessChargingStarted.ogg \
+    frameworks/base/data/sounds/effects/ogg/camera_click.ogg:system/media/audio/ui/camera_click.ogg \
+    frameworks/base/data/sounds/effects/ogg/camera_focus.ogg:system/media/audio/ui/camera_focus.ogg
+
+# Get a list of languages.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/locales_full.mk)
+
+# Get everything else from the parent package
+$(call inherit-product, $(SRC_TARGET_DIR)/product/generic_no_telephony.mk)

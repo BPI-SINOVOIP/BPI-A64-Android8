@@ -1,0 +1,2 @@
+on init
+    insmod /gslX680new.ko

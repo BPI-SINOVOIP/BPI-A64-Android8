@@ -1,0 +1,6 @@
+allow radio system_app_data_file:dir getattr;
+allow radio vendor_file:file read;
+allow radio vendor_file:file open;
+allow radio vendor_file:file getattr;
+allow radio vendor_file:file execute;
+allow system_server radio:file write;

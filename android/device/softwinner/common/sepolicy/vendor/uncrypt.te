@@ -1,0 +1,4 @@
+#============= uncrypt ==============
+allow uncrypt cache_file:dir getattr;
+allow uncrypt cache_file:file getattr;
+allow uncrypt cache_file:file read;

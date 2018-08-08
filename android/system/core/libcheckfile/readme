@@ -1,0 +1,4 @@
+1、此目录不能提交
+2、此目录放在system/core/
+3、要编译时把Android改为Android.mk
+4、把编译出来的libcheckfile.so放在vendor/aw/public/prebuild/lib/libcheckfile/

@@ -1,0 +1,17 @@
+type optee, domain;
+type optee_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(optee)
+
+allow shell optee_exec:file getattr;
+allow optee system_data_file:dir { write remove_name add_name create getattr };
+allow optee self:capability { dac_override };
+allow optee tee_device:chr_file { read write open ioctl };
+allow optee tee_data_file:dir { remove_name rmdir search add_name write read open create };
+allow optee tee_data_file:file { link unlink write read open create };
+allow optee self:netlink_socket create_socket_perms_no_ioctl;
+allow optee self:netlink_generic_socket create_socket_perms_no_ioctl;
+allow optee ion_device:chr_file r_file_perms;
+r_dir_file(optee, sysfs_type)
+
+allow optee system_data_file:file { getattr read };
+allow optee system_data_file:lnk_file r_file_perms;

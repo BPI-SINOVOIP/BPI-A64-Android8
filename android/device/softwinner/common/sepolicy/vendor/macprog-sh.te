@@ -1,0 +1,29 @@
+#========= macprog ===========
+type macprog-sh, domain;
+type macprog-sh_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(macprog-sh)
+
+allow macprog-sh bluetooth_prop:file { getattr open read };
+allow macprog-sh vendor_shell_exec:file { getattr read };
+allow macprog-sh vendor_toolbox_exec:file execute_no_trans;
+allow macprog-sh self:capability { dac_override dac_read_search };
+
+allow macprog-sh wifi_data_file:file open;
+allow macprog-sh wifi_data_file:file create;
+allow macprog-sh wifi_data_file:file { getattr write };
+allow macprog-sh wifi_data_file:file setattr;
+
+allow macprog-sh wifi_data_file:dir search;
+allow macprog-sh wifi_data_file:dir write;
+allow macprog-sh wifi_data_file:dir add_name;
+
+allow macprog-sh bluetooth_data_file:file open;
+allow macprog-sh bluetooth_data_file:file create;
+allow macprog-sh bluetooth_data_file:file { getattr write };
+allow macprog-sh bluetooth_data_file:file setattr;
+
+allow macprog-sh bluetooth_data_file:dir search;
+allow macprog-sh bluetooth_data_file:dir write;
+allow macprog-sh bluetooth_data_file:dir add_name;
+
+allow macprog-sh rootfs:dir { open read };

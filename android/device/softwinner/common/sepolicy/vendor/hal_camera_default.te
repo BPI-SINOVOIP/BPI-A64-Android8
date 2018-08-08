@@ -1,0 +1,5 @@
+#============= hal_camera_default ==============
+allow hal_camera_default cedar_device:chr_file { ioctl open read write };
+allow hal_camera_default vndbinder_device:chr_file { ioctl open read write };
+allow hal_camera_default hal_graphics_mapper_hwservice:hwservice_manager find;
+allow hal_camera_default camera_device:chr_file{ read write };

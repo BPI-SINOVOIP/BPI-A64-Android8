@@ -1,0 +1,24 @@
+on init
+    # Load persistent dm-verity state
+    verity_load_state
+
+on early-boot
+    # Update dm-verity state and set partition.*.verified properties
+    verity_update_state
+
+on boot
+    #inmod tp module
+    insmod /system/vendor/modules/gslX680new.ko
+
+    #tp
+    chown system system /sys/devices/platform/soc/twi0/i2c-0/0-0040/input/input6/runtime_suspend
+
+    ### csi module
+    insmod /vendor/modules/videobuf2-core.ko
+    insmod /vendor/modules/videobuf2-memops.ko
+    insmod /vendor/modules/videobuf2-v4l2.ko
+    insmod /vendor/modules/videobuf2-dma-contig.ko
+    insmod /vendor/modules/vin_io.ko
+    insmod /vendor/modules/ov5640.ko
+    insmod /vendor/modules/gc2145.ko
+    insmod /vendor/modules/vin_v4l2.ko

@@ -1,0 +1,4 @@
+#============= toolbox ==============
+allow toolbox ram_device:blk_file { read write };
+allow toolbox ram_device:blk_file open;
+allow toolbox ram_device:blk_file getattr;

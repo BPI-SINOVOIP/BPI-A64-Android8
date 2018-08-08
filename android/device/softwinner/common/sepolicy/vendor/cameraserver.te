@@ -1,0 +1,3 @@
+#============= cameraserver ==============
+allow cameraserver vendor_file:file { execute getattr open read };
+allow cameraserver hal_allocator_server:fd use;

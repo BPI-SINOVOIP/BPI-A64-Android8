@@ -1,0 +1,6 @@
+#============= mediaprovider ==============
+allow mediaprovider vendor_file:file { execute getattr open read};
+allow mediaprovider unlabeled:dir { read getattr open search };
+allow mediaprovider unlabeled:file getattr;
+allow mediaprovider cache_private_backup_file:dir getattr;
+allow mediaprovider storage_stub_file:dir getattr;
