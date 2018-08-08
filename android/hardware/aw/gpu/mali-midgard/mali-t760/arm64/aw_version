@@ -1,0 +1,17 @@
+mali-t760: r18p0-01rel0 um android oreo_mr1 arm64 005
+
+Build parameters:
+profile=tx041-release-64
+gpu=t76x
+hwver=r1p0
+kernel_modules=0
+winsys=android
+android_version=oreo_mr1
+android_config_override=sunxi
+toolchain=clang
+ump=0
+afbc=1
+
+MD5 information:
+0c4ac88c03588c0f16a422e23f3c07ee  lib/libGLES_mali.so
+7690812d3741482acda46b4d75bcc773  lib64/libGLES_mali.so

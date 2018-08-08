@@ -1,0 +1,136 @@
+.
+├── Android.mk
+├── CompassSensor.AKM.cpp
+├── CompassSensor.AKM.h
+├── CompassSensor.IIO.9150.cpp
+├── CompassSensor.IIO.9150.h
+├── CompassSensor.IIO.primary.cpp
+├── CompassSensor.IIO.primary.h
+├── CompassSensor.IIO.secondary.cpp
+├── CompassSensor.IIO.secondary.h
+├── dmp3_6axis_lib.h
+├── dmp3_9axis_lib.h
+├── dmp3_accel_cal_lib.h
+├── dmp3_bac_lib.h
+├── dmp3_compass_cal_lib.h
+├── dmp3_flip_pickup_detection_lib.h
+├── dmp3_geomag_lib.h
+├── dmp3_gyro_cal_lib.h
+├── dmp3_pedometer_lib.h
+├── dmp3_sensor_control.h
+├── dmp3_sensor_setup.h
+├── InputEventReader.cpp
+├── InputEventReader.h
+├── License.txt
+├── LightSensor.cpp
+├── LightSensor.h
+├── LightSensor.IIO.secondary.cpp
+├── LightSensor.IIO.secondary.h
+├── MPLAdapter.cpp
+├── MPLAdapter.h
+├── MPLBuilder.cpp
+├── MPLBuilder.h
+├── MPLBuilderInt.h
+├── MPLSensor.cpp
+├── MPLSensor.h
+├── MPLSensorSysApi.cpp
+├── MPLSensorSysApi.h
+├── MPLSupport.cpp
+├── MPLSupport.h
+├── obj
+│   └── libmotion.so
+├── obj_64
+│   └── libmotion.so
+├── PressureSensor.IIO.secondary.cpp
+├── PressureSensor.IIO.secondary.h
+├── ProximitySensor.cpp
+├── ProximitySensor.h
+├── README_L_arm64
+├── SensorBase.cpp
+├── SensorBase.h
+├── sensorDetect.cpp
+├── sensor_params.h
+├── sensors.h
+├── sensors_mpl.cpp
+├── software
+│   ├── build
+│   │   └── android
+│   │       ├── common_64.mk
+│   │       ├── common.mk
+│   │       └── shared.mk
+│   └── core
+│       ├── driver
+│       │   └── include
+│       │       ├── linux
+│       │       │   └── mpu.h
+│       │       ├── log.h
+│       │       ├── mlinclude.h
+│       │       ├── mlmath.h
+│       │       ├── mlsl.h
+│       │       ├── mltypes.h
+│       │       └── stdint_invensense.h
+│       └── mllite
+│           ├── build
+│           │   ├── android
+│           │   │   ├── common.mk
+│           │   │   ├── libmllite.so
+│           │   │   ├── obj
+│           │   │   │   ├── data_builder.c.o
+│           │   │   │   ├── hal_outputs.c.o
+│           │   │   │   ├── libmllite.so
+│           │   │   │   ├── message_layer.c.o
+│           │   │   │   ├── ml_android_to_imu.c.o
+│           │   │   │   ├── ml_load_dmp.c.o
+│           │   │   │   ├── ml_math_func.c.o
+│           │   │   │   ├── ml_sensor_parsing.c.o
+│           │   │   │   ├── ml_stored_data.c.o
+│           │   │   │   ├── ml_sysfs_helper.c.o
+│           │   │   │   ├── mpl.c.o
+│           │   │   │   ├── results_holder.c.o
+│           │   │   │   ├── start_manager.c.o
+│           │   │   │   └── storage_manager.c.o
+│           │   │   ├── shared_64.mk
+│           │   │   ├── shared.mk
+│           │   │   └── static.mk
+│           │   └── filelist.mk
+│           ├── CMakeLists.txt
+│           ├── data_builder.c
+│           ├── data_builder.h
+│           ├── dmpconfig.txt
+│           ├── Engineering.cmake
+│           ├── hal_outputs.c
+│           ├── hal_outputs.h
+│           ├── invensense.h
+│           ├── linux
+│           │   ├── inv_sysfs_utils.c
+│           │   ├── inv_sysfs_utils.h
+│           │   ├── ml_android_to_imu.c
+│           │   ├── ml_android_to_imu.h
+│           │   ├── ml_command_generator.c
+│           │   ├── ml_command_generator.h
+│           │   ├── ml_load_dmp.c
+│           │   ├── ml_load_dmp.h
+│           │   ├── mlos.h
+│           │   ├── mlos_linux.c
+│           │   ├── ml_sensor_parsing.c
+│           │   ├── ml_sensor_parsing.h
+│           │   ├── ml_stored_data.c
+│           │   ├── ml_stored_data.h
+│           │   ├── ml_sysfs_helper.c
+│           │   └── ml_sysfs_helper.h
+│           ├── message_layer.c
+│           ├── message_layer.h
+│           ├── mlmath.c
+│           ├── ml_math_func.c
+│           ├── ml_math_func.h
+│           ├── mpl.c
+│           ├── mpl.h
+│           ├── results_holder.c
+│           ├── results_holder.h
+│           ├── start_manager.c
+│           ├── start_manager.h
+│           ├── storage_manager.c
+│           └── storage_manager.h
+└── tree.txt
+
+14 directories, 119 files

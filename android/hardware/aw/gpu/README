@@ -1,0 +1,24 @@
+GPU Type on Allwinner platforms
+A10/A13/R8
+        Mali-400 MP1
+
+A20/T2/A23/A33/R16/H3/A64/H64/R18/V40/A20E/R40/T3
+        Mali-400 MP2
+
+A31/A31S
+        SGX-544 MP2
+
+A83T/H8/H8vr/V66/T8/R58
+        SGX-544 MP1
+
+A80/A80T
+        RGX-6230 MP2
+
+H5
+        Mali-450 MP4
+
+H6
+        Mali-T720 MP2
+
+A63/VR9
+        Mali-T760 MP2

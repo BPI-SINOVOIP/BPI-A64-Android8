@@ -1,0 +1,3 @@
+service optee /vendor/bin/hw/tee_supplicant
+    class early_hal
+

@@ -1,0 +1,14 @@
+mali400: r8p1-00rel0 um android oreo_mr1 arm64 003
+
+Fix mali-utgard prerotate issue on Android O;
+
+Build parameters:
+VARIANT=mali400-r1p1-gles-linux-android-oreo-prerotate-no_profiling-dma_buf-rgb_is_xrgb-no_Werror-egl_wait_sync
+TARGET_TOOLCHAIN=aarch64-linux-gcc
+TARGET_PLATFORM=default_8a
+CONFIG=release
+CROSS_COMPILE=aarch64-linux-
+
+MD5 Info:
+5e47d50472785b632c0835cb36836196  lib/libGLES_mali.so
+955a65789eb92586d356385c1714b4d6  lib64/libGLES_mali.so
