@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="cpu_type" msgid="410C2A9B00B122B8310">"处理器类型"</string>
+	<string name="software_version" msgid="610C2A9B00B12356310">"固件版本号"</string>
+</resources>

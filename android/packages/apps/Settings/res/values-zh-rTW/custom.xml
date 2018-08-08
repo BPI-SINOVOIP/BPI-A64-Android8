@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+	<string name="cpu_type" msgid="507679567812241348">處理器類型</string>
+	<string name="software_version" msgid="415374954196167201">軟件版本</string>
+    <!-- recovery mode -->
+    <string name="reboot_recovery_title">Recovery模式</string>
+    <string name="reboot_recovery_desc">現在重啓進入recovery?</string>
+    <string name="reboot_recovery_button">立即重啓</string>
+</resources>
