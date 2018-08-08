@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/ClockWork/side-by-side/companion-device-base" />
+    <option name="google-device-setup:global-setting" key="wifi_on" value="0" />
+    <!--
+       Reboot the device after changing the secure settings
+    -->
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" >
+        <option name="delay" value="30000" />
+        <option name="reboot-after-sleep" value="true" />
+    </target_preparer>
+
+    <!-- Hide it for now due to the test flakiness -->
+<!--
+    <test class="com.android.tradefed.testtype.InstrumentationTest">
+        <option name="package" value="com.android.test.uiautomator.platform.clockwork" />
+        <option name="runner"  value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="test-package" value="com.android.test.uiautomator.platform.clockwork.DeviceBluetoothPair" />
+        <option name="instrumentation-arg" key="wear_mac" value="CC:FA:00:96:CD:12" />
+    </test>
+-->
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="HHCompanionBTPaired" />
+        <option name="config" key="ScreenOffTime" value="1800000" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testClockWorkBluetoothPaired" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="ClockWorkTests" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="20000" />
+        <option name="ru_name" value="CompanionDevice" />
+    </test>
+</configuration>

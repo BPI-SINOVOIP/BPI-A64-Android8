@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration
+    description="Test fake and new old OTa update on watch">
+    <option name="test-tag" value="CwFakeOtaUpdate" />
+    <test class="com.google.android.clockwork.ota.ClockworkOtaUpdateTest" />
+</configuration>

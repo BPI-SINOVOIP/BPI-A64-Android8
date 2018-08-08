@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Install apks needed for most power tests">
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="alt-dir" value="/google/data/ro/teams/tradefed/testdata/power/clockwork" />
+        <option name="test-file-name" value="ClockworkPower.apk" />
+        <option name="test-file-name" value="ARPowerTest.apk" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.companion.CompanionTestAppInstallSetup">
+        <option name="alt-dir" value="/google/data/ro/teams/tradefed/testdata/power/clockwork" />
+        <option name="test-file-name" value="ClockworkPower.apk" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/OffBodyTestApp.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+      <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/clockwork/wearsky/20170801/phonesky_wearsky_dev_all.apk" />
+      <option name="post-install-cmd" value="am startservice -n com.android.vending/com.google.android.finsky.wear.debug.DebugService --es command disable_daily_hygiene --ez disable true" />
+    </target_preparer>
+    <option name="google-device-setup:set-gservice-setting" key="off_body_eligible_apps" value="com.google.android.wearable.app,com.google.android.wearable.ambient,com.google.android.apps.wearable.settings,com.google.android.clockwork.testapp"/>
+    <option name="google-device-setup:set-gservice-setting" key="location:activity_low_power_mode_enabled" value="false" />
+    <option name="google-device-setup:set-gservice-setting" key="location:sensor_batching_on_watch_enabled" value="true" />
+    <option name="google-device-setup:disable-dialing" value="false" />
+    <option name="google-device-setup:disable-audio" value="false" />
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" >
+        <option name="account-sync" value="true" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/clockwork/trustedtestproxy.apk" />
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/media/apps/MusicPlaybackTest.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/uipowertest/DJ-Masque_Oceanic-Dawn-320.mp3->/sdcard/Music/DJ-Masque_Oceanic-Dawn-320.mp3" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/voice_input_test_files/ok_google.pcm->/data/data/com.google.android.clockwork.powertests/ok_google.pcm" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/voice_input_test_files/what_time_is_it.pcm->/data/data/com.google.android.clockwork.powertests/what_time_is_it.pcm" />
+    </target_preparer>
+</configuration>

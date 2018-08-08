@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration
+    description="Downloads a device and CTS build, and then runs a CTS plan with it">
+    <option name="enable-logcat" value="false" />
+    <option name="null-device" value="true" />
+    <option name="test-tag" value="cts-unit-tests" />
+    <build_provider class="com.google.android.tradefed.build.CtsLaunchControlProvider" >
+        <option name="cts-extra-artifact" value="google-tradefed.jar" />
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+    <test class="com.google.android.tradefed.testtype.CtsTestLauncher">
+        <option name="config-name" value="cts-unit-tests" />
+        <option name="max-run-time" value="10m" />
+        <option name="run-jar" value="hosttestlib.jar" />
+        <option name="run-jar" value="tradefed.jar" />
+    </test>
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <template-include name="log-saver" default="google/template/reporters/android-build-api-log-saver" />
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+    <result_reporter class="com.android.tradefed.result.InvocationFailureEmailResultReporter" >
+        <option name="sender" value="tffail@google.com" />
+    </result_reporter>
+    <template-include name="reporters" default="empty" />
+</configuration>

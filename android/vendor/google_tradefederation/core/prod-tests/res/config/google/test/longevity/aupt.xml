@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Run AUPT on device and get results">
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="DummyIME.apk" />
+        <option name="test-file-name" value="AuptTest2.apk" />
+    </target_preparer>
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer">
+        <option name="account-sync" value="true" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAppsSetup">
+        <option name="vending-auto-update" value="OFF" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <!-- disable Chrome First Run Experience -->
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/chrome-command-line" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/tmp/chrome-command-line" />
+        <!-- replace the PlayMovies preferences to skip the intro page -->
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/aupt/shared-prefs/PlayMovies/youtube.xml->/data/data/com.google.android.videos/shared_prefs/youtube.xml" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+
+    <!-- There is an assumption for local runs that the device is already
+        connected to a WiFi network and that no configuration is necessary.
+        Otherwise, a configuration option must be passed in. -->
+
+    <option name="bugreport-on-invocation-ended" value="false" />
+
+    <!-- Additional "run-arg" options are still need to be configured in order
+        to successfully run specific test classes.-->
+    <test class="com.google.android.aupt.AuptTest">
+        <option name="instrumentation" value="true" />
+        <option name="package" value="com.android.test.uiautomator.aupt" />
+        <option name="runner" value="android.support.test.aupt.AuptTestRunner" />
+
+        <option name="run-arg" key="disable_ime" value="true" />
+        <option name="run-arg" key="shortSleep" value="5000" />
+        <option name="run-arg" key="longSleep" value="30000" />
+
+        <option name="run-arg" key="bugreportInterval" value="30" />
+        <option name="run-arg" key="meminfoInterval" value="5" />
+        <option name="run-arg" key="outputLocation" value="aupt-output" />
+        <option name="run-arg" key="shuffle" value="true" />
+
+        <option name="run-arg" key="iterations" value="50" />
+
+        <option name="bugreport-check-interval" value="5" />
+        <option name="on-test-failure" value="SCREENSHOT" />
+        <option name="sync-time" value="30000" />
+    </test>
+</configuration>

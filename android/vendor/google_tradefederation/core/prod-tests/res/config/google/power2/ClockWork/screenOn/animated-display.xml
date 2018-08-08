@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/ClockWork/settings/power-screen-on" />
+    <option name="test-tag" value="clockAnimatedDisplay" />
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="clockWork" value="true" />
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testAnimatedDisplay" />
+        <option name="test_package_name" value="com.google.android.powertests" />
+        <option name="test_class_name" value="LowResAnimatedDisplayTest" />
+        <option name="test_runner_name" value="android.test.InstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_samples" value="5000" />
+        <option name="ru_name" value="ClockWorkScreenOn" />
+    </test>
+</configuration>

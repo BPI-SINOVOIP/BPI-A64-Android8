@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Sets up side by side execution of tests">
+    <option name="null-device" value="true" />
+    <test class="com.google.android.power.tests.SideBySideTestRunner">
+    </test>
+</configuration>

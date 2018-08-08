@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Set location provider to gps">
+  <device name="watch">
+    <option name="google-device-setup:location-opt-in" value="on" />
+    <option name="google-device-setup:location-network" value="off" />
+    <option name="google-device-setup:location-gps" value="on" />
+    <option name="google-device-setup:wifi" value="off" />
+  </device>
+</configuration>

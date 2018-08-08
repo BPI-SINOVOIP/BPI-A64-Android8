@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Runs unbundled jank test on TV">
+    <!-- need to specify a test-tag option -->
+    <option name="test-tag" value="TvJank" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:airplane-mode" value="on" />
+    <option name="google-device-setup:screen-saver" value="off" />
+    <option name="google-device-setup:location-gps" value="off" />
+    <option name="google-device-setup:location-network" value="off" />
+    <option name="google-device-setup:wifi" value="off" />
+
+    <!-- any special test files to be pushed -->
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+    <!-- need to specify a test-file-name option -->
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" />
+    <!-- need to specify a apk-path option -->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <!-- need to configure account-name, account-password, account-sync, sync-then-off options -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" />
+    <!-- any special run command options needed -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.TemperatureThrottlingWaiter" />
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" />
+
+    <!-- need to specify a package option -->
+    <test class="com.android.tradefed.testtype.UiAutomatorTest">
+        <option name="instrumentation" value="true"/>
+        <option name="package" value="com.google.android.tv.tests.jank" />
+    </test>
+</configuration>

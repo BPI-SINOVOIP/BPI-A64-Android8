@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Base setup for developers to run power test">
+
+    <!-- com.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:location-collection" value="off" />
+    <option name="google-device-setup:screen-brightness-nits" value="200" />
+    <option name="google-device-setup:screen-saver" value="off" />
+    <option name="google-device-setup:screen-adaptive-brightness" value="off" />
+    <option name="google-device-setup:screen-timeout-secs" value="1800" />
+    <option name="google-device-setup:notification-led" value="off" />
+    <option name="google-device-setup:auto-rotate" value="off" />
+    <option name="google-device-setup:disable-audio" value="false" />
+    <option name="google-device-setup:disable-volta" value="true" />
+    <option name="google-device-setup:disable-playstore" value="true" />
+
+    <!-- Disable battery saver mode for regular power tests-->
+    <option name="google-device-setup:battery-saver-mode" value="off" />
+    <option name="google-device-setup:battery-saver-trigger" value="0" />
+
+    <!-- Enable full battery stats history -->
+    <option name="google-device-setup:enable-full-battery-stats-history" value="true" />
+
+    <!-- Disable doze mode for regular power tests-->
+    <option name="google-device-setup:disable-doze" value="true" />
+
+    <!-- Disable NFC for all tests -->
+    <option name="google-device-setup:nfc" value="off" />
+
+    <!-- Disable all gestures -->
+    <option name="google-device-setup:set-secure-setting" key="doze_pulse_on_pick_up" value="0"/>
+    <option name="google-device-setup:set-secure-setting" key="doze_pulse_on_double_tap" value="0"/>
+    <option name="google-device-setup:set-secure-setting" key="camera_double_tap_power_gesture_disabled" value="1"/>
+    <option name="google-device-setup:set-secure-setting" key="camera_double_twist_to_flip_enabled" value="0"/>
+    <option name="google-device-setup:set-secure-setting" key="assist_gesture_enabled" value="0"/>
+    <option name="google-device-setup:set-secure-setting" key="assist_gesture_silence_alerts_enabled" value="0"/>
+    <option name="google-device-setup:set-secure-setting" key="assist_gesture_wake_enabled" value="0"/>
+    <option name="google-device-setup:set-secure-setting" key="system_navigation_keys_enabled" value="0"/>
+    <option name="google-device-setup:set-secure-setting" key="camera_lift_trigger_enabled" value="0" />
+
+    <!-- Disable ambient, ambient music,  wake up gesture and always on display for regular power tests -->
+    <option name="google-device-setup:screen-ambient-mode" value="off" />
+    <option name="google-device-setup:wake-gesture" value="off" />
+    <option name="google-device-setup:set-secure-setting" key="doze_always_on" value="0" />
+    <option name="run-command" value="pm disable-user com.google.intelligence.sense" />
+
+    <!-- Enable compact logging -->
+    <option name="google-device-setup:set-gservice-setting" key="location:compact_log_enabled" value="true"/>
+
+    <!-- Display HDR option -->
+    <option name="google-device-setup:set-property" key="camera.optbar.hdr" value="true" />
+
+    <!-- Disable magic tethering -->
+    <option name="google-device-setup:set-gservice-setting" key="gms:magictether:enable" value="false" />
+
+    <!-- By pass GMS core phenotype experiments -->
+    <option name="google-device-setup:set-gservice-setting" key="gms:phenotype:phenotype_flag:debug_bypass_phenotype" value="true" />
+
+    <!-- Disable devices sending CAST messages to prevent frequent wakeups by WiFi -->
+    <option name="google-device-setup:cast-broadcast" value="off" />
+
+    <!-- Update Time Zone for easier data analysis -->
+    <option name="google-device-setup:set-property" key="persist.sys.timezone" value="America/Los_Angeles"/>
+
+    <!-- Turn off icing download for test purpose -->
+    <option name="google-device-setup:set-gservice-setting" key="gms_icing_extension_download_enabled" value="false"/>
+
+    <!-- Turn off gsa web suggest service -->
+    <option name="pre-test-host-command" value="/google/data/ro/teams/android-search/edit_shared_preferences.par --gsa_config --edit_key=on_device_web_suggest_enabled --bool_value=false --device $serial" />
+
+    <!-- Print charge counters before and after the test -->
+    <option name="pre-test-adb-command" value="cat /sys/class/power_supply/bms/charge_counter" />
+    <option name="post-test-adb-command" value="cat /sys/class/power_supply/bms/charge_counter" />
+
+
+    <!-- Enable clock dump info-->
+    <option name="google-device-setup:run-command" value="echo 1 > /d/clk/debug_suspend" />
+
+    <!-- Installs the dismiss dialogs app and dismisses the apps' initial dialogs. -->
+    <target_preparer class="com.google.android.tradefed.targetprep.DismissDialogsPreparer" >
+      <option name="test-file-name" value="DialogDismissalUtil.apk" />
+      <option name="quit-on-error" value="true" />
+      <option name="upload-screenshots" value="true" />
+    </target_preparer>
+
+    <!-- Use signed WifiUtil APK -->
+    <option name="wifiutil-apk-path" value="/google/data/ro/teams/tradefed/testdata/power/apks/WifiUtil.apk" />
+
+    <target_preparer class="com.google.android.power.tests.PowerTestCleaner">
+        <option name="monsoon-lib-path" value="/google/data/ro/teams/tradefed/testdata/power/monsoon"/>
+        <option name="tigertool-path" value="/google/data/ro/teams/tradefed/testdata/power/tigertail/tigertail_tool/tigertool.py"/>
+    </target_preparer>
+</configuration>

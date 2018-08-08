@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- This is a base config intended to be included by other test configs. -->
+<!-- Not intended to be run by itself. -->
+<configuration description="Base args for camera startup tests.">
+    <include name="google/camera/camera_base" />
+    <include name="google/test/framework/media/camera-startup" />
+
+    <option name="test-package" value="com.android.camera2" />
+    <option name="num-test-runs" value="5" />
+    <option name="test-file-name" value="GoogleCameraTests.apk" />
+</configuration>

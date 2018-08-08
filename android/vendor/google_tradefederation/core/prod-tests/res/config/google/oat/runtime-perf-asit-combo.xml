@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved. -->
+<configuration description="Flashes device, pushes a lot of runtime perf benchmark tests to the device, runs the tests, and posts the results to the dashboard.">
+    <include name="google/common/asit" />
+    <option name="test-tag" value="RuntimeAsitCombo" />
+    <option name="invocation-failure-email:destination" value="android-asit-failures@google.com" />
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/parfait->/data/local/tmp/parfait"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/richards/richards.jar->/data/local/tmp/richards.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/JOlden->/data/local/tmp/jolden"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/TJGF/jgfutil.jar->/data/local/tmp/jgfutil.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/TJGF/section1.jar->/data/local/tmp/section1.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/TJGF/section2.jar->/data/local/tmp/section2.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/TJGF/jgfutil.jar->/data/local/tmp/jgfutil.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/dacapo->/data/local/tmp/dacapo"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/Ninja/ninja.jar->/data/local/tmp/ninja.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/ritzperf/android_benchmark_proguard2_dex.jar->/data/local/tmp/android_benchmark_proguard2_dex.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/CaffeineMark/caffeinemark.jar->/data/local/tmp/caffeinemark.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/scimark2/scimark2.jar->/data/local/tmp/scimark2.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/linpack/linpack.jar->/data/local/tmp/linpack.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/symantec/symantec.jar->/data/local/tmp/symantec.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/delaunay->/data/local/tmp/delaunay"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/dhrystone/Dhrystone.jar->/data/local/tmp/Dhrystone.jar"/>
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/reversi/benchmarks.ReversiBench.jar->/data/local/tmp/benchmarks.ReversiBench.jar"/>
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFileInvoker">
+        <option name="test-file-name" value="local/tmp/perf-setup.sh" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.StopServicesSetup"/>
+
+    <option name="perf-test-timeout" value="600000"/>
+    <option name="post-test-cooldown" value="true"/>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/scimark2.jar"/>
+        <option name="perf-tests-map" value="jnt.scimark2.commandline->SciMark" />
+        <option name="perf-results-regex" value="(.*):[ \t]+(\d+\.?\d+)\r?\n"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/caffeinemark.jar"/>
+        <option name="perf-tests-map" value="CaffeineMarkEmbeddedApp->CaffeineMark" />
+        <option name="perf-results-regex" value="(.*) = (\d+)[ \t\(]?.*[\)]?\r?\n"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/linpack.jar"/>
+        <option name="perf-tests-map" value="Linpack->Linpack" />
+        <option name="perf-results-regex" value="([^0-9 ]+): ([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/symantec.jar"/>
+        <option name="perf-tests-map" value="RunTests->Symantec" />
+        <option name="perf-results-regex" value="Running (.*)\.\.\.\r?\n[ \t]*Test took (\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/delaunay/delaunay.jar"/>
+        <option name="perf-tests-map" value="main->Delaunay_gen" />
+        <option name="benchmark-args" value="/data/local/tmp/delaunay/inputs/gen2.2" />
+        <option name="runtime-args" value="-Xmx128m" />
+        <option name="perf-results-regex" value="([A-Za-z ]+): (\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/delaunay/delaunay.jar"/>
+        <option name="perf-tests-map" value="main->Delaunay_large" />
+        <option name="benchmark-args" value="/data/local/tmp/delaunay/inputs/large.2" />
+        <option name="runtime-args" value="-Xmx128m" />
+        <option name="perf-results-regex" value="([A-Za-z ]+): (\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/Dhrystone.jar"/>
+        <option name="perf-tests-map" value="Dhrystone->Dhrystone" />
+        <option name="perf-results-regex" value="(Average Time over 10 runs): (\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/benchmarks.ReversiBench.jar"/>
+        <option name="perf-tests-map" value="benchmarks.ReversiBench->Reversi" />
+        <option name="perf-results-regex" value="(time|speed)[ \t]?:[ \t]?(\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/jolden/tsp.jar"/>
+        <option name="perf-tests-map" value="TSP->JOlden" />
+        <option name="runtime-args" value="-Xmx512m" />
+        <option name="benchmark-args" value="-c 10000 -m" />
+        <option name="perf-results-regex" value="(.+ time) +(\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/jolden/treeadd.jar"/>
+        <option name="perf-tests-map" value="TreeAdd->JOlden" />
+        <option name="runtime-args" value="-Xmx512m" />
+        <option name="benchmark-args" value="-l 20 -m" />
+        <option name="perf-results-regex" value="(.+ time) +(\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/jolden/power.jar"/>
+        <option name="perf-tests-map" value="Power->JOlden" />
+        <option name="benchmark-args" value="-m" />
+        <option name="runtime-args" value="-Xmx512m" />
+        <option name="perf-results-regex" value="(.+ time) +(\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/jolden/perimeter.jar"/>
+        <option name="perf-tests-map" value="Perimeter->JOlden" />
+        <option name="benchmark-args" value="-l 16 -m" />
+        <option name="runtime-args" value="-Xmx512m" />
+        <option name="perf-results-regex" value="(.+ time) +(\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/jolden/em3d.jar"/>
+        <option name="perf-tests-map" value="Em3d->JOlden" />
+        <option name="benchmark-args" value="-n 2000 -d 100 -m" />
+        <option name="runtime-args" value="-Xmx512m" />
+        <option name="perf-results-regex" value="(.+ time) +(\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/jolden/voronoi.jar"/>
+        <option name="perf-tests-map" value="Voronoi->JOlden" />
+        <option name="benchmark-args" value="-n 20000 -m" />
+        <option name="runtime-args" value="-Xmx512m" />
+        <option name="perf-results-regex" value="(?d)(voronoi).*\n.*\n.*\nTotal time (\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/jolden/mst.jar"/>
+        <option name="perf-tests-map" value="MST->JOlden" />
+        <option name="benchmark-args" value="-v 1024 -m" />
+        <option name="runtime-args" value="-Xmx512m" />
+        <option name="perf-results-regex" value="(?d)(MST).*\n.*\n.*\nTotal time (\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/jolden/health.jar"/>
+        <option name="perf-tests-map" value="Health->JOlden" />
+        <option name="benchmark-args" value="-l 5 -t 500 -s 1 -m" />
+        <option name="runtime-args" value="-Xmx512m" />
+        <option name="perf-results-regex" value="(?d)(hospitals).*\n.*\n.*\nTotal Time (\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/jolden/bisort.jar"/>
+        <option name="perf-tests-map" value="BiSort->JOlden" />
+        <option name="benchmark-args" value="-s 250000 -m" />
+        <option name="runtime-args" value="-Xmx512m" />
+        <option name="perf-results-regex" value="(?d)(Bisort).*\n.*\n.*\n.*\n.*\nTotal: (\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/jolden/bh.jar"/>
+        <option name="perf-tests-map" value="BH->JOlden" />
+        <option name="runtime-args" value="-Xmx512m" />
+        <option name="benchmark-args" value="-b 4906 -m" />
+        <option name="perf-results-regex" value="(?d)(Bodies).*\n.*\n.*\nTotal Time (\d+\.?\d+)"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-map" value="cfft->Ninja->cfft_" />
+        <option name="perf-results-regex" value="(Mflops): (\d+\.?\d+)"/>
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/ninja.jar"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-map" value="shallow->Ninja->shallow_" />
+        <option name="perf-results-regex" value="(Mflops): (\d+\.?\d+)"/>
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/ninja.jar"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-map" value="cmatmul->Ninja->cmatmul_" />
+        <option name="perf-results-regex" value="(Mflops): (\d+\.?\d+)"/>
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/ninja.jar"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-map" value="testblas->Ninja->testblas_" />
+        <option name="perf-results-regex" value="mflops from (.+): (\d+\.?\d+)"/>
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/ninja.jar"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-map" value="cholesky->Ninja->cholesky_" />
+        <option name="perf-results-regex" value="(.+), Time.* Mflops:(\d+\.?\d+)"/>
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/ninja.jar"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-map" value="section1.JGFAll->TJGF" />
+        <option name="perf-tests-map" value="section2.JGFAllSizeA->TJGF" />
+        <option name="perf-results-regex" value="(\S+).*\s+(\d+\.?[\dE]+)\s+\(.*\)"/>
+        <option name="benchmark-args" value="2"/>
+        <option name="runtime-args" value="-Xmx512m -Xms512m -Xss256k"/>
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/jgfutil.jar:/data/local/tmp/section1.jar:/data/local/tmp/section2.jar"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-map" value="Harness -scratch /data/local/tmp/dacapo/scratch pmd->Dacapo" />
+        <option name="perf-tests-map" value="Harness -scratch /data/local/tmp/dacapo/scratch avrora->Dacapo" />
+        <option name="perf-tests-map" value="Harness -scratch /data/local/tmp/dacapo/scratch xalan->Dacapo" />
+        <option name="perf-tests-map" value="Harness -scratch /data/local/tmp/dacapo/scratch luindex->Dacapo" />
+        <option name="perf-results-regex" value="=+ DaCapo .*\b (.*) PASSED in (\d+) .* =+"/>
+        <option name="benchmark-args" value="2"/>
+        <option name="runtime-args" value="-Xmx512m -Xss256k"/>
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/dacapo/dacapo.jar:/data/local/tmp/dacapo/jar/bootstrap.jar:/data/local/tmp/dacapo/jar/pmd-4.2.5.jar:/data/local/tmp/dacapo/jar/jaxen-1.1.1.jar:/data/local/tmp/dacapo/jar/lucene-demos-2.4.jar:/data/local/tmp/dacapo/jar/lucene-core-2.4.jar:/data/local/tmp/dacapo/jar/luindex.jar:/data/local/tmp/dacapo/jar/avrora-cvs-20090612.jar:/data/local/tmp/dacapo/jar/xalan-benchmark.jar:/data/local/tmp/dacapo/jar/xalan.jar:/data/local/tmp/dacapo/jar/serializer.jar:/data/local/tmp/dacapo/jar/xml-apis.jar"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-map" value="COM.sun.labs.kanban.DeltaBlue.DeltaBlue->Richards" />
+        <option name="perf-tests-map" value="COM.sun.labs.kanban.allRichards->Richards" />
+        <option name="perf-results-regex" value="(.*) starting\.\.\.\r?\n[finished\.\r?\n]*Total time.*: (\d+\.?\d*)"/>
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/richards.jar"/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-tests-map" value="boehm.GCBench->Parfait" />
+        <option name="perf-tests-map" value="kano.Ackermann->Parfait" />
+        <option name="perf-tests-map" value="kano.Fibo->Parfait" />
+        <option name="perf-tests-map" value="kano.Heapsort->Parfait" />
+        <option name="perf-tests-map" value="kano.Matrix->Parfait" />
+        <option name="perf-tests-map" value="kano.NestedLoop->Parfait" />
+        <option name="perf-tests-map" value="kano.Random->Parfait" />
+        <option name="perf-tests-map" value="com.google.parfait.benchmark.ArraysSort->Parfait" />
+        <option name="perf-tests-map" value="com.google.parfait.benchmark.BubbleSort->Parfait" />
+        <option name="perf-tests-map" value="com.google.parfait.benchmark.InterfaceCalls->Parfait" />
+        <option name="perf-tests-map" value="com.google.ocr_performance.OcrBench->Parfait" />
+        <option name="perf-tests-map" value="shootout1.chameneosredux->Parfait" />
+        <option name="perf-tests-map" value="shootout1.meteor->Parfait" />
+        <option name="perf-tests-map" value="shootout1.nbody->Parfait" />
+        <option name="perf-tests-map" value="shootout1.fannkuch->Parfait" />
+        <option name="perf-tests-map" value="shootout1.mandelbrot->Parfait" />
+        <option name="perf-tests-map" value="splay.Splay->Parfait" />
+        <option name="perf-tests-map" value="splay.SystemGC->Parfait" />
+        <option name="perf-results-regex" value="([A-Za-z]+) .[ \t]+(\d+\.?\d+)"/>
+        <option name="runtime-args" value="-Xmx512m -Xss256k"/>
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/parfait/parfait.jar"/>
+    </test>
+</configuration>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and setup the device for power test">
+    <include name="google/gpe-power/settings/power-base" />
+    <option name="google-device-setup:setting" key="auto_time_zone" value="0" />
+    <option name="google-device-setup:setting" key="auto_time" value="0" />
+    <option name="google-device-setup:secure-setting" key="location_providers_allowed" value="none" />
+    <option name="google-device-setup:secure-setting" key="wifi_on" value="0" />
+    <option name="google-device-setup:enable-airplane-mode" value="true" />
+</configuration>

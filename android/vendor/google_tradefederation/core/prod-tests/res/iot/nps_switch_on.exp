@@ -1,0 +1,70 @@
+#!/usr/bin/expect
+
+# Switch power plug on for a given NPS ip and plug id.
+# if a second plug id is provided, that plug id is switched off at first.
+
+proc abort {} {
+  puts "Timeout or EOF\n"
+  exit 1
+}
+
+# read input argument
+set ip [lindex $argv 0]
+set id [lindex $argv 1]
+set previous_id [lindex $argv 2]
+
+# set variables
+set timeout 60
+
+if { $ip == "" || $id == "" } {
+  puts "Usage: <ip> <id>"
+  puts "or"
+  puts "Usage: <ip> <id> <previous_id>"
+  exit 1
+}
+
+#spawn ssh super@atl-wti-01.mtv
+spawn telnet $ip
+
+expect {
+  "login:" { send -- "super\r"}
+  default abort
+}
+
+expect {
+  "Password:" { send -- "super\r" }
+  default abort
+}
+sleep 1
+
+if { $previous_id != "" } {
+  puts "Switch off power plug $previous_id"
+  expect {
+    "NPS>" { send -- "/OFF $previous_id\r"}
+    default abort
+  }
+  sleep 1
+  expect {
+    "Are you sure? (Y/N):" {send -- "Y \r"}
+    default abort
+  }
+}
+
+sleep 1
+expect {
+  "NPS>" {send -- "/ON $id \r" }
+  default abort
+}
+sleep 15
+expect {
+  "Are you sure? (Y/N):" {send -- "Y \r"}
+  default abort
+}
+sleep 5
+expect {
+  "NPS>" { send -- "/X\r" }
+  timeout abort
+  eof
+}
+puts "Finished OK\n"
+exit 0

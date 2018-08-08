@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Automated user profile test for clockwork">
+    <include name="google/test/clockwork/common/aupt" />
+
+    <option name="test-tag" value="aupt-clockwork" />
+
+    <test class="com.google.android.aupt.AuptCompanionTest">
+        <option name="companion-command" value="am instrument -w -r -e class android.test.clockwork.notification.NotificationSender#testSendQuickNotification -e title @TEST@NOTIFICATION@0 -e notification_timeout 0  android.test.clockwork.notification/android.test.InstrumentationTestRunner" />
+        <option name="companion-recurring-command" value="am instrument -w -r -e class android.test.clockwork.notification.NotificationSender#testSendQuickNotification -e title @TEST@NOTIFICATION@0 -e notification_timeout 0  android.test.clockwork.notification/android.test.InstrumentationTestRunner" />
+        <option name="companion-recurring-interval" value="10" />
+        <option name="companion-meminfo" value="true" />
+
+        <option name="instrumentation" value="true" />
+        <option name="package" value="com.android.test.uiautomator.aupt" />
+        <option name="record-kmsg" value="true" />
+        <option name="runner" value="android.support.test.aupt.AuptTestRunner" />
+
+        <option name="run-arg" key="disable_ime" value="true" />
+        <option name="run-arg" key="shortSleep" value="5000" />
+        <option name="run-arg" key="longSleep" value="30000" />
+
+        <option name="run-arg" key="bugreportInterval" value="30" />
+        <option name="run-arg" key="meminfoInterval" value="5" />
+        <option name="run-arg" key="outputLocation" value="aupt-output" />
+        <option name="run-arg" key="shuffle" value="true" />
+
+        <option name="run-arg" key="iterations" value="100" />
+
+        <option name="bugreport-check-interval" value="5" />
+        <option name="on-test-failure" value="SCREENSHOT" />
+        <option name="sync-time" value="30000" />
+    </test>
+</configuration>

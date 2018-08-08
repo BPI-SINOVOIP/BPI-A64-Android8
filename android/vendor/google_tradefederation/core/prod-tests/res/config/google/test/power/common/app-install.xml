@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Install apks needed for most power tests">
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="alt-dir" value="/google/data/ro/teams/tradefed/testdata/power" />
+        <option name="test-file-name" value="Power.apk" />
+        <option name="test-file-name" value="PowerTests.apk" />
+        <option name="test-file-name" value="GeppettoPowerTest.apk" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+</configuration>

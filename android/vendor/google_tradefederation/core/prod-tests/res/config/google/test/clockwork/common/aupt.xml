@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Common build provider and preparers for Clockwork AUPT templates. -->
+<configuration description="Common build provider and preparers for Clockwork AUPT templates." >
+    <device name="watch">
+        <option name="google-device-setup:disable-dialing" value="false" />
+        <option name="tests-zip-app:test-file-name" value="DummyIME.apk" />
+        <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+            <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/media/apps/MusicPlaybackTest.apk" />
+        </target_preparer>
+        <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+        <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+        <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+            <!-- Push music files -->
+            <option name="push" value="/google/data/ro/teams/tradefed/testdata/media/mp3->/sdcard/Music/" />
+        </target_preparer>
+        <option name="run-command" value="svc power stayon false" />
+        <option name="run-command" value="settings put global zen_mode 2" />
+        <target_preparer class="com.android.tradefed.targetprep.TimeWaster">
+            <option name="delay" value="60000" />
+        </target_preparer>
+    </device>
+</configuration>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerBluetoothA2DPPairedMusicPlayback" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/bluetooth" />
+    <option name="dismiss-dialogs:dismiss-apps" value="PlayMusic" />
+
+    <option name="google-device-setup:local-data-path" value="/google/data/ro/teams/tradefed/testdata/power/uipowertest" />
+    <option name="google-device-setup:trigger-media-mounted" value="true" />
+
+    <target_preparer class="com.google.android.power.tests.BluetoothPreparer" >
+        <option name="socket-timeout-secs" value="1560" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="MusicTests-testLocalPlaybackBackground-before-playback" value="powerBluetoothIdle" />
+    <option name="schema_ru_pair" key="MusicTests-testLocalPlaybackBackground" value="powerBluetooth" />
+    <option name="schema_ru_pair" key="MusicTests-testLocalPlaybackBackground-after-playback" value="powerBluetoothIdle" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testLocalPlaybackBackground" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="MusicTests" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="MusicTests-testLocalPlaybackBackground-before-playback" value="300" />
+        <option name="test_duration" key="MusicTests-testLocalPlaybackBackground" value="600" />
+        <option name="test_duration" key="MusicTests-testLocalPlaybackBackground-after-playback" value="300" />
+        <option name="test_arguments" key="album_name" value="Internal Illusions, External Delusions" />
+        <option name="test_arguments" key="song_name" value="Oceanic Dawn" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="1260" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="decimal-places" value="0"/>
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

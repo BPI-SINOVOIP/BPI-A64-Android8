@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Common results reporters for CTS V2 run internally-->
+<configuration description="Common results reporters for CTS run internally" >
+    <log_saver class="com.google.android.tradefed.result.AndroidBuildApiLogSaver" />
+    <result_reporter class="com.google.android.tradefed.result.BlackboxResultReporter">
+        <option name="disable" value="true" />
+    </result_reporter>
+    <result_reporter class="com.google.android.tradefed.result.TestSuiteBlackboxResultReporter">
+        <option name="disable" value="true" />
+    </result_reporter>
+    <result_reporter class="com.google.android.tradefed.result.NotifilterResultReporter" />
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter">
+        <option name="report-error-email-sender" value="tffail@google.com" />
+    </result_reporter>
+    <result_reporter class="com.android.tradefed.result.InvocationFailureEmailResultReporter" >
+        <option name="sender" value="tffail@google.com" />
+    </result_reporter>
+    <result_reporter class="com.android.tradefed.result.DeviceUnavailEmailResultReporter" >
+        <option name="sender" value="tffail@google.com" />
+    </result_reporter>
+    <result_reporter class="com.android.tradefed.result.SubprocessResultsReporter">
+        <option name="output-test-log" value="true" />
+    </result_reporter>
+</configuration>

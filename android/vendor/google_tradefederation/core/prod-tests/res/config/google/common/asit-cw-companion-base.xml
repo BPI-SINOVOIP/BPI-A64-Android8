@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Common base configuration for Clockwork ASIT with Companion -->
+<configuration
+    description="Common base Clockwork ASIT configuration, with companion, without further setup or reporting">
+    <option name="bugreport-on-invocation-ended" value="true" />
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+        <option name="userdata-flash" value="FORCE_WIPE" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.DeviceSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner" />
+    <target_preparer class="com.google.android.tradefed.targetprep.clockwork.ClockworkCompanionAllocator" />
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <log_saver class="com.android.tradefed.result.FileSystemLogSaver">
+        <option name="log-file-path" value="/auto/android-test/www/test_logs" />
+        <option name="log-file-url" value="http://android-test/www/test_logs" />
+    </log_saver>"
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+    <result_reporter class="com.android.tradefed.result.InvocationFailureEmailResultReporter" >
+        <option name="sender" value="tffail@google.com" />
+    </result_reporter>
+    <result_reporter class="com.android.tradefed.result.DeviceUnavailEmailResultReporter" >
+        <option name="sender" value="tffail@google.com" />
+        <option name="destination" value="asit-lab-admin@google.com" />
+    </result_reporter>
+</configuration>

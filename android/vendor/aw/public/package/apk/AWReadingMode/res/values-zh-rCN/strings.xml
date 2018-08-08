@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">护眼模式</string>
+    <string name="readingmode_title_normal">切换到护眼模式</string>
+    <string name="readingmode_title_readingmode">恢复到普通模式</string>
+    <string name="readingmode_summary">护眼功能适合长时间阅读时使用，减少屏幕蓝光对眼睛的损害。</string>
+
+</resources>

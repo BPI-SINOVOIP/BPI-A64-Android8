@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerWearStandbyPhoneWifiCloudSync" />
+
+    <target_preparer class="com.google.android.tradefed.targetprep.WearPairingAllocator" />
+    <target_preparer class="com.google.android.tradefed.targetprep.WearPairingDeviceWiper" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/phone-wear-base" />
+    <include name="google/test/power/common/app-install-pairing-for-phone" />
+    <include name="google/test/power/common/wifi" />
+    <option name="google-device-setup:bluetooth" value="on" />
+
+    <test class="com.google.android.clockwork.PairingTest">
+        <option name="phone-primary" value="true" />
+    </test>
+
+    <test class="com.google.android.power.tests.MonsoonPairingTestRunner">
+        <option name="schema_ru_pair" key="IdleTestCase-testIdleScreenOff" value="powerPairing" />
+        <option name="schema_suffix" value="PairStandbyPhoneWifiCloudSync" />
+        <option name="test_method" value="testIdleScreenOff" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="IdleTestCase" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="IdleTestCase-testIdleScreenOff" value="3600" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="3900" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+        <option name="pre-test-nohup-command" value="dumpsys deviceidle disable" />
+        <option name="run-companion-device-setup" value="true" />
+        <option name="companion-device-setup" key="airplane-mode" value="on" />
+        <option name="companion-device-setup" key="run-command" value="svc wifi enable" />
+    </test>
+</configuration>

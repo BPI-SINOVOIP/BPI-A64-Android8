@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerWifi5GWifiDataTransfer"/>
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/wifi" />
+
+    <target_preparer class="com.google.android.power.tests.WhirlWindWifiPreparer" >
+        <option name="network-type" value="5G" />
+        <option name="socket-timeout-secs" value="700.0" />
+        <option name="wifi-security" value="wpa2" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="DownloadTests-testDownloadFile" value="powerWifi"/>
+    <option name="schema_suffix" value="5G-wifi-datatransfer"/>
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testDownloadFile" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="DownloadTests" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_arguments" key="iterations" value="10" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="400" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

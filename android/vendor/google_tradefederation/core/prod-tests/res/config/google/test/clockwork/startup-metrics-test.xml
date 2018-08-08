@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Downloads build, flashes on device, wipes data, and measures startup metrics">
+    <option name="test-tag" value="startup_metrics" />
+    <option name="invocation-failure-email:destination" value="android-asit-failures@google.com" />
+    <option name="google-device-setup:disable" value="true" />
+    <test class="com.android.performance.tests.StartupMetricsTest" />
+</configuration>

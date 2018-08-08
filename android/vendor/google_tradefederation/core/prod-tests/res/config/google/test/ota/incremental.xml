@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Incremental OTA update">
+    <option name="test-tag" value="IncrementalOtaFromBUT" />
+    <target_preparer class="com.google.android.ota.VersionCachePreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="OtaFunctionalTests.apk" />
+        <option name="test-file-name" value="DeviceHealthTests.apk" />
+    </target_preparer>
+    <!-- b/28532304: prevent a race condition on uncrypt by removing any
+         accumulated information about scheduled updates -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="rm -f /data/data/com.google.android.gms/shared_prefs/update.xml" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.InstallPublicApkSetup" >
+        <!-- disable by default -->
+        <option name="disable" value="true" />
+        <option name="base-dir" value="/google/data/ro/teams/tradefed/testdata/apk_downloader/results" />
+        <option name="package-list" value="com.whatsapp,com.facebook.orca,com.facebook.katana,com.anstagram.android,com.skype.raider,com.snapchat.android,com.viber.voip,com.cleanmaster.mguard,com.surpax.ledflashlight.panel" />
+    </target_preparer>
+    <!-- apply the OTA itself -->
+    <test class="com.android.ota.tests.SideloadOtaStabilityTest">
+        <option name="iterations" value="1" />
+        <option name="max-install-time" value="600" />
+    </test>
+    <!-- run postcondition checks -->
+    <test class="com.android.tradefed.testtype.AndroidJUnitTest">
+        <option name="package" value="com.android.functional.otatests" />
+        <option name="class" value="com.android.functional.otatests.SystemUpdateTest" />
+    </test>
+     <!-- run health checks -->
+    <test class="com.android.tradefed.testtype.AndroidJUnitTest">
+        <option name="package" value="com.android.devicehealth.tests" />
+    </test>
+</configuration>

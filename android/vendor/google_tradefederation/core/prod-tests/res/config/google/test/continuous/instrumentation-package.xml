@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved. -->
+<configuration description="Runs given instrumentation test package.">
+    <!-- install selected APKs from tests zip to data partition -->
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.CrashCollector" />
+    <!--
+        TODO(fangk): This similar to instrumentation-with-filter.xml and should
+        be merged to minimize discrepancy. The blocking issue is that
+        InstalledInstrumentationsTest used in instrumentation-with-filter.xml
+        may run more tests than does specified by the "package" flag.
+    -->
+    <test class="com.android.tradefed.testtype.InstrumentationTest" />
+</configuration>

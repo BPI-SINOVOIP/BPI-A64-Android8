@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<configuration description="Common definitions for unbundled reporting">
+
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <template-include name="log-saver" default="google/template/reporters/android-build-api-log-saver" />
+
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter">
+        <option name="report-error-email-sender" value="tffail@google.com" />
+        <option name="report-error-email-destination" value="android-test-service+spongefail@google.com" />
+    </result_reporter>
+
+    <result_reporter class="com.android.tradefed.result.InvocationFailureEmailResultReporter" >
+        <option name="sender" value="tffail@google.com" />
+    </result_reporter>
+    <result_reporter class="com.android.tradefed.result.DeviceUnavailEmailResultReporter" >
+        <option name="sender" value="tffail@google.com" />
+        <option name="destination" value="asit-lab-admin@google.com" />
+    </result_reporter>
+
+    <result_reporter class="com.google.android.tradefed.result.InspectBugResultReporter">
+        <option name="report-error-email-sender" value="tffail@google.com" />
+        <option name="report-error-email-destination"
+            value="android-test-service+inspectbugfail@google.com" />
+        <option name="only-report-invocation-failures" value="true" />
+        <option name="suite-key-prefix" value="unbundled_tf_" />
+    </result_reporter>
+</configuration>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration
+    description="Running wifi throughput test">
+    <target_preparer class="com.google.android.tradefed.targetprep.SemaphoreTokenTargetPreparer" />
+    <option name="test-tag" value="CwWifiThroughput" />
+    <option name="test-run-name" value="ClockworkWifiThroughput" />
+    <test class="com.google.android.clockwork.ClockworkWifiThroughput" />
+</configuration>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration
+    description="Downloads a device and CTS build, flashes device, and then runs a CTS plan on device">
+    <option name="enable-logcat" value="false" />
+    <option name="test-tag" value="cts" />
+    <build_provider class="com.google.android.tradefed.build.CtsDeviceLaunchControlProvider" >
+        <option name="cts-extra-artifact" value="google-tradefed.jar" />
+        <option name="cts-extra-artifact" value="google-tf-prod-tests.jar" />
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+        <option name="userdata-flash" value="WIPE" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+       <option name="disable-dialing" value="false" />
+       <option name="disable-audio" value="false" />
+    </target_preparer>
+
+    <!-- begin Andromeda specific preparers -->
+    <target_preparer class="com.google.android.tradefed.targetprep.CreateUserPreparer" >
+        <option name="user" value="test-user" />
+        <option name="switch" value="test-user" />
+    </target_preparer>
+    <!-- end Andromeda specific preparers -->
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <!-- disable Chrome First Run Experience -->
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/chrome-command-line" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/tmp/chrome-command-line" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+    <target_preparer class="com.google.android.tradefed.targetprep.CtsSettingsSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.CrashCollector" />
+    <test class="com.google.android.tradefed.testtype.CtsTestLauncher">
+        <option name="config-name" value="cts" />
+        <option name="max-run-time" value="1h30m" />
+        <option name="run-jar" value="hosttestlib.jar" />
+        <option name="run-jar" value="tradefed.jar" />
+    </test>
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <template-include name="log-saver" default="google/template/reporters/android-build-api-log-saver" />
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+    <result_reporter class="com.android.tradefed.result.InvocationFailureEmailResultReporter" >
+        <option name="sender" value="tffail@google.com" />
+    </result_reporter>
+</configuration>

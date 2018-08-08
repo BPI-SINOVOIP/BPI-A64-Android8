@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerPhoneVolteOff" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/radio" />
+
+    <option name="google-device-setup:disable-dialing" value="false" />
+
+    <option name="schema_ru_pair" key="ImsTestCases-testVoLTEOffPhoneCall" value="powerCommunications" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testVoLTEOffPhoneCall" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="ImsTestCases" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="ImsTestCases-testVoLTEOffPhoneCall" value="300" />
+        <option name="test_arguments" key="PhoneNumber" value="8586515050" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="500" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

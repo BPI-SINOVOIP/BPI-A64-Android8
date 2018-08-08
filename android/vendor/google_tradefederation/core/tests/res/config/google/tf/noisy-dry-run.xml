@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<configuration description="Noisy dry run on a command file">
+    <option name="null-device" value="true" />
+    <build_provider class="com.google.android.tradefed.build.ATPStubLaunchControlProvider" />
+    <test class="com.android.tradefed.testtype.NoisyDryRunTest" >
+    </test>
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <template-include name="log-saver" default="google/template/reporters/android-build-api-log-saver" />
+    <option name="use-stub-build" value="true" />
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter">
+        <!--  0 is small -->
+        <option name="sponge-size" value="0" />
+    </result_reporter>
+</configuration>

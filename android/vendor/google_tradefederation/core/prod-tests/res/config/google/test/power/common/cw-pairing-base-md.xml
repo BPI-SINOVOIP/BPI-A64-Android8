@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Base setup for developers to run clockwork power test">
+    <!-- Installing APK on the watch side-->
+    <device name="watch">
+      <!-- com.android.tradefed.targetprep.GoogleDeviceSetup -->
+      <option name="google-device-setup:screen-adaptive-brightness" value="off" />
+      <option name="google-device-setup:screen-saver" value="off" />
+      <option name="google-device-setup:screen-always-on" value="on" />
+      <option name="google-device-setup:disable-audio" value="false" />
+      <option name="google-device-setup:disable-dialing" value="false" />
+      <option name="google-device-setup:auto-update-timezone" value="off" />
+      <option name="google-device-setup:auto-update-time" value="off" />
+      <option name="google-device-setup:location-gps" value="off" />
+      <option name="google-device-setup:location-network" value="off" />
+      <option name="google-device-setup:wifi" value="off" />
+      <option name="google-device-setup:disable-volta" value="true" />
+      <option name="google-device-setup:enable-full-battery-stats-history" value="true" />
+      <option name="google-device-setup:set-gservice-setting" key="cw:enable_mute_notifications_when_off_body" value="false" />
+      <option name="clockwork-device-setup:disable-ambient" value="true" />
+      <target_preparer class="com.google.android.power.tests.PowerTestCleaner" />
+      <target_preparer class="com.google.android.tradefed.targetprep.clockwork.ClockworkDeviceSetup" />
+      <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+      <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="am broadcast -a com.google.android.clockwork.action.POWER_TESTING" />
+      </target_preparer>
+    </device>
+
+    <!-- Installing APK on the companion side-->
+    <device name="companion">
+      <!-- com.android.tradefed.targetprep.GoogleDeviceSetup -->
+      <option name="google-device-setup:wifi" value="on" />
+    </device>
+
+</configuration>

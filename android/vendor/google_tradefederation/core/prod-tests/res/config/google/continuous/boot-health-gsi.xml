@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Test to verify if the device can fully boot with functional app framework services. -->
+<configuration description="GSI Device Boot Test">
+    <!-- Device to be flashed. -->
+    <device name="device">
+        <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        </build_provider>
+    </device>
+    <!-- Placeholder to download the system image. -->
+    <device name="system_build">
+        <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        </build_provider>
+        <!-- Force the device to be null. -->
+        <option name="null-device" value="true" />
+    </device>
+
+    <option name="test-tag" value="BootTest" />
+    <option name="logcat-options" value="-b all" />
+    <test class="com.google.android.asit.DeviceBootGsiTest">
+        <!-- Flashing the device with the GSI confuses the checker. -->
+        <option name="skip-pre-flash-product-check" value="true" />
+    </test>
+    <option name="test-file-name" value="DeviceHealthTests.apk" />
+</configuration>

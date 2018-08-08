@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Settings for Fit power test on phone">
+    <option name="google-device-setup:auto-update-timezone" value="off" />
+    <option name="google-device-setup:auto-update-time" value="off" />
+    <option name="google-device-setup:wifi" value="off" />
+    <option name="google-device-setup:bluetooth" value="off" />
+    <option name="google-device-setup:set-gservice-setting" key="location:activity_low_power_mode_enabled" value="false"/>
+    <option name="google-device-setup:set-gservice-setting" key="fitness.min_gps_location_delta_meters" value="0"/>
+    <option name="google-device-setup:wifi-scan-always-enabled" value="on" />
+    <option name="google-device-setup:run-command" value="pm disable com.google.android.apps.plus" />
+    <option name="google-device-setup:run-command" value="pm disable com.google.android.play.games" />
+    <option name="google-device-setup:run-command" value="pm disable com.google.android.talk" />
+    <option name="google-device-setup:run-command" value="pm disable com.google.android.apps.photos" />
+    <option name="google-device-setup:run-command" value="pm disable com.google.android.wearable.app" />
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" >
+        <option name="account-sync" value="false" />
+    </target_preparer>
+</configuration>

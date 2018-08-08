@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and runs framework perf tests">
+    <option name="test-tag" value="FrameworkPerformanceTests" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:airplane-mode" value="on" />
+
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="setprop testing.mediascanner.skiplist=/storage/emulated/0/webkit/"/>
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/third_party_perf/FrameworkPerfFg.apk"/>
+    </target_preparer>
+
+    <test class="com.android.framework.tests.FrameworkPerfTest" />
+</configuration>

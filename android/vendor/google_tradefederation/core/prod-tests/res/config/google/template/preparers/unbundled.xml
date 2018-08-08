@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Common build provider and preparers for unbundled templates. -->
+<configuration description="Common build provider and preparers for unbundled templates." >
+    <option name="bugreport-on-invocation-ended" value="true" />
+    <build_provider class="com.google.android.tradefed.build.AppLaunchControlProvider">
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+
+    <!-- Device wiper disabled by default -->
+    <!-- To enable, add: device-wiper:no-disable -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceWiper">
+        <option name="disable" value="true" />
+    </target_preparer>
+
+    <!-- Device setup disabled by default -->
+    <!-- To enable, add: device-setup:no-disable -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="disable" value="true" />
+        <option name="screen-always-on" value="on" />
+        <option name="screen-adaptive-brightness" value="off" />
+        <option name="screen-brightness" value="30" />
+    </target_preparer>
+
+    <!-- Device admin preparer disabled by default -->
+    <!-- To enable, add: device-admin:no-disable -->
+    <target_preparer class="com.google.android.tradefed.targetprep.DeviceAdminPreparer">
+        <option name="disable" value="true" />
+        <option name="setup-policy-path" value="/device_policies/empty_device_policy.xml" />
+    </target_preparer>
+
+    <!-- optionally launch emulator using local SDK avd. -->
+    <!-- To enable, add: new-emulator -->
+    <target_preparer class="com.android.tradefed.targetprep.LocalSdkAvdPreparer" />
+
+    <!-- optionally launch emulator using CROW. -->
+    <!-- To enable, add: new-emulator, local-sdk-preparer:disable, crow-preparer:no-disable -->
+    <target_preparer class="com.google.android.tradefed.targetprep.CrowEmulatorPreparer" />
+
+    <!-- inject the device info into the build object, so reporters can make use of it -->
+    <target_preparer class="com.android.tradefed.targetprep.DeviceBuildInfoInjector" />
+
+    <!-- Setup wifi. -->
+    <!-- To disable, add: wifi:disable -->
+    <target_preparer class="com.android.tradefed.targetprep.WifiPreparer" />
+
+    <!-- TODO: Enable DeviceSetup by default and move there -->
+    <!-- Enable mock locations, must first agree to opt-in, then set settings. -->
+    <!-- Since order is not guaranteed by SettingsSetup, need two instances. -->
+    <target_preparer class="com.google.android.tradefed.targetprep.SettingsSetup">
+        <!-- enable mock location -->
+        <option name="secure-setting" key="mock_location" value="1" />
+        <!--Opt-in for pre-JB -->
+        <option name="secure-setting" key="network_location_opt_in" value="1" />
+        <!--Opt-in for JB+, prevent 'Location Consent' dialog from appearing -->
+        <option name="google-partner-setting" key="network_location_opt_in" value="1" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.SettingsSetup">
+        <option name="secure-setting" key="location_providers_allowed" value="network" />
+        <option name="google-partner-setting" key="use_location_for_services" value="1" />
+    </target_preparer>
+
+    <!-- TODO: Enable DeviceSetup by default and move there -->
+    <!-- Disable the play store -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command" value="pm disable-user com.android.vending"/>
+    </target_preparer>
+
+    <!-- Install the app -->
+    <target_preparer class="com.android.tradefed.targetprep.AppSetup" >
+        <option name="uninstall" value="false" />
+        <option name="reboot" value="false" />
+    </target_preparer>
+
+    <!-- optionally do not install a new GmsCore apk by default -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GmsCoreInstaller">
+        <option name="version" value="NONE" />
+    </target_preparer>
+
+    <!-- EmailPreparer is used to optionally set up an account within the Email app -->
+    <!-- Needs to go after AppSetup to ensure up to date Email app handles the account creation -->
+    <target_preparer class="com.google.android.tradefed.targetprep.EmailPreparer">
+        <option name="google-version" value="true" />
+    </target_preparer>
+
+    <!-- Optionally do not add google account by default -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer">
+        <option name="disable" value="true" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner"/>
+</configuration>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno MONSOON_SERIALNO -->
+<!-- Required input: push-file:push BLUETOOTH_DEVICE_CONFIG_FILE->/data/misc/bluedroid/bt_config.conf -->
+<!-- Required input: test_arguments bluetooth_device_mac_addr BLUETOOTH_DEVICE_MAC_ADDR -->
+<!-- Required input: test_arguments wifi_ssid WIFI_SSID -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+  <option name="test-tag" value="VerizonMapsSearchRADIO" />
+
+  <include name="google/test/power/common/verizon-days-of-use" />
+
+  <option name="dismiss-dialogs:dismiss-apps" value="Maps" />
+
+  <option name="schema_ru_pair" key="DoUVerizonTests-testMapsSearch-RADIOMapsNavigationTest" value="VerizonDoU"/>
+
+  <test class="com.google.android.power.tests.MonsoonTestRunner">
+    <option name="test_method" value="testMapsSearch"/>
+    <option name="test_package" value="com.google.android.platform.dou"/>
+    <option name="test_class" value="DoUVerizonTests"/>
+    <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+
+    <option name="test_duration" key="DoUVerizonTests-testMapsSearch-RADIOMapsNavigationTest" value="360" />
+    <option name="test_arguments" key="dou_mode" value="RADIO" />
+    <option name="test_arguments" key="log_delay_in_seconds" value="1" />
+    <option name="test_arguments" key="map_address_1" value="restaurant" />
+    <option name="test_arguments" key="map_address_2" value="restaurant" />
+    <option name="test_arguments" key="map_address_3" value="restaurant" />
+    <option name="test_arguments" key="maps_navigation_time_in_secs" value="30" />
+    <option name="test_arguments" key="maps_search_only" value="True" />
+    <option name="test_arguments" key="precondition_gps" value="ON" />
+    <option name="test_arguments" key="precondition_location" value="ON" />
+    <option name="test_arguments" key="precondition_mobile_data" value="ON" />
+    <option name="test_arguments" key="precondition_radio" value="CONNECTED" />
+    <option name="test_arguments" key="precondition_wifi" value="ON" />
+    <option name="test_arguments" key="profile_iterations" value="1" />
+    <option name="test_arguments" key="short_delay_in_seconds" value="15" />
+    <option name="test_arguments" key="typing_delay_in_mseconds" value="1" />
+
+    <option name="save_result_on_host" value="true"/>
+    <option name="monsoon_voltage" value="4.2"/>
+    <option name="monsoon_duration" value="540"/>
+    <option name="monsoon_frequency" value="1000"/>
+    <option name="wait_for_disconnect_signal" value="true"/>
+    <option name="report_unit_mw" value="false"/>
+  </test>
+</configuration>

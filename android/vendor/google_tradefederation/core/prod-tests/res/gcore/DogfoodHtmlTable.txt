@@ -1,0 +1,10 @@
+<div><b><font face="arial, sans-serif" size="4">DOGFOOD</font></b></div>
+<div>
+<div><b style="line-height:1.25;font-size:10pt;font-family:arial,sans-serif"><font size="3"><br>
+</font></b></div>
+</div>
+<div><b style="line-height:1.25;font-size:10pt;font-family:arial,sans-serif"><font size="3">SHORT_BRANCH -- APK build BUILD_NUMBER</font></b><font face="arial, sans-serif" size="3"><b>, vVERSION_NAME</b></font></div>
+<div><br>
+</div>
+<div><font face="arial, sans-serif" size="3">Install using /home/build/static/projects/wireless/android/test_tools/gms_core_apk.par --bid BUILD_NUMBER --install --branch BRANCH</font></div>
+<br/>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Common base configuration for Clockwork ASIT with Companion and Setup -->
+<configuration description="Common base Clockwork ASIT configuration, with companion, setup and pairing, no reporting">
+    <include name="google/common/asit-cw-companion-base" />
+    <!-- don't set test harness bit since we need pairing -->
+    <option name="device-setup:set-test-harness" value="false" />
+    <!-- install dependency pieces for pairing onto clockwork -->
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="BluetoothTests.apk" />
+        <option name="test-file-name" value="GeppettoClockwork.apk" />
+    </target_preparer>
+    <!-- install dependency pieces for pairing onto companion -->
+    <target_preparer class="com.google.android.tradefed.targetprep.clockwork.ClockworkCompanionPreparer">
+        <option name="sideload-apks-path" value="/google/data/ro/teams/tradefed/testdata/clockwork" />
+        <option name="apk-name-filter" value="GmsCore\.apk" />
+        <option name="apk-name-filter" value="Velvet\.apk" />
+        <option name="apk-name-filter" value="ClockworkCompanionGoogle\.apk" />
+        <option name="apk-name-filter" value="BluetoothTests\.apk" />
+    </target_preparer>
+    <!-- install dependency pieces for pairing onto companion -->
+    <target_preparer class="com.android.tradefed.targetprep.companion.CompanionTestAppInstallSetup">
+        <option name="test-file-name" value="GeppettoClockwork.apk" />
+        <!-- considered adding uninstall code via ITargetCleaner to this target_preparer instead of
+        using -d as an installation argument but this is the simpler solution because uninstallation
+        requires a package name (in addition to the file name already required for installation) -->
+        <option name="install-arg" value="-d" />
+    </target_preparer>
+    <!-- prep clockwork device with some commands -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <!-- Disable WiFi opt-in dialog -->
+        <option name="run-command" value="pm disable com.google.android.wearable.app/com.google.android.clockwork.home.cloudsync.CloudSyncOptInService" />
+        <!-- Disable charging activities that interfere with pairing -->
+        <option name="run-command" value="pm disable com.lge.wearable.chargingmode/com.lge.wearable.chargingmode.ChargingActivity" />
+        <option name="run-command" value="pm disable com.motorola.targetnotif/com.motorola.loop.ChargeActivity" />
+    </target_preparer>
+    <!-- prep companion device with some commands -->
+    <target_preparer class="com.android.tradefed.targetprep.companion.CompanionRunCommandTargetPreparer">
+        <option name="run-command" value="settings put secure enabled_notification_listeners com.google.android.wearable.app/com.google.android.clockwork.stream.NotificationCollectorService" />
+        <!-- Screen on for pairing automation -->
+        <option name="run-command" value="svc power stayon true" />
+    </target_preparer>
+    <!-- one shot pairing "stress" to pair the devices -->
+    <test class="com.google.android.clockwork.PairingStress">
+        <option name="one-shot" value="true" />
+    </test>
+</configuration>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Camera stress video snapshot.">
+    <option name="test-tag" value="CameraStressVideoSnapshot" />
+    <include name="google/camera/camera_base" />
+    <include name="google/test/framework/media/camera2-framework-stress" />
+
+    <option name="test-class" value="com.android.mediaframeworktest.stress.Camera2RecordingTest#testVideoSnapshot" />
+    <option name="instrumentation-arg" key="iterations" value="5" />
+    <option name="instrumentation-arg" key="waitIntervalMs" value="1000" />
+</configuration>

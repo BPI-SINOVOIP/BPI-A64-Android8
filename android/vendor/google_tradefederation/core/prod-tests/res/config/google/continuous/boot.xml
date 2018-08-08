@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Test to verify if the device can fully boot with functional app framework services -->
+<!-- TODO(kevcheng): Delete when boot-new.xml is proven to work and deployed -->
+<configuration description="Device Boot Test">
+    <option name="test-tag" value="BootTest" />
+    <option name="logcat-options" value="-b all" />
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+
+    <test class="com.google.android.asit.DeviceBootTest">
+        <!-- disable the extra InstalledInstrumentationTest running after boot -->
+        <option name="disable" value="true" />
+    </test>
+
+    <include name="google/template/reporters/asit" />
+
+    <template-include name="reporters" default="empty" />
+</configuration>

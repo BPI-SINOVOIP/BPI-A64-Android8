@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<methodCall>
+  <methodName>PostRuDataWithBuildDetail</methodName>
+  <params>
+    <param>
+      <value>
+        <string>AAS12</string>
+      </value>
+    </param>
+    <param>
+      <value>
+        <string>git_foo-branch</string>
+      </value>
+    </param>
+    <param>
+      <value>
+        <string>1</string>
+      </value>
+    </param>
+    <param>
+      <value>
+        <string>Target</string>
+      </value>
+    </param>
+    <param>
+      <value>
+        <string>RuKey</string>
+      </value>
+    </param>
+    <param>
+      <value>
+        <struct>
+          <T>THIS IS DATA</T>
+        </struct>
+      </value>
+    </param>
+    <param>
+      <value>
+        <string></string>
+      </value>
+    </param>
+    <param>
+      <value>
+        <string></string>
+      </value>
+    </param>
+  </params>
+</methodCall>

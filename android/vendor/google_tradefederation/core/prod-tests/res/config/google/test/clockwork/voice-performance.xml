@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="configuration file voice app performance tests on Android Wear">
+    <option name="test-tag" value="cw-voice-performance" />
+    <test class="com.google.android.clockwork.ClockworkVoicePerformanceTest" />
+</configuration>

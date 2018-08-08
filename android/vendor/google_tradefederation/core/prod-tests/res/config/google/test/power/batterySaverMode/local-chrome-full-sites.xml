@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/test/power/apps/local-chrome-full-sites" />
+    <option name="test-tag" value="powerChromeFullSitesLocalBatterySaverMode"/>
+
+    <include name="google/test/power/common/battery-saver-mode" />
+    <option name="schema_ru_pair" key="ChromeTests-testFullSites" value="BatterySaverMode" />
+    <option name="schema_ru_pair" key="ChromeTests-testFullSites-idle" value="BatterySaverModeIdle" />
+</configuration>

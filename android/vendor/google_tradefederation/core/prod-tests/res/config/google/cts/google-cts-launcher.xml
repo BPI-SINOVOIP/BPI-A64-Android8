@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration
+    description="Downloads a device and CTS build, flashes device, and then runs a CTS plan on device">
+    <include name="google/compatibility/common-launcher" />
+    <option name="enable-logcat" value="false" />
+    <option name="test-tag" value="cts" />
+    <option name="com.google.android.tradefed.testtype.CtsTestLauncher:config-name" value="cts-automated" />
+</configuration>

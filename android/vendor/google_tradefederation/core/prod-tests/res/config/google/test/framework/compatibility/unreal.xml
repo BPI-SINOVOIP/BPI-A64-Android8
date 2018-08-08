@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved. -->
+<configuration description="Tests unreal gaming engine.">
+    <option name="test-tag" value="GameUnrealTest" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:screen-saver" value="off" />
+
+    <test class="com.google.android.compatibility.GameUnrealTest" />
+</configuration>

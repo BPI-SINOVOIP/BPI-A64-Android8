@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/idleSystemScreenOff/gmail-wifi" />
+    <result_reporter class="com.google.android.tradefed.result.RdbSideBySideResultReporter"/>
+</configuration>

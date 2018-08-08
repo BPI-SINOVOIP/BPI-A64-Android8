@@ -1,0 +1,15 @@
+Release Date: 2017/07/17
+Build Tag: OPR1.170623.010
+Build ID: 4152406
+Branch: oc-release
+Total test modules: 98
+Total passed test cases: 5262
+Total failed test cases: 5
+Total test execution time: 5hrs 30min
+Release decision: ABANDON
+Release notes:
+- VtsTreblePlatformVersionTest failure (1 test case): expected
+- VtsKernelLtp failure (2 test cases): being removed from VTS oc.
+- VtsHalMediaOmxV1_0Host (1 test case): flaky under investigation
+- VtsKernelLtp failure (armeabi-v7a): test executed but report omitted the counts. flakiness under investigation.
+- Overall, after the test, the device couldn't boot properly (due to data partition corruption).

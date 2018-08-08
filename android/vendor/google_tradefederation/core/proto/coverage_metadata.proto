@@ -1,0 +1,58 @@
+syntax = "proto2";
+
+package android_code_coverage.coverage_metadata;
+
+option java_package = "com.google.wireless.android.testtools.coverage.aggregator";
+option java_outer_classname = "CoverageMetadataProto";
+
+// Describes a collection of coverage measurements. Used by the
+// android-code-coverage borg job to generate code coverage reports.
+message CoverageMetadata {
+  // The components for which these measurements were collected
+  repeated Component components = 1;
+  // The raw code coverage measurements
+  repeated CoverageMeasurement measurements = 2;
+}
+
+message Component {
+  // Required string identifier for this component. Each component will have a
+  // separate code coverage report.
+  optional string name = 1;
+  // Filter rules that are used to identify the subset of code that belongs to
+  // this component. The report for this component will only contain code that
+  // passes the filter rules.
+  repeated CodeFilter filters = 2;
+}
+
+// LINT.IfChange(CodeFilter)
+message CodeFilter {
+  oneof filter_oneof {
+    // Glob pattern used to select one or more .em files which are used to
+    // generate a filtered coverage report when using the Jack toolchain.
+    // An example filter: "glob:**/AndroidVCardTests_intermediates/coverage.em"
+    string jack_filter = 1;
+  }
+}
+// LINT.ThenChange(//depot/google3/java/com/google/wireless/android/testtools/coverage/database/storage.proto:CodeFilter)
+
+// LINT.IfChange(CoverageMeasurement)
+message CoverageMeasurement {
+  oneof measurement_oneof {
+    // A measurement that has been saved to the Build API as a test artifact.
+    TestArtifact test_artifact = 1;
+  }
+}
+// LINT.ThenChange(//depot/google3/java/com/google/wireless/android/testtools/coverage/database/storage.proto:CoverageMeasurement)
+
+// The parameters that can be used to retrieve the artifact from the build API
+// LINT.IfChange(TestArtifact)
+message TestArtifact {
+  optional string build_type = 1;
+  optional string build_id = 2;
+  optional string target = 3;
+  optional string attempt_id = 4;
+  optional int64 test_result_id = 5;
+  optional string resource_id = 6;
+}
+// LINT.ThenChange(//depot/google3/java/com/google/wireless/android/testtools/coverage/database/storage.proto:TestArtifact)
+

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Result reports for reporting test metrics to Android and skia  -->
+<configuration description="Result reports for reporting test metrics to RDB" >
+    <include name="google/template/reporters/rdb-test-metrics" />
+    <result_reporter class="com.android.tradefed.result.JsonHttpTestResultReporter">
+        <option name="posting-endpoint" value="https://android-ingest.skia.org/upload" />
+    </result_reporter>
+</configuration>

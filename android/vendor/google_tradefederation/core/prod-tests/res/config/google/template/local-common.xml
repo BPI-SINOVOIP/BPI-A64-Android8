@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Common base configuration for local runs with Google specific preparers / reporters. -->
+<configuration description="Base configuration for local runs using sponge logging">
+    <!-- Provides a mechanism for overwriting the preloaded classes that is disabled by default. -->
+    <target_preparer class="com.android.tradefed.targetprep.PreloadedClassesPreparer">
+        <option name="skip" value="true" />
+    </target_preparer>
+    <option name="bugreport-on-invocation-ended" value="true" />
+    <target_preparer class="com.android.tradefed.targetprep.DeviceWiper">
+        <option name="disable" value="true" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="screen-always-on" value="on" />
+        <option name="screen-adaptive-brightness" value="off" />
+        <option name="screen-brightness" value="30" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GrantPermissionPreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner" />
+
+    <logger class="com.android.tradefed.log.FileLogger">
+        <option name="log-level" value="VERBOSE" />
+        <option name="log-level-display" value="VERBOSE" />
+    </logger>
+    <log_saver class="com.android.tradefed.result.FileSystemLogSaver" />
+    <result_reporter class="com.android.tradefed.result.ConsoleResultReporter" />
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+    <result_reporter class="com.android.tradefed.result.InvocationFailureEmailResultReporter" />
+    <result_reporter class="com.android.tradefed.result.DeviceUnavailEmailResultReporter" />
+
+    <template-include name="reporters" default="empty" />
+</configuration>

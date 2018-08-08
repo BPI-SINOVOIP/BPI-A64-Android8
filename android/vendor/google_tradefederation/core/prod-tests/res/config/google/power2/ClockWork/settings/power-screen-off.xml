@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and setup the device for power test">
+    <include name="google/power2/ClockWork/settings/power-base" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command" value="svc power stayon true"/>
+        <option name="run-command" value="am broadcast -a com.google.android.clockwork.settings.SYNC_AMBIENT_DISABLED --ez ambient_disabled true"/>
+    </target_preparer>
+    <option name="google-device-setup:secure-setting" key="screensaver_enabled" value="0" />
+    <option name="google-device-setup:audio-silent" value="false"/>
+    <option name="google-device-setup:disable-use-location" value="false" />
+</configuration>

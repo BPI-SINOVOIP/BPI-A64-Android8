@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved. -->
+<configuration description="Cluster TF config for ATP lab machines">
+    <command_scheduler class="com.google.android.tradefed.cluster.ClusterCommandScheduler">
+    </command_scheduler>
+    <device_monitor class="com.google.android.tradefed.cluster.ClusterDeviceMonitor">
+      <option name="host-info-cmd" key="prodcertstatus" value="prodcertstatus" />
+      <option name="host-info-cmd" key="krbstatus" value="krbstatus" />
+      <option name="host-info-cmd-timeout" value="10000" />
+    </device_monitor>
+    <object type="cluster_client" class="com.google.android.tradefed.cluster.ClusterClient">
+    </object>
+    <object type="cluster_options" class="com.google.android.tradefed.cluster.ClusterOptions">
+    </object>
+</configuration>

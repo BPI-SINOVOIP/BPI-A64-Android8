@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Power and jank test">
+    <include name="google/test/power/common/base" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:location-gps" value="off" />
+    <option name="google-device-setup:location-network" value="off" />
+
+    <!-- any special test files to be pushed -->
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer"/>
+    <!-- need to specify a test-file-name option -->
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" />
+    <!-- need to configure account-name, account-password, account-sync, sync-then-off options -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" />
+    <!-- any special run command options needed -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+    <!-- need to specify a package option -->
+
+    <test class="com.google.android.performance.PowerJankTest">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_runner_name" value="android.test.InstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="use-power-reporter" value="false" />
+    </test>
+
+</configuration>
+

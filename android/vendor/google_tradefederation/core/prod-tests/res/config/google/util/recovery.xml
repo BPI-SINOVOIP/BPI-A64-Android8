@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Recovery Configuration for device in Fastboot">
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+        <option name="skip-download" value="TESTS_ZIP" />
+    </build_provider>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+        <option name="userdata-flash" value="WIPE" />
+    </target_preparer>
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+
+    <logger class="com.android.tradefed.log.FileLogger">
+        <option name="log-level" value="VERBOSE" />
+    </logger>
+    <include name="google/template/reporters/android-build-api-log-saver" />
+</configuration>

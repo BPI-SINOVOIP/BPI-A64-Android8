@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Common build provider and preparers for Clockwork ASIT templates. -->
+<configuration description="Test OTA download on watch">
+    <option name="test-tag" value="CwOtaDownload" />
+    <test class="com.google.android.clockwork.ota.ClockworkOtaDownloadTest" />
+</configuration>

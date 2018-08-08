@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Runs wear keyboard functional tests">
+    <option name="test-tag" value="CwKeyboardFunctional" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" >
+        <option name="test-file-name" value="IMEJankTestsWear.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" >
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/ime/wear_keyboard_activity_1019.apk" />
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.InstrumentationTest">
+        <option name="screenshot-on-failure" value="true" />
+        <option name="package" value="com.android.wearable.ime.tests" />
+        <option name="class" value="com.android.wearable.ime.tests.KeyboardFunctionalTests" />
+    </test>
+</configuration>

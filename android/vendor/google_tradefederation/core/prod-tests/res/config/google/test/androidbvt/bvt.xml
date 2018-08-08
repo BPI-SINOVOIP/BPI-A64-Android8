@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<configuration description="Android BVT test config to run all tests.">
+    <option name="test-tag" value="AndroidBvt" />
+    <include name="google/test/androidbvt/androidbvt" />
+
+    <option name="google-account:account-sync" value="true" />
+    <option name="google-account:sync-then-off" value="60" />
+
+    <option name="package" value="com.android.androidbvt" />
+    <option name="test-file-name" value="AndroidBvtTests.apk" />
+</configuration>

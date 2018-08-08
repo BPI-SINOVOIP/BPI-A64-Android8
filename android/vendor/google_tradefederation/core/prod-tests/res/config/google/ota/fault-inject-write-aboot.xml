@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Fault injection tests: write aboot">
+    <include name="google/ota/fault-inject" />
+    <option name="test-tag" value="fault-inject-write-aboot" />
+    <option name="ota-stability:run-name" value="write_aboot" />
+</configuration>

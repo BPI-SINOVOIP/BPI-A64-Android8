@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Disable doze">
+    <target_preparer class="com.android.tradefed.targetprep.DeviceSetup">
+        <option name="disable-doze" value="true" />
+    </target_preparer>
+</configuration>

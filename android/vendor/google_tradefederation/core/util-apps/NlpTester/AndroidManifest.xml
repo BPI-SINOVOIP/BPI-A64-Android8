@@ -1,0 +1,15 @@
+<!-- Copyright 2013 Google Inc. All Rights Reserved. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.google.android.nlptester">
+
+    <instrumentation
+        android:targetPackage="com.google.android.nlptester"
+        android:name="android.test.InstrumentationTestRunner" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <application android:label="NlpTester">
+        <uses-library android:name="android.test.runner"/>
+    </application>
+
+</manifest>

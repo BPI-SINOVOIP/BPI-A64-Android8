@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration
+    description="Running reconnect test verify bluetooth connection reliability">
+    <option name="test-tag" value="CwBluetoothReconnect" />
+    <test class="com.google.android.clockwork.ClockworkBluetoothReconnectStress" />
+</configuration>

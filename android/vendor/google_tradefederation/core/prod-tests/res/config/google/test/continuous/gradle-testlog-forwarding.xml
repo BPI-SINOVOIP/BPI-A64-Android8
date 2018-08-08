@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Forwards logs of test ran outside of TF">
+    <option name="test-tag" value="GradleHostBasedTest" />
+    <option name="testlog-regex" value="host-test-reports/.*\.zip" />
+    <test class="com.google.android.tradefed.testtype.host.GradleTestlogForwarder" />
+</configuration>

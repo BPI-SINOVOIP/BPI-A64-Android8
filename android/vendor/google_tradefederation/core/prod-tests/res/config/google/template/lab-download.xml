@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Template for lab test run. -->
+<configuration description="Template for lab test runs without full system flash, downloads test artifacts only">
+    <option name="bugreport-on-invocation-ended" value="true" />
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider" >
+        <option name="bootstrap-build-info" value="true" />
+        <option name="skip-download" value="DEVICE_IMAGE" />
+    </build_provider>
+    <target_preparer class="com.android.tradefed.targetprep.DeviceWiper">
+        <option name="disable" value="true" />
+    </target_preparer>
+    <include name="google/template/preparers/lab" />
+
+    <template-include name="test" />
+
+    <include name="google/template/reporters/lab" />
+
+    <template-include name="reporters" default="empty" />
+</configuration>

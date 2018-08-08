@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Result reports for reporting test metrics to RDB. -->
+<configuration description="Result reports for reporting test metrics to RDB" >
+    <result_reporter class="com.google.android.tradefed.result.RdbTestMetricsResultReporter" />
+    <result_reporter class="com.google.android.tradefed.result.InspectBugResultReporter">
+        <option name="suite-key-prefix" value="asit_" />
+    </result_reporter>
+</configuration>

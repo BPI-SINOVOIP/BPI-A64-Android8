@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Run all TF functional tests on a GCE device -->
+<configuration description="TF Func Tests">
+    <option name="enable-logcat" value="false" />
+    <option name="tcp-device" value="true" />
+    <option name="test-tag" value="TfFuncTests" />
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="skip-download" value="DEVICE_IMAGE" />
+        <option name="skip-download" value="BOOTLOADER" />
+        <option name="skip-download" value="BASEBAND" />
+        <option name="skip-download" value="TESTS_ZIP" />
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+    <device_recovery class="com.google.android.tradefed.device.GceDeviceRecovery" />
+    <target_preparer class="com.google.android.tradefed.targetprep.GceAvdPreparer"/>
+    <target_preparer class="com.android.tradefed.targetprep.DeviceSetup" >
+        <option name="set-global-setting" key="verifier_verify_adb_installs" value="0" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <!-- Use dedicated HostTest for each class to avoid using the auto sharding -->
+    <test class="com.android.tradefed.testtype.HostTest">
+        <option name="class" value="com.android.tradefed.FuncTests" />
+    </test>
+    <test class="com.android.tradefed.testtype.HostTest">
+        <option name="class" value="com.google.android.tradefed.FuncTests" />
+    </test>
+
+    <include name="google/template/reporters/asit" />
+    <result_reporter class="com.android.tradefed.result.TestFailureEmailResultReporter" />
+    <template-include name="reporters" default="empty" />
+    <result_reporter class="com.android.tradefed.result.SubprocessResultsReporter">
+        <option name="output-test-log" value="true" />
+    </result_reporter>
+</configuration>

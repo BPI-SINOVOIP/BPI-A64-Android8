@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Hybrid result reporters for reporting test results. -->
+<configuration description="Result reporter for both functional and metrics result types" >
+    <result_reporter class="com.google.android.tradefed.result.BlackboxResultReporter" />
+    <result_reporter class="com.google.android.tradefed.result.RdbTestMetricsResultReporter" />
+</configuration>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerFitPhoneBiking" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install-fit" />
+    <include name="google/test/power/common/user-location-reporting" />
+    <include name="google/test/power/common/fit" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster">
+        <option name="reboot-after-sleep" value="true" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="FitTestCase-testPhoneBiking" value="fitPower" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testPhoneBiking" />
+        <option name="test_package" value="com.google.android.apps.fitness.power" />
+        <option name="test_class" value="FitTestCase" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="FitTestCase-testPhoneBiking" value="3600" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="4200" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+        <option name="pre-test-adb-command" value="dumpsys deviceidle disable" />
+        <option name="pre-test-adb-command" value="dumpsys batterystats --enable full-wake-history" />
+    </test>
+</configuration>

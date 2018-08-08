@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Forwards logs of slang (part of RenderScript) test ran outside of TF">
+    <option name="test-tag" value="SlangHostBasedTest" />
+    <option name="testlog-regex" value="slang_tests/.*" />
+    <test class="com.google.android.tradefed.testtype.host.PythonUnitTestlogForwarder" />
+</configuration>

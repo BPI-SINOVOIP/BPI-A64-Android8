@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved. -->
+<configuration
+    description="Run the tradefed and google-tradefed functional tests from build env">
+
+    <include name="tf/func" />
+
+    <test class="com.google.android.tradefed.FuncTests" />
+
+</configuration>

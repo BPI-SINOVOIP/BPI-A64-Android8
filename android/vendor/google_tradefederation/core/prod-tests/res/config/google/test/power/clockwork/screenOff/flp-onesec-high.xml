@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs FLP power test at 1 second request interval">
+    <option name="test-tag" value="powerFLPOneSecondHigh" />
+
+    <include name="google/test/power/common/cw-base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+    <include name="google/test/power/common/gps" />
+
+    <option name="schema_ru_pair" key="LocationTests-testFlpHigh" value="powerCwLocation" />
+    <option name="schema_suffix" value="1s" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testFlpHigh" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="LocationTests" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="LocationTests-testFlpHigh" value="600" />
+        <option name="test_arguments" key="interval_seconds" value="1" />
+        <option name="test_arguments" key="settleTime_seconds" value="900" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_duration" value="1800" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

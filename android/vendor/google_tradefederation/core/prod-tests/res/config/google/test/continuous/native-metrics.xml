@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved. -->
+<configuration description="Runs the native unit gtests.">
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup" >
+        <option name="test-file-name" value= "benchmarktest" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.CrashCollector" />
+    <test class="com.android.tradefed.testtype.GoogleBenchmarkTest">
+    </test>
+</configuration>

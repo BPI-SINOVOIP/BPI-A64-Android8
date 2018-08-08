@@ -1,0 +1,5 @@
+<configuration description="Config for :module:">
+    <test class="com.android.compatibility.common.tradefed.testtype.JarHostTest" >
+        <option name="jar" value=":module:.jar" />
+    </test>
+</configuration>

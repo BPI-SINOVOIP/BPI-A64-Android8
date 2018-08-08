@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.0//EN" "report.dtd">
+<report name="Report">
+    <sessioninfo id="localhost-928aa0b3" start="13389924807" dump="13390219957" />
+    <package name="com/android/vcard">
+        <class name="com/android/vcard/VCardEntryCounter">
+            <method name="&lt;init&gt;" desc="()V" line="21">
+                <counter type="INSTRUCTION" missed="2" covered="0" />
+                <counter type="LINE" missed="1" covered="0" />
+            </method>
+            <method name="getCount" desc="()I" line="25">
+                <counter type="INSTRUCTION" missed="2" covered="0" />
+                <counter type="LINE" missed="1" covered="0" />
+            </method>
+            <method name="onEntryEnded" desc="()V" line="41">
+                <counter type="INSTRUCTION" missed="4" covered="0" />
+                <counter type="LINE" missed="2" covered="0" />
+            </method>
+            <method name="onEntryStarted" desc="()V" line="37">
+                <counter type="INSTRUCTION" missed="1" covered="0" />
+                <counter type="LINE" missed="1" covered="0" />
+            </method>
+            <method name="onVCardEnded" desc="()V" line="33">
+                <counter type="INSTRUCTION" missed="1" covered="0" />
+                <counter type="LINE" missed="1" covered="0" />
+            </method>
+            <method name="onVCardStarted" desc="()V" line="29">
+                <counter type="INSTRUCTION" missed="1" covered="0" />
+                <counter type="LINE" missed="1" covered="0" />
+            </method>
+            <counter type="INSTRUCTION" missed="12" covered="0" />
+            <counter type="LINE" missed="8" covered="0" />
+            <counter type="CLASS" missed="1" covered="0" />
+        </class>
+        <class name="com/android/vcard/VCardEntry$PostalData">
+            <method name="getCountry" desc="()Ljava/lang/String;" line="715">
+                <counter type="INSTRUCTION" missed="2" covered="0" />
+                <counter type="LINE" missed="1" covered="0" />
+            </method>
+            <method name="isEmpty" desc="()Z" line="632">
+                <counter type="INSTRUCTION" missed="11" covered="16" />
+                <counter type="BRANCH" missed="4" covered="8" />
+                <counter type="LINE" missed="0" covered="7" />
+            </method>
+            <counter type="INSTRUCTION" missed="109" covered="255" />
+            <counter type="BRANCH" missed="28" covered="48" />
+            <counter type="LINE" missed="25" covered="91" />
+            <counter type="CLASS" missed="1" covered="0" />
+        </class>
+        <sourcefile name="VCardEntryCounter.java">
+            <line nr="21" mi="2" ci="0" mb="0" cb="0" />
+            <line nr="25" mi="2" ci="0" mb="0" cb="0" />
+            <line nr="29" mi="1" ci="0" mb="0" cb="0" />
+            <line nr="33" mi="1" ci="0" mb="0" cb="0" />
+            <line nr="37" mi="1" ci="0" mb="0" cb="0" />
+            <line nr="41" mi="1" ci="0" mb="0" cb="0" />
+            <line nr="42" mi="3" ci="0" mb="0" cb="0" />
+            <line nr="46" mi="1" ci="0" mb="0" cb="0" />
+            <counter type="INSTRUCTION" missed="12" covered="0" />
+            <counter type="LINE" missed="8" covered="0" />
+            <counter type="CLASS" missed="1" covered="0" />
+        </sourcefile>
+        <sourcefile name="VCardEntry.java">
+            <line nr="68" mi="0" ci="1" mb="0" cb="0" />
+            <line nr="73" mi="0" ci="3" mb="0" cb="0" />
+            <line nr="1483" mi="2" ci="18" mb="2" cb="4" />
+            <line nr="1488" mi="0" ci="3" mb="1" cb="1" />
+            <line nr="1489" mi="1" ci="0" mb="0" cb="0" />
+            <line nr="2240" mi="0" ci="3" mb="0" cb="2" />
+            <line nr="2241" mi="0" ci="1" mb="0" cb="0" />
+            <line nr="2243" mi="0" ci="1" mb="0" cb="0" />
+
+            <counter type="INSTRUCTION" missed="829" covered="2791" />
+            <counter type="BRANCH" missed="251" covered="529" />
+            <counter type="LINE" missed="240" covered="984" />
+            <counter type="CLASS" missed="19" covered="0" />
+        </sourcefile>
+        <counter type="INSTRUCTION" missed="2296" covered="9800" />
+        <counter type="BRANCH" missed="642" covered="1698" />
+        <counter type="LINE" missed="758" covered="3476" />
+        <counter type="CLASS" missed="44" covered="0" />
+    </package>
+    <package name="com/android/vcard/exception">
+        <class name="com/android/vcard/exception/VCardException">
+            <method name="&lt;init&gt;" desc="(Ljava/lang/String;)V" line="31">
+                <counter type="INSTRUCTION" missed="0" covered="2" />
+                <counter type="LINE" missed="0" covered="2" />
+            </method>
+            <method name="&lt;init&gt;" desc="()V" line="22">
+                <counter type="INSTRUCTION" missed="0" covered="2" />
+                <counter type="LINE" missed="0" covered="2" />
+            </method>
+            <counter type="INSTRUCTION" missed="0" covered="4" />
+            <counter type="LINE" missed="0" covered="4" />
+            <counter type="CLASS" missed="1" covered="0" />
+        </class>
+        <sourcefile name="VCardException.java">
+            <line nr="22" mi="0" ci="1" mb="0" cb="0" />
+            <line nr="23" mi="0" ci="1" mb="0" cb="0" />
+            <line nr="31" mi="0" ci="1" mb="0" cb="0" />
+            <line nr="32" mi="0" ci="1" mb="0" cb="0" />
+            <counter type="INSTRUCTION" missed="0" covered="4" />
+            <counter type="LINE" missed="0" covered="4" />
+            <counter type="CLASS" missed="1" covered="0" />
+        </sourcefile>
+        <counter type="INSTRUCTION" missed="20" covered="8" />
+        <counter type="LINE" missed="20" covered="8" />
+        <counter type="CLASS" missed="7" covered="0" />
+    </package>
+    <counter type="INSTRUCTION" missed="2316" covered="9808" />
+    <counter type="BRANCH" missed="642" covered="1698" />
+    <counter type="LINE" missed="778" covered="3484" />
+    <counter type="CLASS" missed="51" covered="0" />
+</report>

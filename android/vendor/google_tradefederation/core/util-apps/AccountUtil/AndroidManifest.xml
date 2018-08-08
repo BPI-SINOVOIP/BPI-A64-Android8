@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved. -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.google.android.tradefed.account" >
+
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" />
+    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.ALL_SERVICES" />
+    <uses-permission android:name="com.google.android.googleapps.permission.ACCESS_GOOGLE_PASSWORD" />
+
+    <application android:label="Google Account Util" />
+
+    <instrumentation
+        android:name=".AddAccount"
+        android:label="Add Account"
+        android:targetPackage="com.google.android.tradefed.account" >
+    </instrumentation>
+    <instrumentation
+        android:name=".RemoveAccounts"
+        android:label="Remove All Accounts"
+        android:targetPackage="com.google.android.tradefed.account" >
+    </instrumentation>
+    <instrumentation
+        android:name=".RemoveAccount"
+        android:label="Remove Account"
+        android:targetPackage="com.google.android.tradefed.account" >
+    </instrumentation>
+    <instrumentation
+        android:name=".GoogleAccountSync"
+        android:label="Sync Account"
+        android:targetPackage="com.google.android.tradefed.account" >
+    </instrumentation>
+
+    <uses-sdk android:minSdkVersion="8" />
+
+</manifest>

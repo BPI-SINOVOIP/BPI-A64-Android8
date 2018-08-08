@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- This log saver is used for local runs. -->
+<configuration description="Colossus Log Saver" >
+    <log_saver class="com.google.android.tradefed.result.ColossusLogSaver">
+        <option name="log-file-staging-path" value="/auto/android-test/www/test_logs" />
+        <option name="log-file-path" value="/cns/oc-d/home/android-test/kharon/${USER}/world/test_logs" />
+        <option name="remove-staged-files" value="true" />
+    </log_saver>
+</configuration>

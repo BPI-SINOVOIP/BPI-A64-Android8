@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved. -->
+<!-- Required options: branch -->
+<configuration description="Performs one time setup for devices running unbundled app configs. Flashes build, and performs device setup">
+    <include name="google/util/flash" />
+    <include name="google/unbundled/common/device-setup" />
+    <option name="google-device-setup:disable" value="false" />
+    <option name="device-admin:disable" value="false" />
+</configuration>

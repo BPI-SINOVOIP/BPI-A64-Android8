@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/settings/radio" />
+    <option name="test-tag" value="powerSprintPhone" />
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="SprintPhoneCallScreenOff" />
+        <option name="config" key="ScreenOffTime" value="120000" />
+        <option name="config" key="TestDuration" value="120000" />
+        <option name="config" key="Phone_Number" value="8586515050" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testMakePhoneCallScreenOff" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="PhoneTests" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="3000" />
+        <option name="ru_name" value="ActiveUseVoice" />
+    </test>
+</configuration>

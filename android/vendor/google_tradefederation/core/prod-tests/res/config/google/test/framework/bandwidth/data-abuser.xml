@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Naughty box test for an app that tries to break out">
+    <option name="test-tag" value="data_abuser_test" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="BandwidthEnforcementTest.apk" />
+    </target_preparer>
+
+    <test class="com.google.android.bandwidth.tests.DataAbuserTest">
+        <option name="dashboard-test-label" value="bandwidth_data_abuser" />
+        <option name="test-package-name" value="com.android.tests.bandwidthenforcement" />
+        <option name="test-service-name" value=".BandwidthEnforcementTestService" />
+        <option name="output-file-name" value="BandwidthEnforcementTestOutput.txt" />
+    </test>
+</configuration>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/settings/airplane" />
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testAmbientTemperature" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="SensorPowerTests" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="15000" />
+    </test>
+</configuration>

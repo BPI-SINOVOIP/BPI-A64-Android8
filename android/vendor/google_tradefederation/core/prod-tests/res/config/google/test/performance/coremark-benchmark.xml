@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Run CoreMark on device and get results">
+    <option name="test-tag" value="CoreMark" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:airplane-mode" value="on" />
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/third_party_perf/coremarkbin->/data/local/tmp" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="chmod 755 /data/local/tmp/coremark*" />
+        <option name="run-command" value="chmod 755 /data/local/tmp/coremark32" />
+        <option name="run-command" value="chmod 755 /data/local/tmp/coremark64" />
+        <option name="run-command" value="chmod 755 /data/local/tmp/coremarkx86" />
+        <option name="run-command" value="stop" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.CpuThrottlingWaiter" />
+
+    <test class="com.google.android.performance.CoreMarkTest" />
+</configuration>

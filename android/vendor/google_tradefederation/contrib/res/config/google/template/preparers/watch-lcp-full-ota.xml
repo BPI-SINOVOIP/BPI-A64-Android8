@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Side loading normal OtaDeviceLaunchControlProvider for watch. -->
+<configuration description="Sideload preparers full OTA LaunchControlProvider for watch." >
+    <device name="watch">
+        <build_provider class="com.google.android.ota.OtaDeviceLaunchControlProvider">
+            <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+        </build_provider>
+        <target_preparer class="com.google.android.ota.VersionCachePreparer" />
+        <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+            <option name="test-file-name" value="OtaFunctionalTests.apk" />
+            <option name="cleanup-apks" value="true" />
+        </target_preparer>
+    </device>
+</configuration>

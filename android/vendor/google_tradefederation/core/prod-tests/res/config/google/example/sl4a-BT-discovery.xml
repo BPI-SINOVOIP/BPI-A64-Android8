@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Bluetooth discovery test to test sl4a with multi-devices">
+
+    <device name="dut">
+        <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+            <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+        </build_provider>
+        <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer">
+            <option name="userdata-flash" value="WIPE" />
+        </target_preparer>
+        <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+            <option name="test-file-name" value="sl4a.apk" />
+        </target_preparer>
+    </device>
+
+    <device name="discoverer">
+        <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+            <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+        </build_provider>
+        <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer">
+            <option name="userdata-flash" value="WIPE" />
+        </target_preparer>
+        <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+            <option name="test-file-name" value="sl4a.apk" />
+        </target_preparer>
+    </device>
+
+    <logger class="com.android.tradefed.log.FileLogger">
+        <option name="log-level" value="VERBOSE" />
+        <option name="log-level-display" value="VERBOSE" />
+    </logger>
+
+    <test class="com.android.tradefed.Sl4aBluetoothDiscovery" />
+
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+</configuration>

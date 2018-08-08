@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Turn on radio and location">
+    <option name="google-device-setup:wifi" value="off" />
+    <option name="google-device-setup:airplane-mode" value="off" />
+    <option name="google-device-setup:bluetooth" value="off" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command" value="content insert --uri content://com.google.settings/partner --bind name:s:use_location_for_services --bind value:s:1" />
+        <option name="run-command" value="content insert --uri content://com.google.settings/partner --bind name:s:network_location_opt_in --bind value:s:1" />
+        <option name="run-command" value="settings put secure location_providers_allowed +gps" />
+        <option name="run-command" value="settings put secure location_providers_allowed +network" />
+    </target_preparer>
+</configuration>

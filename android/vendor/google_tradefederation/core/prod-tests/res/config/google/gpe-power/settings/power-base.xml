@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and setup the device for power test">
+    <include name="google/common/asit-gpe" />
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/gpe-tests/DATA/app/PowerTests/PowerTests.apk" />
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/gpe-tests/DATA/app/GmailTests2/GmailTests2.apk" />
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/gpe-tests/DATA/app/GeppettoPowerTest/GeppettoPowerTest.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/cachesite->${EXTERNAL_STORAGE}" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/chrome-command-line->/data/local/chrome-command-line" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/chrome-command-line->/data/local/tmp/chrome-command-line" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/gpe-tests/DATA/local/tmp/->/data/local/tmp/" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/busybox-android->/data/local/busybox-android" />
+        <option name="post-push" value="chmod 555 /data/local/busybox-android" />
+    </target_preparer>
+    <option name="google-device-setup:gservices-setting" key="location:collection_enabled" value="0" />
+    <option name="google-device-setup:secure-setting" key="screensaver_enabled" value="0" />
+    <option name="google-device-setup:audio-silent" value="false"/>
+    <option name="google-device-setup:disable-use-location" value="true" />
+    <option name="google-device-setup:setting" key="screen_brightness_mode" value="0" />
+    <option name="google-device-setup:setting" key="screen_off_timeout" value="1800000" />
+    <option name="google-device-setup:setting" key="dim_screen" value="0" />
+    <option name="google-device-setup:setting" key="notification_light_pulse" value="0" />
+    <option name="google-device-setup:setting" key="accelerometer_rotation" value="0" />
+    <option name="google-device-setup:disable-dialing" value="false" />
+    <option name="google-device-setup:setting-cmd-apk-path" value="/google/data/ro/teams/tradefed/testdata/gpe-tests/power/SettingsCmd.apk" />
+    <option name="google-device-setup:local-data-path" value="/google/data/ro/teams/tradefed/testdata/power/uipowertest" />
+    <option name="device-unavail-email:destination" value="avellore@google.com" />
+    <option name="invocation-failure-email:destination" value="avellore@google.com" />
+    <option name="device-unavail-email:sender" value="tffail@google.com" />
+</configuration>

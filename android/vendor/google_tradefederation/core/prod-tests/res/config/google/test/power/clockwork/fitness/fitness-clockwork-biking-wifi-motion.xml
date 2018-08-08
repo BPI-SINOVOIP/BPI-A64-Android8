@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerFitnessClockworkBikingWifiMotion" />
+
+    <include name="google/test/power/common/cw-fit-base" />
+    <include name="google/test/power/common/app-install-cw-fit" />
+    <include name="google/test/power/common/cw-companion-setup-btoff" />
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="set-gservice-setting" key="fitness.micro.enable_active_mode_heart_rate" value="true"/>
+        <option name="set-gservice-setting" key="location:activity_low_power_mode_enabled" value="false" />
+        <option name="set-gservice-setting" key="fitness.min_gps_location_delta_meters" value="0"/>
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster">
+        <option name="reboot-after-sleep" value="true" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="FitTestCase-testWatchBiking" value="fitPower" />
+    <option name="schema_suffix" value="WifiMotion" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testWatchBiking" />
+        <option name="test_package" value="com.google.android.apps.fitness.power" />
+        <option name="test_class" value="FitTestCase" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="FitTestCase-testWatchBiking" value="3600" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_duration" value="4200" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+        <option name="pre-test-adb-command" value="dumpsys deviceidle disable" />
+        <option name="pre-test-adb-command" value="dumpsys batterystats --enable full-wake-history" />
+        <option name="pre-test-host-command" value="/google/data/ro/teams/tradefed/testdata/robot/pypose/Robot_control.py walk" />
+        <option name="post-test-host-command" value="/google/data/ro/teams/tradefed/testdata/robot/pypose/Robot_control.py stop" />
+        <option name="post-test-nohup-command" value="rm /data/misc/wifi/wpa_supplicant.conf" />
+        <option name="post-test-nohup-command" value="cat /data/misc/wifi/wpa_supplicant.conf" />
+    </test>
+</configuration>

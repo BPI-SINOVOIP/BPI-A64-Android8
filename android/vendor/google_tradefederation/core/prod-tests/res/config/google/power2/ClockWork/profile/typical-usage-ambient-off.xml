@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/ClockWork/settings/power-screen-off" />
+    <option name="google-device-setup:setting" key="screen_off_timeout" value="60000" />
+    <option name="test-tag" value="clockTypicalUsageAmbientOff" />
+
+    <!-- Workaround to avoid the retail animation mode start -->
+    <!-- Back to home before starting the retail test card service -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command" value="input keyevent 3"/>
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="svc power stayon false" />
+    </target_preparer>
+     <!--  Need to make sure the device enter ambient mode before start retail service -->
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" >
+        <option name="delay" value="65000" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="am startservice -a com.google.android.clockwork.settings.ENTER_RETAIL_FOR_TEST" />
+    </target_preparer>
+    <!-- Keep device stayon so that the retail mode can be started -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command" value="svc power stayon true"/>
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="typicalUsageAmbientDisable" />
+    </target_preparer>
+
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testTypicalUsageAmbientDisable" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="ClockWorkProfileTests" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_samples" value="48000" />
+        <option name="ru_name" value="ClockWorkProfile" />
+    </test>
+</configuration>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>google-tradefed-tests</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>easymock</name>
+			<type>2</type>
+			<location>TRADEFED_ROOT/external/easymock/src</location>
+		</link>
+		<link>
+			<name>protobuf</name>
+			<type>2</type>
+			<location>TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/host-libprotobuf-java-full_intermediates/proto/src</location>
+		</link>
+	</linkedResources>
+</projectDescription>

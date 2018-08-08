@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Base setup for developers to run phone paired with wear power test">
+
+    <!-- com.android.tradefed.targetprep.CompanionDeviceSetup -->
+    <target_preparer class="com.google.android.tradefed.targetprep.clockwork.CompanionDeviceSetup">
+        <option name="screen-saver" value="off" />
+        <option name="screen-always-on" value="on" />
+        <option name="disable-audio" value="false" />
+        <option name="disable-volta" value="true" />
+        <option name="set-test-harness" value="false" />
+    </target_preparer>
+
+</configuration>

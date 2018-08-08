@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerMotionSensorsConcurrencyBatched" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+
+    <option name="schema_ru_pair" key="SensorTestCases-testMotionSensorsConcurrency-active" value="SensorPowerBatched" />
+    <option name="schema_ru_pair" key="SensorTestCases-testMotionSensorsConcurrency-idle" value="SensorPowerBatchedSuspend" />
+    <option name="schema_suffix" value="Batched" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testMotionSensorsConcurrency" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="SensorTestCases" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="SensorTestCases-testMotionSensorsConcurrency-active" value="900" />
+        <option name="test_duration" key="SensorTestCases-testMotionSensorsConcurrency-idle" value="300" />
+        <option name="test_arguments" key="Rate" value="40000" />
+        <option name="test_arguments" key="BatchLatency" value="9999000000" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="1500" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

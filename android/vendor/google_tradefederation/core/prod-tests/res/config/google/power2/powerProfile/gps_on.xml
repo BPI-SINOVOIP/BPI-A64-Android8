@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/settings/airplane" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command"
+        value="content insert --uri content://com.google.settings/partner --bind value:s:1 --bind name:s:network_location_opt_in"/>
+        <option name="run-command"
+        value="content insert --uri content://com.google.settings/partner --bind value:s:1 --bind name:s:use_location_for_services"/>
+        <option name="run-command"
+        value="content insert --uri content://settings/secure --bind value:s:gps,network --bind name:s:location_providers_allowed"/>
+        <option name="run-command"
+        value="content insert --uri content://settings/secure --bind value:s:+network --bind name:s:location_providers_allowed"/>
+        <option name="run-command"
+        value="content insert --uri content://settings/secure --bind value:s:+gps --bind name:s:location_providers_allowed"/>
+    </target_preparer>
+    <option name="test-tag" value="powerProfileGPSOn" />
+     <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/GPSTest.apk" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerProfileRunner">
+        <option name="testcase" value="gps.on" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="8000" />
+        <option name="ru_name" value="PowerProfile" />
+    </test>
+</configuration>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/idleSystemScreenOn/live-wallpaper" />
+    <option name="test-tag" value="powerLiveWallpaperBatterySaverMode" />
+    <include name="google/power2/batterySaverMode/batterysavermode-base" />
+</configuration>

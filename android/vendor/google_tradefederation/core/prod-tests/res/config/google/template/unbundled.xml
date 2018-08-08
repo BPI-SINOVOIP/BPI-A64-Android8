@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Template for unbundled tests. -->
+<configuration description="Template for unbundled tests">
+    <template-include name="preparers" default="google/template/preparers/unbundled" />
+
+    <template-include name="test" />
+
+    <include name="google/template/reporters/unbundled" />
+
+    <template-include name="reporters" default="empty" />
+</configuration>

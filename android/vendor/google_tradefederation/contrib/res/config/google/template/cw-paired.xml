@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Template for one phone and one watch setup -->
+<configuration description="Template for one phone and one watch setup">
+    <option name="bugreportz-on-invocation-ended" value="true" />
+    <!-- Device preparer for watch -->
+    <include name="google/template/preparers/watch" />
+    <!-- Device preparer for phone -->
+    <include name="google/template/preparers/companion" />
+    <template-include name="pairing" default="google/test/clockwork/pairing-ui" />
+    <template-include name="test" default="empty" />
+    <include name="google/template/reporters/asit" />
+    <template-include name="reporters" default="empty" />
+</configuration>

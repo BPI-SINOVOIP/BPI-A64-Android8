@@ -1,0 +1,5 @@
+This directory contains test harness code that make use of the tradefed
+framework, and the google-tradefed extension to run tests on Android platform.
+
+They are distinct from code in the 'tests' directory, which are unit tests for
+the google-tradefed library itself.

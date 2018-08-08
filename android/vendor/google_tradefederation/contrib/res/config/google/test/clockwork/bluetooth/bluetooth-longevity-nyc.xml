@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Common build provider and preparers for Clockwork ASIT templates. -->
+<configuration
+    description="Running long duration test to verify bluetooth connection">
+    <option name="test-tag" value="CwBluetoothLongevityNYC" />
+    <option name="test-run-name" value="BluetoothLongevityNYC" />
+    <target_preparer class="com.google.android.power.tests.PowerTestCleaner" />
+    <test class="com.google.android.clockwork.BluetoothLongevity" />
+</configuration>

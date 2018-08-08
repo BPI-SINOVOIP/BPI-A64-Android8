@@ -1,0 +1,17 @@
+{
+    "service_key_json_path" : "/google/data/rw/teams/android-vts/coverage/android-vts-internal-f6b26d1ed1a4.json",
+    "build_server_scope" : "https://www.googleapis.com/auth/androidbuild.internal",
+    "build_server_api_name" : "androidbuildinternal",
+    "build_server_api_version" : "v2beta1",
+    "dashboard_post_command": "sso_client --method=POST --request_timeout=30 --url=https://android-vts-staging.googleplex.com/api/datastore --headers=Content-Type: application/octet-stream --data_file=\'{path}\'",
+    "profiling_trace_path" : "/google/data/rw/teams/android-vts/profiling-trace",
+    "systrace_report_path" : "/google/data/rw/teams/android-vts/systrace-report",
+    "systrace_report_path_use_date_directory" : "true",
+    "systrace_report_url_prefix" : "https://android-vts.teams.x20web.corp.google.com/systrace-report/",
+    "enable_log_uploading": "true",
+    "log_uploading_path" : "/google/data/rw/teams/android-vts/host-log",
+    "log_uploading_use_date_directory" : "true",
+    "log_uploading_url_prefix" : "https://android-vts.teams.x20web.corp.google.com/host-log/",
+    "ffmpeg_binary_path" : "/google/data/ro/teams/android-vts/packages/ffmpeg/ffmpeg",
+    "pypi_packages_path": "/google/data/ro/teams/android-vts/packages/pypi-packages"
+}

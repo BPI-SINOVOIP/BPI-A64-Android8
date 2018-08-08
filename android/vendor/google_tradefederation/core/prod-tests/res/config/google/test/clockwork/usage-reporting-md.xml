@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Wear UsageReporting setting - multi-device test">
+    <option name="test-tag" value="CwUsageReportingMd" />
+    <test class="com.google.android.clockwork.UsageReportingMd" />
+</configuration>

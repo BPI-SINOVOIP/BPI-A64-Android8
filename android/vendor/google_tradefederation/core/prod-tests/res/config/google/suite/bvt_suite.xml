@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<!-- Currently non-working but will be the example to use when debugging. b/36222466 -->
+<configuration description="Android BVT test suite config for tf suites">
+    <test class="com.android.tradefed.testtype.suite.TfSuiteRunner">
+        <option name="run-suite-tag" value="abvt" />
+    </test>
+</configuration>

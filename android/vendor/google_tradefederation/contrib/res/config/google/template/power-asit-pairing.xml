@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Template for Clockwork ASIT with companion. -->
+<configuration description="Template for Clockwork Power pairing ASIT">
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+        <option name="userdata-flash" value="WIPE" />
+    </target_preparer>
+    <include name="google/template/preparers/power-asit" />
+    <include name="google/template/preparers/cw-asit" />
+
+    <!-- one shot pairing "stress" to pair the devices -->
+    <test class="com.google.android.clockwork.PairingStress">
+        <option name="one-shot" value="true" />
+    </test>
+    <template-include name="test" />
+
+    <include name="google/template/reporters/asit" />
+
+    <template-include name="reporters" default="empty" />
+</configuration>

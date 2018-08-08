@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerLocalMp3PreviewPlayback" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+
+    <option name="google-device-setup:local-data-path" value="/google/data/ro/teams/tradefed/testdata/power/uipowertest" />
+    <option name="google-device-setup:trigger-media-mounted" value="true" />
+
+    <option name="schema_ru_pair" key="MusicTests-testLocalPlaybackPreview-before-playback" value="powerMediaIdle" />
+    <option name="schema_ru_pair" key="MusicTests-testLocalPlaybackPreview" value="powerMedia" />
+    <option name="schema_ru_pair" key="MusicTests-testLocalPlaybackPreview-after-playback" value="powerMediaIdle" />
+    <option name="schema_suffix" value="OffloadEnabled"/>
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testLocalPlaybackPreview" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="MusicTests" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="MusicTests-testLocalPlaybackPreview-before-playback" value="300" />
+        <option name="test_duration" key="MusicTests-testLocalPlaybackPreview" value="600" />
+        <option name="test_duration" key="MusicTests-testLocalPlaybackPreview-after-playback" value="300" />
+        <option name="test_arguments" key="audio_file_path" value="/sdcard/uipowertest/DJ-Masque_Oceanic-Dawn-320.mp3" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="1260" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="decimal-places" value="0"/>
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="clockPowerWhatTimeIsItVoiceAction" />
+
+    <include name="google/test/power/common/cw-pairing-base" />
+    <include name="google/test/power/common/app-install-profile" />
+    <option name="clockwork-device-setup:disable-ambient" value="true" />
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/clockwork/trustedtestproxy.apk"></option>
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push"
+          value="/google/data/ro/teams/tradefed/testdata/voice_input_test_files/ok_google.pcm->/data/data/com.google.android.clockwork.powertests/ok_google.pcm" />
+        <option name="push"
+          value="/google/data/ro/teams/tradefed/testdata/voice_input_test_files/what_time_is_it.pcm->/data/data/com.google.android.clockwork.powertests/what_time_is_it.pcm" />
+    </target_preparer>
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" >
+        <option name="account-sync" value="true" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="ClockworkVoicePowerTest-testVoiceAction" value="ClockWorkVoiceAction" />
+    <option name="schema_suffix" value="WhatTimeIsItVoiceAction" />
+
+    <test class="com.google.android.power.tests.MonsoonPairingTestRunner">
+        <option name="test_method" value="testVoiceAction" />
+        <option name="test_package" value="com.google.android.clockwork.powertests" />
+        <option name="test_class" value="ClockworkVoicePowerTest" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="ClockworkVoicePowerTest-testVoiceAction" value="1800" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_duration" value="2000" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

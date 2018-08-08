@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration
+    description="Running Bluetooth reconnect test">
+    <!-- Two preparer for connectivity setup and by default disabled. -->
+    <target_preparer class="com.google.android.tradefed.targetprep.SemaphoreTokenTargetPreparer" />
+    <target_preparer class="com.google.android.tradefed.targetprep.AttenuatorPreparer" />
+    <option name="test-tag" value="CwIosBtReconnect" />
+    <option name="test-run-name" value="ClockworkiOSBtReconnect" />
+    <test class="com.google.android.clockwork.ClockworkiOSBtReconnect" />
+</configuration>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerTelephony3GVoiceCall" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/3G-radio" />
+
+    <option name="device-setup:disable-dialing" value="false" />
+
+    <option name="schema_ru_pair" key="PhoneTestCases-testPhoneCall" value="powerTelephony" />
+    <option name="schema_suffix" value="3GVoiceCall"/>
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testPhoneCall" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="PhoneTestCases" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="PhoneTestCases-testPhoneCall" value="300" />
+        <option name="test_arguments" key="PhoneNumber" value="4049789061" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="400" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

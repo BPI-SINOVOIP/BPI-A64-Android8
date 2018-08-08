@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="wifi-signal-strength-scanner" />
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/WifiStrengthScannerUtil.apk"></option>
+    </target_preparer>
+    <option name="google-device-setup:screen-timeout-secs" value="1800" />
+    <include name="google/test/power/common/wifi" />
+    <include name="google/test/power/common/wifi-location" />
+
+    <test class="com.google.android.power.tests.WifiSignalStrengthCollector">
+    </test>
+</configuration>

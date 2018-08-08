@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Camera app session latency.">
+    <include name="google/camera/camera_base" />
+    <option name="test-tag" value="CameraAppLatency" />
+    <include name="google/test/framework/media/camera2-latency" />
+
+    <option name="test-package" value="com.android.camera2" />
+    <option name="test-file-name" value="GoogleCameraTests.apk" />
+</configuration>

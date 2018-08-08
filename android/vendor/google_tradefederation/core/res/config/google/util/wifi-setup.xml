@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved. -->
+<!--  TODO: move this to tradefed proper -->
+<configuration description="configure a wifi network on device.">
+
+    <!--  this is a specialization of setup config that won't set any system properties -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup" >
+        <option name="set-test-harness" value="false" />
+        <option name="audio-silent" value="false" />
+        <option name="disable-dialing" value="false" />
+    </target_preparer>
+
+</configuration>

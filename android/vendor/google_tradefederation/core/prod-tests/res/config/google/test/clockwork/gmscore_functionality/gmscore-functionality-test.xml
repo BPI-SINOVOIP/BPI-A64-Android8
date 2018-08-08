@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and runs functional tests">
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+    </target_preparer>
+    <test class="com.google.android.clockwork.ClockworkGmsFunctionalityTest">
+        <option name="test-run-key" value="WearGMScoreFunctionalityTest" />
+        <option name="test-package-name" value="com.google.android.gmscore.wearable.functionality" />
+        <option name="runner" value="com.google.android.apps.common.testing.testrunner.Google3InstrumentationTestRunner" />
+    </test>
+</configuration>

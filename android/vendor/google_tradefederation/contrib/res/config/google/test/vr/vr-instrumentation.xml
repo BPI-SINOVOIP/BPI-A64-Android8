@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Common configuration for running VR Instrumentation tests">
+  <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+  <test class="com.android.tradefed.testtype.InstrumentationTest" />
+  <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+</configuration>
+

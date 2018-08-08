@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Common build provider and preparers for ASIT templates. -->
+<configuration description="Common build provider and preparers for ASIT templates." >
+    <!-- Provides a mechanism for overwriting the preloaded classes that is disabled by default. -->
+    <target_preparer class="com.android.tradefed.targetprep.PreloadedClassesPreparer">
+        <option name="skip" value="true" />
+    </target_preparer>
+    <option name="bugreport-on-invocation-ended" value="true" />
+    <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner" />
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="screen-always-on" value="on" />
+        <option name="screen-adaptive-brightness" value="off" />
+        <option name="screen-brightness" value="30" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GrantPermissionPreparer" />
+</configuration>

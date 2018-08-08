@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved. -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and runs medium tests from test apks">
+    <include name="google/continuous/app-common" />
+    <option name="test-tag" value="MediumSuite" />
+    <option name="installed-instrumentation:size" value="medium" />
+    <!--  timeout a test after 10 secs -->
+    <option name="installed-instrumentation:timeout" value="10000" />
+    <!--  1 is medium -->
+    <option name="sponge:sponge-size" value="1" />
+</configuration>

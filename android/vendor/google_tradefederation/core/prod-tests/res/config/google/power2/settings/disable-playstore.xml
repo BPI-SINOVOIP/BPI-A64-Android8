@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and setup the device for power test">
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command" value="pm disable-user com.android.vending" />
+    </target_preparer>
+</configuration>

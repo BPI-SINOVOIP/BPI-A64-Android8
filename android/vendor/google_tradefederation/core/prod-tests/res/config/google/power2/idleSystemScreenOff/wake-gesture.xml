@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+   <include name="google/power2/idleSystemScreenOff/airplane-suspend" />
+   <option name="google-device-setup:secure-setting" key="wake_gesture_enabled" value="1" />
+   <option name="test-tag" value="powerWakeGesture" />
+   <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="wakeGesture" />
+        <option name="config" key="TestDuration" value="3600000" />
+    </target_preparer>
+</configuration>

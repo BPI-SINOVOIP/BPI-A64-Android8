@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerPairHeavyUsage" />
+
+    <include name="google/test/power/common/cw-pairing-base-md" />
+    <include name="google/test/power/common/gps-md" />
+    <include name="google/test/power/common/app-install-profile-md" />
+    <device name="watch">
+      <option name="clockwork-device-setup:disable-gaze" value="true" />
+    </device>
+    <include name="google/test/power/common/cw-ambient-on" />
+
+    <option name="schema_ru_pair" key="ClockworkPairingPowerTests-testHeavyUsageWear" value="ClockWorkPairingProfile" />
+    <option name="schema_suffix" value="PairHeavyUsage" />
+
+    <test class="com.google.android.power.tests.MonsoonPairingTestRunner">
+        <option name="test_method" value="testHeavyUsageWear" />
+        <option name="test_package" value="com.google.android.clockwork.powertests" />
+        <option name="test_class" value="ClockworkPairingPowerTests" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="ClockworkPairingPowerTests-testHeavyUsageWear" value="2700" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_duration" value="2900" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+        <option name="pre-test-nohup-command" value="dumpsys deviceidle disable" />
+        <option name="run-companion-instrumentation" value="true" />
+        <option name="companion_test_method" value="testHeavyUsageCompanion" />
+        <option name="companion_test_package" value="com.google.android.clockwork.powertests" />
+        <option name="companion_test_class" value="ClockworkPairingPowerTests" />
+        <option name="companion_test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="companion_test_timeout" value="5400" />
+        <option name="primary-device-name" value="watch" />
+    </test>
+</configuration>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Downloads and flashes a signed build onto a device, then performs signed CTS setup">
+    <include name="google/util/signed-cts-setup" />
+    <!-- GoogleDeviceSetup and ClockworkDeviceSetup do not work correctly on signed devices -->
+    <!-- Therefore, using RunCommandTargetPreparer -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="am broadcast -a com.google.android.clockwork.action.TUTORIAL_SKIP" />
+        <option name="run-command" value="settings put system clockwork_wifi_setting on" />
+        <option name="run-command" value="svc power stayon true" />
+        <option name="run-command" value="am broadcast -a com.google.android.clockwork.settings.SYNC_AMBIENT_DISABLED --ez ambient_disabled true" />
+        <option name="run-command" value="settings put global cw_disable_wifimediator 1" />
+    </target_preparer>
+</configuration>

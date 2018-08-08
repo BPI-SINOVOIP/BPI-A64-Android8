@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Runs hello test on Easel SoC">
+    <option name="test-tag" value="EaselSimpleTestHello" />
+    <option name="ipu-test" value="true"/>
+
+    <target_preparer class="com.google.android.paintbox.EaselTestPreparer" >
+        <option
+            name="test-inputs"
+            value="build-elinux-release-android/host_sw/hello/hello"/>
+    </target_preparer>
+
+    <test class="com.google.android.paintbox.HammerTests" >
+        <option name="run-key" value="hello"/>
+        <option
+            name="test-command"
+            value="build-elinux-release-android/host_sw/hello/hello"/>
+        <option name="test-log-name" value="hello.log"/>
+        <option name="test-timeout" value="10s"/>
+    </test>
+
+    <result_reporter class="com.android.tradefed.result.InvocationFailureEmailResultReporter" >
+        <option name="sender" value="paintbox-system@google.com" />
+    </result_reporter>
+
+    <result_reporter class="com.google.android.tradefed.result.BlackboxResultReporter" />
+
+</configuration>

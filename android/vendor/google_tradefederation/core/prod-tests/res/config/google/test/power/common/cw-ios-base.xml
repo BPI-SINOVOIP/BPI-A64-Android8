@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Base setup for developers to run clockwork power test">
+    <!-- com.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:screen-adaptive-brightness" value="off" />
+    <option name="google-device-setup:screen-saver" value="off" />
+    <option name="google-device-setup:screen-always-on" value="on" />
+    <option name="google-device-setup:disable-audio" value="false" />
+    <option name="google-device-setup:disable-dialing" value="false" />
+    <option name="google-device-setup:auto-update-timezone" value="off" />
+    <option name="google-device-setup:auto-update-time" value="off" />
+    <option name="google-device-setup:location-gps" value="off" />
+    <option name="google-device-setup:location-network" value="off" />
+    <option name="google-device-setup:wifi" value="off" />
+    <option name="google-device-setup:disable-volta" value="true" />
+    <option name="google-device-setup:enable-full-battery-stats-history" value="true" />
+
+    <!-- com.android.tradefed.targetprep.clockwork.ClockworkDeviceSetup -->
+    <target_preparer class="com.google.android.tradefed.targetprep.clockwork.ClockworkDeviceSetup">
+        <option name="skip-tutorial" value="true" />
+    </target_preparer>
+
+    <target_preparer class="com.google.android.power.tests.PowerTestCleaner" />
+    <target_preparer class="com.google.android.tradefed.targetprep.clockwork.ClockworkDeviceSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+      <option name="run-command" value="am broadcast -a com.google.android.clockwork.action.POWER_TESTING" />
+    </target_preparer>
+</configuration>

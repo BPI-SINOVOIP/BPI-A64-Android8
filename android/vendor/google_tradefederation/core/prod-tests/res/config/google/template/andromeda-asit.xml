@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Template for Andromeda ASIT. -->
+<configuration description="Template for Andromeda ASIT">
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+        <option name="userdata-flash" value="WIPE" />
+    </target_preparer>
+    <!-- Device will reboot after flash. -->
+
+    <include name="google/template/preparers/asit" />
+    <!-- Device will reboot because of changed properties. -->
+
+    <target_preparer class="com.google.android.tradefed.targetprep.CreateUserPreparer" >
+        <option name="user" value="test-user" />
+        <option name="switch" value="test-user" />
+    </target_preparer>
+
+    <template-include name="test" />
+
+    <include name="google/template/reporters/asit" />
+
+    <template-include name="reporters" default="empty" />
+</configuration>

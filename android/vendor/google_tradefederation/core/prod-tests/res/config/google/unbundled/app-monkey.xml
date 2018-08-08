@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor test-tag -->
+<configuration description="Run unbundled application monkey">
+    <include name="google/unbundled/common/app" />
+        <!-- Use Lcproxy to count iterations -->
+    <option name="app-launch-control:test-iterations" value="20" />
+    <option name="app-launch-control:hostname" value="lcproxy.googleplex.com" />
+    <option name="app-launch-control:protocol" value="https" />
+    <option name="test-tag" value="AppMonkey" />
+    <!-- clear all stored media files. see google/unbundled/common/setup -->
+    <option name="run-command:run-command" value="rm -r ${EXTERNAL_STORAGE}/DCIM"/>
+
+    <target_preparer class="com.android.monkey.AppPkgInjector" />
+
+    <test class="com.android.monkey.MonkeyBase">
+        <option name="category" value="android.intent.category.CAR_DOCK" />
+        <option name="category" value="android.intent.category.INFO" />
+        <option name="category" value="android.intent.category.LAUNCHER" />
+        <option name="category" value="android.intent.category.MONKEY" />
+        <option name="category" value="android.intent.category.SAMPLE_CODE" />
+        <option name="target-count" value="10000" />
+        <option name="throttle" value="100" />
+        <option name="idle-time" value="30" />
+        <!-- 30 minute timeout for the monkey -->
+        <option name="monkey-timeout" value="30" />
+        <option name="retry-on-failure" value="true" />
+        <option name="reboot-device" value="false" />
+    </test>
+    <result_reporter class="com.google.android.tradefed.result.InspectBugResultReporter">
+        <option name="suite-key" value="unbundled_application_stability" />
+        <!-- Default suite-instance-key to 0 so that there's a common value across all suites -->
+        <option name="suite-instance-key" value="0" />
+    </result_reporter>
+</configuration>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- This will not use hardware performance preparer -->
+<configuration description="Runs storage benchmark tests">
+    <option name="test-tag" value="vold_bench_test" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="input keyevent 26"/>
+        <option name="run-command" value="stop"/>
+    </target_preparer>
+    <test class="com.google.android.performance.VoldBenchMarkTest">
+        <option name="iterations" value="100" />
+        <option name="volumes" value="private" />
+    </test>
+</configuration>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!-- Copyright 2012 Google Inc. All Rights Reserved -->
+    <!-- Required options: build-id -->
+<configuration
+    description="Downloads signed ota packages, pushes them to prod, and generates the OTA config rules.">
+
+    <option name="null-device" value="true" />
+
+    <test class="com.google.android.ota.ConfigureSignedOta" />
+    <logger class="com.android.tradefed.log.FileLogger" />
+
+</configuration>

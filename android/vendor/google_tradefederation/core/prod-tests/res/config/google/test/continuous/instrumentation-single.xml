@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved. -->
+<configuration description="Runs all instrumentation tests.">
+    <!-- install all tests zip to data partition -->
+    <!-- FIXME: need to change this to accept a local path. -->
+    <target_preparer class="com.android.tradefed.targetprep.AllTestAppsInstallSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.CrashCollector" />
+    <!-- run all the small/medium/large tests in sequence -->
+    <test class="com.android.tradefed.testtype.InstalledInstrumentationsTest" />
+</configuration>

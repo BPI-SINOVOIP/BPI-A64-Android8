@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:jacoco="antlib:org.jacoco.ant">
+
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath path="${jacocoant.path}" />
+    </taskdef>
+
+    <jacoco:report>
+        <executiondata>
+            <file file="${execution.files}"/>
+        </executiondata>
+        <structure name="Trade Federation">
+            <classfiles>
+                <zipfileset src="${root.dir}/tradefed.jar">
+                    <include name="com/android/tradefed/**"/>
+                </zipfileset>
+            </classfiles>
+            <classfiles>
+                <zipfileset src="${root.dir}/google-tradefed.jar">
+                    <include name="com/google/android/tradefed/**"/>
+                </zipfileset>
+            </classfiles>
+        </structure>
+        <xml destfile="${dest.file}"/>
+    </jacoco:report>
+</project>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Template for Android Infra Lab Run using versioned TF. -->
+<configuration description="Config for lab using versioned TF.">
+    <!-- Gce enabled this configuration -->
+    <device_options class="com.google.android.tradefed.device.GceAvdTestDeviceOptions" />
+    <device_requirements class="com.google.android.tradefed.device.GoogleDeviceSelectionOptions" />
+
+    <build_provider class="com.google.android.tradefed.build.TfLaunchControlProvider" />
+
+    <test class="com.android.tradefed.testtype.VersionedTfLauncher" >
+        <option name="config-name" value="google/template/lab-base" />
+        <!-- The versioned TF launcher requires more time to set up device and run tests. -->
+        <option name="max-run-time" value="10h" />
+    </test>
+    <include name="google/template/reporters/lab-versioned" />
+    <template-include name="reporters" default="empty" />
+</configuration>

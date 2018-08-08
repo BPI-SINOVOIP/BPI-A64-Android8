@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved. -->
+<configuration description="Tests the compability of apps">
+    <option name="test-tag" value="AppCompatibility" />
+    <target_preparer class="com.android.tradefed.targetprep.BuildInfoRecorder"/>
+    <target_preparer class="com.google.android.tradefed.targetprep.LaunchControlTestClResetter"/>
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="AppCompatibilityTest.apk" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer">
+        <option name="account-sync" value="true" />
+        <option name="wait-for-checkin" value="true" />
+    </target_preparer>
+
+    <!-- must provide kharon-base-dir argument -->
+    <test class="com.google.android.compatibility.AppCompatibilityTest" />
+</configuration>

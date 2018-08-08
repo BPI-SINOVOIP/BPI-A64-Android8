@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Side loading normal DeviceLaunchControlProvider for watch. -->
+<configuration description="Sideload preparers DeviceLaunchControlProvider for watch." >
+    <device name="watch">
+        <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+            <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+        </build_provider>
+    </device>
+</configuration>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved
+     This base config should not be run by itself except in outstanding
+     circumstances where explicitly instructed to do so.
+-->
+<configuration description="Base options for app helper tests.">
+    <include name="google/test/continuous/app-smoke" />
+    <option name="test-tag" value="app-helper-tests" />
+    <option name="disable-unresponsive-reboot" value="true" />
+    <option name="package" value="android.platform.test.helpers.tests" />
+    <option name="run-command" value="svc nfc disable" />
+    <option name="tests-zip-app:test-file-name" value="AppHelperTests.apk" />
+</configuration>

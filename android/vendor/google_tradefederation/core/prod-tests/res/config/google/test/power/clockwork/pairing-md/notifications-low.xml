@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerPairNotificationsLow" />
+
+    <include name="google/test/power/common/cw-pairing-base-md" />
+    <include name="google/test/power/common/app-install-md" />
+    <include name="google/test/power/common/app-install-notifications-md" />
+    <include name="google/test/power/common/cw-ambient-on" />
+
+    <option name="schema_ru_pair" key="IdleTestCase-testIdleScreenOff" value="powerCwConnectivityAndroid" />
+    <option name="schema_suffix" value="PairNotifications" />
+
+    <test class="com.google.android.power.tests.MonsoonPairingTestRunner">
+        <option name="test_method" value="testIdleScreenOff" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="IdleTestCase" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="IdleTestCase-testIdleScreenOff" value="1800" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_duration" value="2000" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+        <option name="send-notifications-low" value="true" />
+        <option name="notification-low-interval" value="300" />
+        <option name="pre-test-nohup-command" value="dumpsys deviceidle disable" />
+        <option name="primary-device-name" value="watch" />
+    </test>
+</configuration>

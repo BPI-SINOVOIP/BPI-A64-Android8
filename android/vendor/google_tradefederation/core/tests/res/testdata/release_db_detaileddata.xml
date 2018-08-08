@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<member>
+  <name>name</name>
+  <value>
+    <struct>
+      <member>
+        <name>value</name>
+        <value>
+          <double>4.0</double>
+        </value>
+      </member>
+      <member>
+        <name>assessment</name>
+        <value>
+          <int>13</int>
+        </value>
+      </member>
+      <member>
+        <name>display</name>
+        <value>
+          <string>DISPLAY</string>
+        </value>
+      </member>
+      <member>
+        <name>description</name>
+        <value>
+          <string>I describe things</string>
+        </value>
+      </member>
+    </struct>
+  </value>
+</member>

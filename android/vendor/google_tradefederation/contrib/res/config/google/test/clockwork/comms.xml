@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Automated user profile test for clockwork">
+    <device name="watch">
+        <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+            <option name="test-file-name" value="nativetest/net_test_bluetooth/net_test_bluetooth" />
+        </target_preparer>
+    </device>
+    <option name="test-tag" value="clockwork_native_comms" />
+
+    <test class="com.android.tradefed.testtype.GTest">
+        <option name="module-name" value="net_test_bluetooth" />
+        <option name="native-test-device-path" value="/data/nativetest/net_test_bluetooth" />
+        <option name="before-test-cmd" value="settings put global airplane_mode_on 1" />
+        <option name="before-test-cmd" value="stop" />
+        <option name="before-test-cmd" value="sleep 1" />
+        <option name="after-test-cmd" value="start" />
+        <option name="after-test-cmd" value="sleep 25" />
+        <option name="after-test-cmd" value="settings put global airplane_mode_on 0" />
+    </test>
+</configuration>

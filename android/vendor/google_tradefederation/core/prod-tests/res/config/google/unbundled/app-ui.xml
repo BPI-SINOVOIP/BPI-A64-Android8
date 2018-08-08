@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<configuration description="Runs UI Geppetto test on unbundled branch">
+
+     <!--
+      At runtime, the following options should be provided:
+      app-launch-control:app-name-filter
+          - should be set to regular expressions that govern what apks should be downloaded from.
+          "-app-name-filter .*Memory.apk
+      app-launch-control:additional-files-filter
+          - optionally, should be set to any additional files required by your asit test.
+          "-app-launch-control:additional-files-filter .*MemoryFastTests.jar"
+          "-class com.android.uiautomator.fast.MemoryFastTests"
+      optional options:
+        wifi-network
+        google-account:account-name
+        google-account:account-password
+     -->
+
+    <include name="google/unbundled/common/app-func" />
+    <option name="test-tag" value="functional" />
+
+    <option name="time-waster:delay" value="30000" />
+    <option name="time-waster:reboot-after-sleep" value="true" />
+
+    <test class="com.android.tradefed.testtype.UiAutomatorTest" >
+        <option name="sync-time" value="0" />
+    </test>
+    <option name="blackbox-reporter:test-suite" value="AppFast" />
+
+</configuration>

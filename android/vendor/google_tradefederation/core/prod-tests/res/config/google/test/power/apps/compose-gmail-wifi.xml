@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerComposeGmailWifi" />
+
+    <!-- In this particular case the account needs to be added before the dismiss dialogs preparer
+         is triggered. Gmail app needs to have an account in order to dismiss the inital dialogs -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" >
+        <option name="account-sync" value="true" />
+        <option name="wait-for-sync" value="true" />
+    </target_preparer>
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/wifi" />
+    <option name="dismiss-dialogs:dismiss-apps" value="Gmail" />
+
+    <option name="schema_ru_pair" key="GmailTests-testComposeEmail" value="powerApps"/>
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testComposeEmail"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="GmailTests"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_arguments" key="message" value="This is a test " />
+        <option name="test_arguments" key="iterations" value="50" />
+        <option name="test_arguments" key="input_delay" value="300" />
+        <option name="monsoon_voltage" value="4.2"/>
+        <option name="monsoon_duration" value="900"/>
+        <option name="monsoon_frequency" value="10"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+    </test>
+</configuration>

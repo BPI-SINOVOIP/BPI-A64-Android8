@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Runs FIO benchmark tests">
+    <option name="test-tag" value="fio_performance" />
+
+    <target_preparer class="com.android.tradefed.targetprep.StopServicesSetup">
+        <option name="service" value="ril-daemon" />
+        <option name="service" value="media" />
+        <option name="service" value="drm" />
+        <option name="service" value="keystore" />
+        <option name="service" value="tf_daemon" />
+        <option name="service" value="bluetoothd" />
+        <option name="service" value="hciattach" />
+    </target_preparer>
+
+    <test class="com.android.performance.tests.FioBenchmarkTest" />
+</configuration>

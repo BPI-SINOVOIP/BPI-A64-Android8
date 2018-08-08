@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved. -->
+<configuration description="Common TF config for ATP lab machines">
+    <include name="google/android-te/host-metric" />
+    <option name="exclude-serial" value="0123456789ABCDEF" />
+    <wtf_handler class="com.android.tradefed.log.TerribleFailureEmailHandler">
+        <option name="sender" value="tfwtf@google.com" />
+        <option name="destination" value="asit-test-production@google.com" />
+    </wtf_handler>
+    <object type="parser" class="com.android.tradefed.command.CommandScheduler">
+        <option name="reload-cmdfiles" value="true" />
+    </object>
+    <multi_device_recovery class="com.google.android.tradefed.device.UsbResetMultiDeviceRecovery" />
+    <sharding_strategy class="com.android.tradefed.invoker.shard.StrictShardHelper" />
+</configuration>

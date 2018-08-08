@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/ClockWork/settings/power-screen-on" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="GestureDetectorPowerTests.apk" />
+    </target_preparer>
+    <option name="test-tag" value="ambientGazeDetector" />
+    <option name="google-device-setup:gservices-setting" key="cw:smart_default_setting" value="true"/>
+    <option name="google-device-setup:gservices-setting" key="cw:smart_illuminated_enabled" value="true"/>
+    <option name="google-device-setup:setting" key="screen_off_timeout" value="1800000" />
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="AmbientGazeDetector" />
+        <option name="config" key="TestDuration" value="30000" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="clockWork" value="true" />
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testAmbientGazeDetector" />
+        <option name="test_package_name" value="com.android.clockwork.gestures.detector.powertests" />
+        <option name="test_class_name" value="AmbientGazeDetectorTest" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_samples" value="1800" />
+        <option name="ru_name" value="ClockWorkScreenOn" />
+    </test>
+</configuration>

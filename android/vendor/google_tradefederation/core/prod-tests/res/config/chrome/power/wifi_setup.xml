@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<configuration description="Setup the device for power test">
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+        <option name="userdata-flash" value="WIPE" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup" >
+        <option name="secure-setting" key="screensaver_enabled" value="0" />
+        <option name="secure-setting" key="wifi_on" value="1" />
+        <option name="enable-airplane-mode" value="true" />
+        <option name="disable-use-location" value="true" />
+        <option name="setting" key="screen_brightness_mode" value="0" />
+        <option name="setting" key="screen_brightness" value="255" />
+        <option name="setting" key="screen_off_timeout" value="600000" />
+        <option name="setting" key="dim_screen" value="0" />
+        <option name="setting" key="notification_light_pulse" value="0" />
+        <option name="setting" key="accelerometer_rotation" value="1" />
+        <option name="wifi-network" value="GoogleGuest" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+</configuration>

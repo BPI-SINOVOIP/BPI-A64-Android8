@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="I/O performance test for uncrypt">
+    <option name="test-tag" value="UncryptPerfIO" />
+    <!-- b/28532304: prevent a race condition on uncrypt by removing any
+         accumulated information about scheduled updates -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="rm -f /data/data/com.google.android.gms/shared_prefs/update.xml" />
+    </target_preparer>
+    <!-- run uncrypt -->
+    <test class="com.android.ota.tests.SideloadOtaStabilityTest">
+        <option name="iterations" value="1" />
+        <option name="max-install-time" value="600" />
+    </test>
+    <test_profiler class="com.android.tradefed.profiler.AggregatingProfiler">
+        <option name="profiler-name" value="IoProfiler" />
+        <option name="recorder" value="com.android.tradefed.profiler.recorder.TraceMetricsRecorder" />
+        <!-- specify metric-descriptor with invocation -->
+    </test_profiler>
+</configuration>

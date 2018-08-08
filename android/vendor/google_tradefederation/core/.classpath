@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/tradefederation"/>
+	<classpathentry kind="src" path="res"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ddmlib"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/loganalysis"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/vendor/unbundled_google/libraries/apiary/libs/core/lib/google-api-client-1.22.0.jar"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/vendor/unbundled_google/libraries/apiary/libs/core/lib/google-http-client-1.22.0.jar"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/vendor/unbundled_google/libraries/apiary/libs/core/lib/google-http-client-jackson2-1.22.0.jar"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/vendor/unbundled_google/libraries/apiary/libs/core/lib/google-oauth-client-1.22.0.jar"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/vendor/unbundled_google/libraries/apiary/libs/core/lib/jackson-core-2.1.3.jar"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/prebuilts/misc/common/sdklib/sdklib-prebuilt.jar"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/vendor/unbundled_google/libraries/androidbuildinternal/libandroid_build_v2beta1_java.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/tradefed-protos_intermediates/classes.jar"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/google-tradefed-protos_intermediates/classes.jar"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/host-libprotobuf-java-full_intermediates/classes.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/tf-remote-client"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

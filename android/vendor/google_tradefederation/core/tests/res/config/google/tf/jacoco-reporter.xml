@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved. -->
+<configuration description="Jacoco reporter to be used when reporting code coverage">
+    <result_reporter class="com.google.android.tradefed.result.BlackboxCodeCoverageReporter" />
+</configuration>

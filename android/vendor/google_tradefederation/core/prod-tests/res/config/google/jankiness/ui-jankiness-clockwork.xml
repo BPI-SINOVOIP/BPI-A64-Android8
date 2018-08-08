@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and runs clockwork jank mode tests">
+    <include name="google/jankiness/ui-jankiness-basic" />
+
+    <!-- com.google.android.tradefed.build.DeviceLaunchControlProvider -->
+    <option name="test-tag" value="ClockworkJank" />
+
+    <!-- starts retail service and fill home screen with cards -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="am startservice -a com.google.android.clockwork.settings.ENTER_RETAIL_FOR_TEST" />
+    </target_preparer>
+    <test class="com.google.android.jankiness.UiJankinessTest2">
+        <option name="jar-path" value="ClockworkJank.jar" />
+        <option name="jar-path" value="geppetto.tests.common.jar" />
+        <option name="class" value="android.test.clockwork.jank.RetailModeJank" />
+        <option name="sync-time" value="60000" />
+        <option name="run-arg" key="tracetime" value="3" />
+        <option name="reporting-key" value="ClockworkJank" />
+        <option name="schema-mapping" key="testBrowseCards" value="browse_cards" />
+        <option name="schema-mapping" key="testSwipeCards" value="swipe_cards" />
+        <option name="schema-mapping" key="testBrowseBundle" value="browse_bundle" />
+    </test>
+</configuration>

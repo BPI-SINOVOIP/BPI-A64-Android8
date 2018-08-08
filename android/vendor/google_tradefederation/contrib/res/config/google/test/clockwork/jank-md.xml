@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Runs UI performance tests on paired device">
+    <!-- need to specify a test-tag option -->
+    <device name="watch">
+        <option name="google-device-setup:screen-saver" value="off" />
+        <option name="google-device-setup:location-gps" value="off" />
+        <option name="google-device-setup:location-network" value="off" />
+        <option name="google-device-setup:battery-saver-mode" value="off" />
+        <option name="google-device-setup:disable-playstore" value="true" />
+        <!-- any special run command options needed -->
+        <target_preparer class="com.android.tradefed.targetprep.TemperatureThrottlingWaiter" />
+        <target_preparer class="com.android.tradefed.targetprep.TimeWaster" />
+        <target_preparer class="com.android.tradefed.targetprep.CrashCollector" />
+    </device>
+    <!-- need to specify a package option -->
+    <test class="com.android.tradefed.testtype.UiAutomatorTest">
+        <option name="instrumentation" value="true"/>
+        <option name="runner" value="android.test.InstrumentationTestRunner" />
+        <option name="on-test-failure" value="SCREENSHOT" />
+    </test>
+</configuration>

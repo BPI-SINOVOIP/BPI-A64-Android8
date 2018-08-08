@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Downloads build, flashes on device, and runs pairing stress test">
+    <option name="test-tag" value="CwPairingStress" />
+    <option name="iteration" value="10" />
+    <test class="com.google.android.clockwork.PairingStressTest" />
+</configuration>

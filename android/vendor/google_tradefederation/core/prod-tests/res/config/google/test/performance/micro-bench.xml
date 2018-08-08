@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Runs micro bench tests">
+    <option name="test-tag" value="micro_bench_test" />
+
+    <target_preparer class="com.android.tradefed.targetprep.CpuThrottlingWaiter" />
+    <test class="com.android.performance.tests.MicroBenchTest" />
+</configuration>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Run Audio WALT Test on device and get results">
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/media/apps/walt.apk" />
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/media/apps/walt-permission.apk" />
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/media/apps/walt-permission-instrumentation.apk" />
+    </target_preparer>
+
+    <option name="test-tag" value="AudioWalt" />
+
+    <test class="com.google.android.media.tests.AudioWaltTest">
+        <option name="tigertail-path" value="/google/data/ro/teams/tradefed/testdata/media/scripts/tigertail/tigertail_tool/tigertool.py" />
+        <option name="permission-script-path" value="/google/data/ro/teams/tradefed/testdata/media/scripts/walt-permission.sh"/>
+        <option name="test-type" value="MidiIn"/>
+        <option name="fields" value="time_to_midi,time_total"/>
+    </test>
+</configuration>
+

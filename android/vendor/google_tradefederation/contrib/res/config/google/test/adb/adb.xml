@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<configuration description="Runs adb tests">
+    <option name="null-device" value="true" />
+
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="files-filter" value="adb"/>
+        <!--TODO: download test files from build server once adb_integration_test is in google_tests-->
+        <!--<option name="files-filter" value="test_adb.py"/>-->
+        <!--<option name="files-filter" value="test_device.py"/>-->
+        <option name="skip-download" value="DEVICE_IMAGE" />
+        <option name="skip-download" value="TESTS_ZIP" />
+        <option name="skip-download" value="BOOTLOADER" />
+        <option name="skip-download" value="BASEBAND" />
+    </build_provider>
+
+    <target_preparer class="com.google.android.adb.AdbStopServerPreparer"/>
+
+    <test class="com.google.android.adb.AdbPythonUnitTestRunner">
+        <!--TODO: download test files from build server once adb_integration_test is in google_tests-->
+        <!--<option name="pythonpath" value="/usr/local/google/home/ghliu/android/master/system/core/adb/"/>-->
+        <!--<option name="pytest" value="test_adb"/>-->
+        <!--<option name="pytest" value="test_device"/>-->
+    </test>
+</configuration>

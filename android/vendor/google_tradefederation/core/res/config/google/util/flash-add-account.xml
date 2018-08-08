@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<configuration description="Utility config to flash latest build from build server with wipe, then configure account on device">
+    <include name="google/util/flash" />
+    <include name="google/util/account-setup" />
+    <option name="test-tag" value="flasher-with-account" />
+</configuration>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Runs functional acceptance test">
+    <!-- any special test files to be pushed -->
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+    <!-- need to specify a test-file-name option -->
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" />
+    <!-- need to specify a apk-path option -->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <!-- need to configure account-name, account-password, account-sync, sync-then-off options -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" />
+    <!-- any special run command options needed -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.TemperatureThrottlingWaiter" />
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" />
+
+    <test class="com.android.tradefed.testtype.InstalledInstrumentationsTest" />
+</configuration>

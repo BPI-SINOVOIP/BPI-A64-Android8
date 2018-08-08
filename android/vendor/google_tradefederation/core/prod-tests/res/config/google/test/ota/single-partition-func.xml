@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Single-partition OTA component tests">
+    <option name="test-tag" value="SinglePartitionOtaFunctional" />
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value="nativetest/recovery_component_test" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/ota/->/data/nativetest/recovery/testdata/" />
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.GTest">
+        <option name="module-name" value="recovery_component_test" />
+    </test>
+</configuration>

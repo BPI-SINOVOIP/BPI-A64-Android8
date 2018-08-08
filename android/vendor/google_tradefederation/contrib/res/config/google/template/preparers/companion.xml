@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Common template for companion phone in a paired setup. -->
+<configuration description="Common template for companion phone in a paired setup" >
+    <device name="companion">
+        <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner" />
+        <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+            <option name="disable" value="true" />
+        </target_preparer>
+        <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+            <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+        </build_provider>
+        <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+        <!-- don't set test harness bit since we need pairing -->
+        <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+            <option name="screen-always-on" value="on" />
+            <option name="screen-adaptive-brightness" value="off" />
+            <option name="screen-brightness" value="50" />
+            <option name="set-test-harness" value="false" />
+            <option name="bluetooth" value="ON" />
+            <option name="wifi" value="ON" />
+            <option name="nfc" value="OFF" />
+            <option name="set-property" key="persist.sys.timezone" value="America/Los_Angeles"/>
+            <option name="set-property" key="log.tag.Flow" value="DEBUG"/>
+        </target_preparer>
+        <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+            <option name="test-file-name" value="BluetoothTests.apk" />
+            <option name="test-file-name" value="sl4a.apk" />
+            <option name="install-arg" value="-d" />
+            <option name="cleanup-apks" value="true" />
+        </target_preparer>
+        <!-- install dependency pieces for pairing onto companion -->
+        <target_preparer class="com.google.android.tradefed.targetprep.InstallCompanionAppApkSetup">
+            <option name="install-arg" value="-d" />
+        </target_preparer>
+        <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+            <option name="alt-dir" value="/google/data/ro/teams/tradefed/testdata/clockwork" />
+            <option name="alt-dir-behavior" value="OVERRIDE" />
+            <option name="test-file-name" value="GeppettoClockwork.apk" />
+            <option name="install-arg" value="-d" />
+        </target_preparer>
+        <!-- prep companion device with some commands -->
+        <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+            <option name="run-command" value="settings put secure enabled_notification_listeners com.google.android.wearable.app/com.google.android.clockwork.stream.NotificationCollectorService" />
+            <!-- Screen on for pairing automation -->
+            <option name="run-command" value="svc power stayon true" />
+            <option name="run-command" value="setprop persist.logd.logpersistd logcatd" />
+            <!-- clear logpersisd logs -->
+            <option name="run-command" value="rm /data/misc/logd/logcat.*" />
+        </target_preparer>
+        <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer">
+            <option name="remove-accounts" value="true" />
+        </target_preparer>
+        <!-- Two preparer for conectivity setup and by default disabled. -->
+        <target_preparer class="com.google.android.tradefed.targetprep.SemaphoreTokenTargetPreparer" />
+        <target_preparer class="com.google.android.tradefed.targetprep.AttenuatorPreparer" />
+        <target_preparer class="com.google.android.tradefed.targetprep.InstallGmsCoreApkSetup">
+            <option name="version-number" value="v9" />
+            <option name="install-arg" value="-d" />
+        </target_preparer>
+        <target_preparer class="com.google.android.tradefed.targetprep.InstallGsaApkSetup">
+            <option name="version-number" value="6.11" />
+            <option name="install-arg" value="-d" />
+        </target_preparer>
+    </device>
+    <template-include name="NOTIF" default="google/template/preparers/companion-notif-NYC" />
+</configuration>

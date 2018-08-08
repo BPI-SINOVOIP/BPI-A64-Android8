@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved. -->
+<configuration description="Flashes device, pushes Ritzperf benchmark tests to the device, runs the tests, and posts the results to the dashboard.">
+    <include name="google/common/asit" />
+    <option name="invocation-failure-email:destination" value="android-asit-failures@google.com" />
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer"/>
+    <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/ritzperf/android_benchmark_proguard2_dex.jar->/data/local/tmp/android_benchmark_proguard2_dex.jar"/>
+    <option name="perf-tests-jarfiles" value="/data/local/tmp/android_benchmark_proguard2_dex.jar"/>
+    <option name="runtime-args" value="-Xmx48m"/>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-results-regex" value="(FormulaEvaluationActions\.EvaluateAndApplyChanges)\r?\n?(\d+)"/>
+        <option name="benchmark-args" value="FormulaEvaluationActions.EvaluateAndApplyChanges"/>
+        <option name="pre-perf-arg" value="echo FormulaEvaluationActions.EvaluateAndApplyChanges ; "/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-results-regex" value="(GenericCalcActions\.QuicksortTest)\r?\n?(\d+)"/>
+        <option name="benchmark-args" value="GenericCalcActions.QuicksortTest"/>
+        <option name="pre-perf-arg" value="echo GenericCalcActions.QuicksortTest ; "/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-results-regex" value="(GenericCalcActions\.MemAllocTest)\r?\n?(\d+)"/>
+        <option name="benchmark-args" value="GenericCalcActions.MemAllocTest"/>
+        <option name="pre-perf-arg" value="echo GenericCalcActions.MemAllocTest ; "/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-results-regex" value="(ShuffleRangeActions\.MoveFunctionColumn)\r?\n?(\d+)"/>
+        <option name="benchmark-args" value="ShuffleRangeActions.MoveFunctionColumn"/>
+        <option name="pre-perf-arg" value="echo ShuffleRangeActions.MoveFunctionColumn ; "/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-results-regex" value="(ShuffleRangeActions\.MoveLiteralColumn)\r?\n?(\d+)"/>
+        <option name="benchmark-args" value="ShuffleRangeActions.MoveLiteralColumn"/>
+        <option name="pre-perf-arg" value="echo ShuffleRangeActions.MoveLiteralColumn ; "/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-results-regex" value="(FormulaEvaluationActions\.EvaluateLargeSums)\r?\n?(\d+)"/>
+        <option name="benchmark-args" value="FormulaEvaluationActions.EvaluateLargeSums"/>
+        <option name="pre-perf-arg" value="echo FormulaEvaluationActions.EvaluateLargeSums ; "/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-results-regex" value="(FormulaEvaluationActions\.EvaluateFibonacci)\r?\n?(\d+)"/>
+        <option name="benchmark-args" value="FormulaEvaluationActions.EvaluateFibonacci"/>
+        <option name="pre-perf-arg" value="echo FormulaEvaluationActions.EvaluateFibonacci ; "/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-results-regex" value="(FormulaEvaluationActions\.EvaluateComplexFormulas)\r?\n?(\d+)"/>
+        <option name="benchmark-args" value="FormulaEvaluationActions.EvaluateComplexFormulas"/>
+        <option name="pre-perf-arg" value="echo FormulaEvaluationActions.EvaluateComplexFormulas ; "/>
+    </test>
+    <test class="com.google.android.oat.RuntimePerfTest" >
+        <option name="perf-results-regex" value="(FormulaEvaluationActions\.EvaluateCascadingSums)\r?\n?(\d+)"/>
+        <option name="benchmark-args" value="FormulaEvaluationActions.EvaluateCascadingSums"/>
+        <option name="pre-perf-arg" value="echo FormulaEvaluationActions.EvaluateCascadingSums ; "/>
+    </test>
+</configuration>

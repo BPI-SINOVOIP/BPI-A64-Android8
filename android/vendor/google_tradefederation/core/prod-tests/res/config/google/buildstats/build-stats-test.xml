@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build stats and posts them to the dashboard.">
+    <!--  no device required -->
+    <option name="null-device" value="true" />
+    <option name="test-tag" value="build_stats" />
+    <build_provider class="com.google.android.buildstats.BuildStatsLaunchControlProvider" />
+    <test class="com.google.android.buildstats.BuildStatsTest" />
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <log_saver class="com.android.tradefed.result.FileSystemLogSaver">
+        <option name="log-file-path" value="/auto/android-test/www/test_logs" />
+        <option name="log-file-url" value="http://android-test/www/test_logs" />
+    </log_saver>
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+    <result_reporter class="com.google.android.tradefed.result.InspectBugResultReporter">
+        <option name="suite-key-prefix" value="asit_" />
+        <!-- TODO: Turn this on globally. For now, turn it on on a case-by-case basis -->
+        <option name="disable-inspect-bug" value="true" />
+    </result_reporter>
+    <result_reporter class="com.google.android.tradefed.result.RdbRunMetricsResultReporter" />
+    <result_reporter class="com.android.tradefed.result.InvocationFailureEmailResultReporter" >
+        <option name="sender" value="tsu+tffail@google.com" />
+        <option name="destination" value="tsu@google.com" />
+    </result_reporter>
+</configuration>

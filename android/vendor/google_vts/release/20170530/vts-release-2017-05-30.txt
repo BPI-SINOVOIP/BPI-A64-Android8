@@ -1,0 +1,9 @@
+Release Date: 2017/05/30
+Build Tag: OPR1.170530.001
+Build ID: 4050665
+Branch: oc-release
+Total test modules: 98 of 98
+Total passed test cases: 4783
+Total failed test cases: 127
+Total test execution time: 3h 11m 42s
+Release decision: DISTRIBUTE

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <logger class="com.android.tradefed.log.FileLogger" />
+     <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="setting" key="screen_brightness_mode" value="0" />
+        <option name="setting" key="screen_brightness" value="30" />
+        <option name="setting" key="accelerometer_rotation" value="0" />
+     </target_preparer>
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+    <log_saver class="com.android.tradefed.result.FileSystemLogSaver">
+        <option name="log-file-path" value="/auto/android-test/www/test_logs" />
+        <option name="log-file-url" value="http://android-test/www/test_logs" />
+    </log_saver>"
+
+    <!--
+    Test apk which is platform specific. Current platform build is KTU84G
+    -->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" >
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/clockwork/GeppettoClockwork.apk"/>
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/clockwork/GeppettoPowerTest.apk"/>
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/clockwork/GmsCore.apk"/>
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/clockwork/ClockworkCompanionGoogle.apk"/>
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/clockwork/Gmail.apk"/>
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/clockwork/Velvet.apk"/>
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+         <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/busybox-android->/data/local/busybox-android" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command" value="chmod 777 /data/local/busybox-android"/>
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup" >
+        <option name="setting-cmd-apk-path" value="/home/android-build/tradefed/SettingsCmd-devkey-1.apk" />
+    </target_preparer>
+    <result_reporter class="com.google.android.tradefed.result.RdbSideBySideResultReporter" />
+</configuration>

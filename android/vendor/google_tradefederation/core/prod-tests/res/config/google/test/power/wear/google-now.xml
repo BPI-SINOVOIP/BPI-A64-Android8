@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerWearGoogleNow"/>
+
+    <target_preparer class="com.google.android.tradefed.targetprep.WearPairingAllocator"/>
+    <target_preparer class="com.google.android.tradefed.targetprep.WearPairingDeviceWiper"/>
+
+    <include name="google/test/power/common/base"/>
+    <include name="google/test/power/common/phone-wear-base"/>
+    <include name="google/test/power/common/app-install-pairing-for-phone"/>
+    <include name="google/test/power/common/radio-wifi-location"/>
+    <option name="google-device-setup:bluetooth" value="on"/>
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:set-gservice-setting" key="qsb:debug_level" value="2"/>
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/nowdevutils.apk"/>
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer">
+        <option name="account-sync" value="true"/>
+    </target_preparer>
+
+    <test class="com.google.android.clockwork.PairingTest">
+        <option name="phone-primary" value="true"/>
+    </test>
+
+    <option name="schema_ru_pair" key="GoogleSearchAppTests-testGoogleNow" value="powerPairing"/>
+    <option name="schema_suffix" value="PairStandbyGoogleNow"/>
+
+    <test class="com.google.android.power.tests.MonsoonPairingTestRunner">
+        <option name="test_method" value="testGoogleNow"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="GoogleSearchAppTests"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_duration" key="GoogleSearchAppTests-testGoogleNow" value="7200"/>
+        <option name="monsoon_voltage" value="4.2"/>
+        <option name="monsoon_duration" value="7500"/>
+        <option name="monsoon_frequency" value="10"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+        <option name="pre-test-nohup-command" value="dumpsys deviceidle disable"/>
+    </test>
+</configuration>

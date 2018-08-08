@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and runs encryption stress tests">
+    <include name="google/common/asit" />
+    <option name="test-tag" value="EncryptionFuncV2" />
+    <test class="com.android.encryption.tests.EncryptionFunctionalityTest" />
+</configuration>

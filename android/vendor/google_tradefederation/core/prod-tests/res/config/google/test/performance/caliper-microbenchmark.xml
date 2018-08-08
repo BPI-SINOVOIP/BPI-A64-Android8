@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Runs caliper performance microbenchmark tests">
+    <option name="test-tag" value="caliper_microbenchmark" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value="caliperperf" />
+    </target_preparer>
+
+    <test class="com.google.android.performance.CaliperPerformanceTest" />
+</configuration>

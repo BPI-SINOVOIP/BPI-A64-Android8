@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="chrome/power/wifi_setup" />
+    <option name="test-tag" value="chrome_power_browser_wifi" />
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider" />
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="Browser_UrlDelay" value="90000" />
+        <option name="config" key="Browser_Url_1" value="cnn.com" />
+        <option name="config" key="Browser_Url_2" value="espn.com" />
+        <option name="config" key="Browser_Url_3" value="nytimes.com" />
+        <option name="config" key="TestCase" value="BrowserWifi" />
+        <option name="config" key="TestCase_idle" value="BrowserWifiIdle" />
+        <option name="config" key="ScreenOffTime" value="600000" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="test_case_name" value="testChrome" />
+        <option name="monsoon_voltage" value="3.9" />
+        <option name="monsoon_samples" value="1200" />
+        <option name="ru_name" value="CommonUserActions" />
+    </test>
+</configuration>

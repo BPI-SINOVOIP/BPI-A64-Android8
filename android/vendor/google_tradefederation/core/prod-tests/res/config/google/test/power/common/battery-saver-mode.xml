@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Turn on battery saver mode">
+    <option name="google-device-setup:battery-saver-mode" value="on" />
+</configuration>

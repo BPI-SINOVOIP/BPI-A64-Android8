@@ -1,0 +1,7 @@
+# Script to start "preinstall" on the device, which has a very rudimentary
+# shell.
+#
+base=/vendor
+export CLASSPATH=$base/framework/preinstall.jar
+exec app_process $base/bin com.softwinner.preinstall.Preinstall "$@"
+

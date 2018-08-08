@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Single-partition OTA fault injection tests">
+    <target_preparer class="com.google.android.tradefed.targetprep.OtaFaultInjectionPreparer" />
+    <target_preparer class="com.google.android.ota.VersionCachePreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="OtaFunctionalTests.apk" />
+    </target_preparer>
+    <test class="com.android.ota.tests.SideloadOtaStabilityTest">
+        <option name="iterations" value="1" />
+        <option name="max-install-time" value="600" />
+    </test>
+    <!-- run postcondition checks -->
+    <test class="com.android.tradefed.testtype.AndroidJUnitTest">
+        <option name="package" value="com.android.functional.otatests" />
+        <option name="class" value="com.android.functional.otatests.SystemUpdateTest" />
+    </test>
+</configuration>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<configuration description="Download manager host-based tests">
+    <option name="test-tag" value="download_manager" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="DownloadManagerTestApp.apk" />
+    </target_preparer>
+
+    <test class="com.android.framework.tests.DownloadManagerHostTests" />
+</configuration>

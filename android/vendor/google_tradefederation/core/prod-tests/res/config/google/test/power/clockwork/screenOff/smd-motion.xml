@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="clockSMDMotion" />
+
+    <include name="google/test/power/common/cw-base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+    <option name="clockwork-device-setup:disable-ambient" value="true" />
+
+    <option name="schema_ru_pair" key="SensorTestCases-testSMD-active" value="ClockWorkScreenOff" />
+    <option name="schema_ru_pair" key="SensorTestCases-testSMD-idle" value="ClockWorkScreenOff" />
+    <option name="schema_suffix" value="NonBatched-Motion" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testSMD" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="SensorTestCases" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="SensorTestCases-testSMD-active" value="900" />
+        <option name="test_duration" key="SensorTestCases-testSMD-idle" value="300" />
+        <option name="test_arguments" key="Rate" value="0" />
+        <option name="test_arguments" key="BatchLatency" value="0" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_duration" value="1500" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="pre-test-host-command" value="/google/data/ro/teams/tradefed/testdata/robot/pypose/Robot_watch_walk.py start" />
+        <option name="post-test-host-command" value="/google/data/ro/teams/tradefed/testdata/robot/pypose/Robot_watch_walk.py stop" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

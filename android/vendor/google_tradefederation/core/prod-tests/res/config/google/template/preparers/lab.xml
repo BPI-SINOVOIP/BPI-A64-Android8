@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Common build provider and preparers for lab templates. -->
+<configuration description="Common build provider and preparers for lab templates." >
+    <option name="bugreport-on-invocation-ended" value="true" />
+    <!-- put DeviceCleaner first to be called last in TearDown -->
+    <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner" />
+    <!-- Provides a mechanism for overwriting the preloaded classes that is disabled by default -->
+    <target_preparer class="com.android.tradefed.targetprep.PreloadedClassesPreparer">
+        <option name="skip" value="true" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="screen-always-on" value="on" />
+        <option name="screen-adaptive-brightness" value="off" />
+        <option name="screen-brightness" value="30" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GrantPermissionPreparer" />
+</configuration>

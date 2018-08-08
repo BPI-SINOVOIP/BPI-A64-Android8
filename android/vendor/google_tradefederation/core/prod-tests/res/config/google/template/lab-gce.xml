@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Template for lab test runs. -->
+<configuration description="Template for lab">
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="skip-download" value="DEVICE_IMAGE" />
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+    <option name="tcp-device" value="true" />
+    <device_recovery class="com.google.android.tradefed.device.GceDeviceRecovery" />
+    <target_preparer class="com.google.android.tradefed.targetprep.GceAvdPreparer"/>
+    <include name="google/template/preparers/lab" />
+
+    <template-include name="test" />
+
+    <include name="google/template/reporters/lab" />
+
+    <template-include name="reporters" default="empty" />
+</configuration>

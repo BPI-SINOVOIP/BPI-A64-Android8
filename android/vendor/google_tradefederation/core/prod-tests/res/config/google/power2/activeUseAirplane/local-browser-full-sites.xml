@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/settings/airplane" />
+    <option name="test-tag" value="powerBrowserFullSitesLocal" />
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="Browser_UrlDelay" value="20000" />
+        <option name="config" key="Browser_Url_1" value="file:///sdcard/.cachesite/amazon/index.html" />
+        <option name="config" key="Browser_Url_2" value="file:///sdcard/.cachesite/msn/index.html" />
+        <option name="config" key="Browser_Url_3" value="file:///sdcard/.cachesite/cnn/index.html" />
+        <option name="config" key="TestCase" value="ChromeFullSiteLocal" />
+        <option name="config" key="TestCase_idle" value="ChromeFullSiteLocalIdle" />
+        <option name="config" key="ScreenOffTime" value="600000" />
+        <option name="config" key="Desktop_Url" value="http://www.nytimes.com" />
+        <option name="config" key="DesktopSite" value="true" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testFullSites" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="BrowserTests" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="11000" />
+        <option name="ru_name" value="Browser" />
+    </test>
+</configuration>

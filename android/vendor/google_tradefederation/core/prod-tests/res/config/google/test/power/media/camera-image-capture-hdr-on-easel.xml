@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+  <include name="google/test/power/media/camera-image-capture-hdr-on"/>
+  <option name="test-tag" value="powerCameraImageCaptureHdrOnEasel" />
+  <option name="schema_suffix" value="easel" />
+  <option name="google-device-setup:set-property" key="persist.camera.hdrplus.enable" value="1" />
+</configuration>

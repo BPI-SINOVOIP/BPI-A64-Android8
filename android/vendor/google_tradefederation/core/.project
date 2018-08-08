@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>google-tradefed</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>protobuf</name>
+			<type>2</type>
+			<locationURI>TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/host-libprotobuf-java-full_intermediates/proto/src/com</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

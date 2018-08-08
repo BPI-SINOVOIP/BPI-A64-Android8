@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Bandwidth download microbenchmark tests for mobile">
+    <option name="test-tag" value="bandwidth_mobile_download" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="BandwidthTests.apk" />
+    </target_preparer>
+
+    <test class="com.android.framework.tests.BandwidthMicroBenchMarkTest">
+        <option name="test-package-name" value="com.android.bandwidth.tests" />
+        <option name="test-class-name" value="com.android.bandwidthtest.BandwidthTest" />
+        <option name="test-method-name" value="testMobileDownload" />
+        <option name="test-label" value="BandwidthMobileTestDownload" />
+        <option name="bandwidth-test-server" value="http://test-bandwidth.appspot.com/" />
+        <option name="compact-ru-key" value="mobile-data-pass-fail" />
+    </test>
+</configuration>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved. -->
+<configuration description="Configures google account on device.">
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" />
+</configuration>

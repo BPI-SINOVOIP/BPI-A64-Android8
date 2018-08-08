@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<configuration description="Test that measures application start up times">
+    <option name="test-tag" value="LaunchPerformanceTests" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:location-gps" value="off" />
+    <option name="google-device-setup:location-network" value="off" />
+
+    <target_preparer class="com.google.android.tradefed.targetprep.InstallPublicApkSetup">
+        <option name="disable" value="true" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer">
+        <option name="account-sync" value="true" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.DismissDialogsPreparer" >
+        <option name="test-file-name" value="DialogDismissalUtil.apk" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="AppLaunch.apk" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.HardwarePerformancePreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+    <test class="com.google.android.performance.AppLaunchTest">
+        <option name="ru-key" value="ApplicationStartupTime2" />
+    </test>
+</configuration>

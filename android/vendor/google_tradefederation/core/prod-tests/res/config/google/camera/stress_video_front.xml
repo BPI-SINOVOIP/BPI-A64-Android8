@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Camera stress video front.">
+    <option name="test-tag" value="frontVideoCapture" />
+    <include name="google/camera/stress_base" />
+
+    <option name="camera2-stress:test-methods" value="testFrontCameraVideoCapture" />
+    <option name="instrumentation-arg" key="iamgeCount" value="400" />
+</configuration>

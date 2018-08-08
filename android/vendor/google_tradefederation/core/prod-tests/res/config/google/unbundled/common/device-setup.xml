@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved. -->
+<configuration description="Performs devices setup for for unbundled app testing. Wipes use data then configures device settings">
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceWiper">
+        <option name="disable" value="true" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="disable" value="true" />
+        <!--enable mock location -->
+        <option name="secure-setting" key="mock_location" value="1" />
+        <!--enable NLP for pre-JB -->
+        <option name="secure-setting" key="network_location_opt_in" value="1" />
+        <option name="secure-setting" key="location_providers_allowed" value="network" />
+        <!--For JB+,  prevent 'Location Consent' dialog from appearing -->
+        <option name="google-partner-setting" key="network_location_opt_in" value="1" />
+    </target_preparer>
+    <!-- use DeviceAdminPreparer to remove any DeviceAdmin policy artifacts -->
+    <target_preparer class="com.google.android.tradefed.targetprep.DeviceAdminPreparer">
+      <option name="disable" value="true" />
+      <option name="setup-policy-path" value="/device_policies/empty_device_policy.xml" />
+    </target_preparer>
+    <!-- include device cleaner to turn off screen if desired. By default disabled, set -->
+    <!--  post-cleanup ==  SCREEN_OFF to enable -->
+    <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner"/>
+</configuration>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved
+     Base config for run target configs, use in conjunction with run_target configs.
+     This config should not be run by itself.
+-->
+<configuration description="base device args">
+    <option name="target-temperature" value="28" />
+</configuration>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and runs memory tests">
+    <option name="test-tag" value="FitMemoryTest" />
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+    </target_preparer>
+    <test class="com.google.android.memory.MemoryTestRunner">
+        <option name="test-class-name" value="SystemHealthTest" />
+        <option name="test-case-name" value="testMemoryRecordingActivity" />
+        <option name="test-package-name" value="com.google.android.apps.fitness.systemhealth" />
+        <option name="metrics-key-name" value="fit.systemhealth.recording.activity" />
+    </test>
+</configuration>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerGyroscopeSensorNonBatched" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+
+    <option name="schema_ru_pair" key="SensorTestCases-testGyroscope-active" value="SensorPowerNonBatched" />
+    <option name="schema_ru_pair" key="SensorTestCases-testGyroscope-idle" value="SensorPowerNonBatchedSuspend" />
+    <option name="schema_suffix" value="NonBatched" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testGyroscope" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="SensorTestCases" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="SensorTestCases-testGyroscope-active" value="900" />
+        <option name="test_duration" key="SensorTestCases-testGyroscope-idle" value="300" />
+        <option name="test_arguments" key="Rate" value="40000" />
+        <option name="test_arguments" key="BatchLatency" value="0" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="1500" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2010 Google Inc. All Rights Reserved. -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Runs the one time ncd setup on device">
+
+    <test class="com.google.android.tradefed.device.NcdSetup" />
+
+</configuration>

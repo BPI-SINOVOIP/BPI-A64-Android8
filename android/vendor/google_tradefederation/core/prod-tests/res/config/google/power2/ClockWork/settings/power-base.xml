@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and setup the device for power test">
+    <include name="google/power2/ClockWork/settings/power-asit-base" />
+    <option name="disable-keyguard" value="false" />
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value="local/tmp" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="PowerTests.apk" />
+        <option name="test-file-name" value="GeppettoPowerTest.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+         <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/busybox-android->/data/local/busybox-android" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command" value="chmod 777 /data/local/busybox-android"/>
+        <option name="run-command" value="am startservice -a com.google.android.clockwork.action.TUTORIAL_SKIP" />
+        <option name="run-command" value="am broadcast -a com.google.android.clockwork.action.TEST_MODE" />
+        <option name="run-command" value="dumpsys batterystats --enable full-wake-history" />
+        <option name="run-command" value="dumpsys battery set level 90" />
+        <option name="run-command" value="dumpsys battery set usb 0" />
+    </target_preparer>
+    <!-- Workaround for the sync disable. Need to wait for 3 mins for GMS sync back off complete -->
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" >
+        <option name="reboot-before-sleep" value="false" />
+        <option name="delay" value="180000" />
+    </target_preparer>
+    <option name="google-device-setup:setting-cmd-apk-path" value="/home/android-build/tradefed/SettingsCmd-devkey-1.apk" />
+    <result_reporter class="com.google.android.tradefed.result.RdbRunMetricsResultReporter" />
+    <option name="device-unavail-email:destination" value="yslau@google.com" />
+    <option name="invocation-failure-email:destination" value="yslau@google.com" />
+    <option name="device-unavail-email:sender" value="tffail@google.com" />
+</configuration>

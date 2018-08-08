@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2010 Google Inc. All Rights Reserved. -->
+<!-- Required options: branch build-flavor -->
+<!--  TODO: move this to tradefed proper -->
+<configuration description="Runs device setup without flashing a build">
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup" />
+
+</configuration>

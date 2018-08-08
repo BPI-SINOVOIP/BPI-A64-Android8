@@ -1,0 +1,16 @@
+release Date: 2017/06/23
+Build Tag: OPR1.170622.003
+Build ID: 4127036
+Branch: oc-release
+Total test modules: 98 of 98
+Total passed test cases: 6083
+Total failed test cases: 18
+Total test execution time: 4H 6m 14s
+Release decision: DISTRIBUTE
+Notes:
+VtsHalKeymaster HAL: 5 test case failures (sailfish impl issue)
+VtsHalSensor HAL: 1 test case failure (flakiness due to a value range)
+VtsKernelLtp: 2 test case failures (under investigation)
+VtsTreblePlatformVersionTest: expected on sailfish
+
+

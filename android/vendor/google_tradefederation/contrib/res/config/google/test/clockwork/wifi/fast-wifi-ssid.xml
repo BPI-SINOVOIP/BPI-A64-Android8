@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Wifi SSID saved network test">
+    <!-- Left blank so some configs can add their own run command -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+    <option name="test-tag" value="CwFastWifiSsid" />
+    <option name="test-run-name" value="CwFastWifiSsid" />
+    <test class="com.google.android.clockwork.wifi.CwFastWifiSsid" />
+</configuration>

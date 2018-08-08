@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/settings/airplane" />
+    <option name="test-tag" value="powerProfileScreenOn" />
+     <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/ScreenOn.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/shell_scripts/screen.sh->/data/local/screen.sh" />
+        <option name="post-push" value="chmod 555 /data/local/screen.sh" />
+   </target_preparer>
+    <test class="com.google.android.power.tests.PowerProfileRunner">
+        <option name="testcase" value="screen.on" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="5000" />
+        <option name="ru_name" value="PowerProfile" />
+    </test>
+</configuration>

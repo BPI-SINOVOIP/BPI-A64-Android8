@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Enable AOT compilation">
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <!--Command to precompile all the apps and generate dex beforehand instead of using run time compilation using JIT -->
+        <option name="run-command" value="cmd package compile -m speed -f -a" />
+        <option name="run-command-timeout" value="600s" />
+        <option name="delay-after-commands" value="60" />
+    </target_preparer>
+</configuration>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved
+     Base config for run target configs, use in conjunction with run_target configs.
+     This config should not be run by itself.
+-->
+<configuration description="bullhead device args">
+    <include name="google/camera/run_target/base" />
+    <option name="device-temperature-file-path" value="/sys/class/hwmon/hwmon2/device/xo_therm" />
+</configuration>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Common Verizon DoU test configurations">
+
+    <!-- Push device-specific bluetooth config file onto the device to skip the device pairing, -->
+    <!-- because we cannot put third-party Bluetooth headsets into discovery modes. -->
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+        <option name="post-push" value="reboot" />
+    </target_preparer>
+
+    <!-- com.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="location-collection" value="off" />
+        <option name="screen-brightness-nits" value="200" />
+        <option name="screen-saver" value="off" />
+        <option name="screen-adaptive-brightness" value="off" />
+        <option name="screen-timeout-secs" value="1800" />
+        <option name="auto-rotate" value="off" />
+        <option name="disable-audio" value="false" />
+        <option name="disable-volta" value="true" />
+        <option name="disable-playstore" value="true" />
+
+        <!-- Enable full battery stats history -->
+        <option name="enable-full-battery-stats-history" value="true" />
+
+        <option name="airplane-mode" value="off" />
+        <option name="wifi" value="on" />
+        <option name="bluetooth" value="on" />
+        <option name="disable-dialing" value="false" />
+        <option name="disable-doze" value="false" />
+
+        <!-- Update Time Zone for easier data analysis -->
+        <option name="set-property" key="persist.sys.timezone" value="America/Los_Angeles" />
+
+        <!-- Turn off icing download for test purpose -->
+        <option name="set-gservice-setting" key="gms_icing_extension_download_enabled" value="false" />
+
+        <!-- Enable clock dump info-->
+        <option name="run-command" value="echo 1 > /d/clk/debug_suspend" />
+    </target_preparer>
+
+    <!-- Prevent Pixel Logger from running -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="setprop persist.sys.modem.diag.mdlog false" />
+    </target_preparer>
+
+    <!-- Set up DUT account. -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" >
+        <option name="account-sync" value="true" />
+    </target_preparer>
+
+    <!-- Installs the dismiss dialogs app and dismisses the apps' initial dialogs. -->
+    <target_preparer class="com.google.android.tradefed.targetprep.DismissDialogsPreparer" >
+      <option name="test-file-name" value="DialogDismissalUtil.apk" />
+      <option name="quit-on-error" value="true" />
+      <option name="upload-screenshots" value="true" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="alt-dir" value="/google/data/ro/teams/tradefed/testdata/power" />
+        <option name="test-file-name" value="DaysOfUsePowerTestsApp.apk" />
+    </target_preparer>
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GrantPermissionPreparer" />
+
+    <target_preparer class="com.google.android.power.tests.PowerTestCleaner" />
+</configuration>

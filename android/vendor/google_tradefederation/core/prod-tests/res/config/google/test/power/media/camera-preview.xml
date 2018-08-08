@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerCameraPreview" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+    <option name="dismiss-dialogs:dismiss-apps" value="GoogleCamera" />
+
+    <option name="schema_ru_pair" key="CameraTests-testCameraPreview" value="powerCamera"/>
+    <option name="schema_ru_pair" key="CameraTests-testCameraPreview-idle" value="powerCameraIdle"/>
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testCameraPreview"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="CameraTests"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_duration" key="CameraTests-testCameraPreview" value="120"/>
+        <option name="test_duration" key="CameraTests-testCameraPreview-idle" value="120"/>
+        <option name="monsoon_voltage" value="4.2"/>
+        <option name="monsoon_duration" value="420"/>
+        <option name="monsoon_frequency" value="10"/>
+        <option name="decimal-places" value="0"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+    </test>
+</configuration>

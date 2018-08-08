@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved
+     Test to calculate the succesive boot delays and granular boot info
+     TODO(kevcheng): Move this to boot-successive.xml once stable in lab.
+-->
+<configuration description="Device Boot Test">
+    <option name="test-tag" value="successiveboottest" />
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer">
+        <option name="account-sync" value="true" />
+    </target_preparer>
+    <test class="com.google.android.asit.DeviceBootTest">
+        <option name="disable" value="true" />
+    </test>
+    <option name="first-boot" value="false" />
+    <option name="successive-boot" value="true" />
+    <option name="granular-boot-info" value="true" />
+    <option name="dmesg-info" value="true" />
+    <option name="boot-count" value="10" />
+</configuration>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerWifi2GLowRSSIStandby" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/wifi" />
+
+    <target_preparer class="com.google.android.power.tests.WhirlWindWifiPreparer" >
+        <option name="network-type" value="2G" />
+        <option name="socket-timeout-secs" value="4100.0" />
+        <option name="wifi-security" value="wpa2" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="IdleTestCase-testIdleScreenOff" value="powerWifi" />
+    <option name="schema_suffix" value="2G-low-rssi-standby" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testIdleScreenOff" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="IdleTestCase" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="IdleTestCase-testIdleScreenOff" value="3600" />
+        <option name="signal-strength-controller" value="wifi" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="3800" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

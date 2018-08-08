@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerCameraPreviewRear1080P30FpsEISH264" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+    <option name="dismiss-dialogs:dismiss-apps" value="GoogleCamera" />
+
+    <option name="schema_ru_pair" key="CameraTests-testUserConfigVideoCapture" value="powerCamera"/>
+    <option name="schema_suffix" value="PreviewRear1080P30FpsEISH264" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testUserConfigVideoCapture"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="CameraTests"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_arguments" key="capture_video" value="false" />
+        <option name="test_arguments" key="camera_type" value="back" />
+        <option name="test_arguments" key="resolution" value="HD1080p" />
+        <option name="test_arguments" key="frame_rate" value="30" />
+        <option name="test_arguments" key="eis_enabled" value="true" />
+        <option name="test_duration" key="CameraTests-testUserConfigVideoCapture" value="120"/>
+        <option name="monsoon_voltage" value="4.2"/>
+        <option name="monsoon_duration" value="200"/>
+        <option name="monsoon_frequency" value="10"/>
+        <option name="decimal-places" value="0"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+    </test>
+</configuration>

@@ -1,0 +1,48 @@
+#!/usr/bin/expect
+
+# This script simple switches all power plug off for a given NPS
+
+proc abort {} {
+  puts "Timeout or EOF\n"
+  exit 1
+}
+
+# read input argument
+set ip [lindex $argv 0]
+# set variables
+set timeout 60
+
+if { $ip == "" } {
+  puts "Usage: <nps ip>"
+  exit 1
+}
+
+spawn telnet $ip
+
+expect {
+  "login:" { send -- "super\r"}
+  default abort
+}
+
+expect {
+  "Password:" { send -- "super\r" }
+  default abort
+}
+sleep 1
+expect {
+  "NPS>" { send -- "/OFF *\r" }
+  default abort
+}
+sleep 1
+expect {
+  "Are you sure? (Y/N):" {send -- "Y \r"}
+  default abort
+}
+sleep 15
+expect {
+  "NPS>" { send -- "/X\r" }
+  timeout abort
+  eof
+}
+puts "Finished OK\n"
+exit 0

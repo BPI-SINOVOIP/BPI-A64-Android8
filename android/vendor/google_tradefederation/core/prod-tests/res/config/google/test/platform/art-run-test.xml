@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved. -->
+<configuration description="Runs the art run-test with Valgrind.">
+    <option name="test-tag" value="ArtRunTests" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value= "art-run-tests"/>
+        <option name="test-file-name" value= "art-test/arm/libarttest.so"/>
+        <option name="test-file-name" value= "art-test/arm64/libarttest.so"/>
+        <!-- libarttest.so depends on libartd.so-->
+        <option name="test-file-name" value="lib/libartd.so" />
+        <option name="test-file-name" value="lib64/libartd.so" />
+        <!-- lib64/ doesn't exist for 32bit arm device.-->
+        <option name="throw-if-not-found" value="false" />
+    </target_preparer>
+
+    <test class="com.google.android.oat.ArtRunTest" />
+</configuration>

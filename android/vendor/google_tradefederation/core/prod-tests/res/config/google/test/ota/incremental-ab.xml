@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Incremental OTA update">
+    <option name="test-tag" value="IncrementalAbOtaFromBUT" />
+    <target_preparer class="com.google.android.ota.VersionCachePreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="OtaFunctionalTests.apk" />
+    </target_preparer>
+    <target_preparer class="com.google.android.ota.FakeOtaPreparer" />
+    <!-- apply the OTA itself -->
+    <test class="com.google.android.ota.OtaFunctionalTest" />
+    <!-- run postcondition checks -->
+    <test class="com.android.tradefed.testtype.AndroidJUnitTest">
+        <option name="package" value="com.android.functional.otatests" />
+        <option name="class" value="com.android.functional.otatests.SystemUpdateTest" />
+    </test>
+    <test_profiler class="com.android.tradefed.profiler.AggregatingProfiler">
+        <option name="profiler-name" value="IoProfiler" />
+        <option name="recorder" value="com.android.tradefed.profiler.recorder.TraceMetricsRecorder" />
+        <!-- specify metric-descriptor with invocation -->
+    </test_profiler>
+</configuration>

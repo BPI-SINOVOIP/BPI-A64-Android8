@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Common base configuration for local runs with Google specific preparers / reporters. -->
+<!-- Used for Clockwork tests that require a companion device. -->
+<configuration description="Template based configuration for local runs using sponge logging">
+    <build_provider class="com.android.tradefed.build.BootstrapBuildProvider" />
+    <target_preparer class="com.google.android.tradefed.targetprep.clockwork.ClockworkCompanionAllocator" />
+    <!-- Update Time Zone for easier data analysis -->
+    <target_preparer class="com.google.android.tradefed.targetprep.clockwork.CompanionDeviceSetup">
+        <option name="set-property" key="persist.sys.timezone" value="America/Los_Angeles"/>
+    </target_preparer>
+    <include name="google/template/local-common" />
+    <template-include name="test" />
+</configuration>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<configuration description="Run GLBenchmark on device and get results">
+    <option name="test-tag" value="GFXBench3_0" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:airplane-mode" value="on" />
+    <option name="google-device-setup:screen-saver" value="off" />
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.CpuThrottlingWaiter" />
+    <test class="com.google.android.performance.GFXBench3Test" />
+</configuration>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration
+    description="Running wifi throughput test">
+    <option name="test-tag" value="CwIosBtThroughput" />
+    <option name="test-run-name" value="ClockworkiOSBtThroughput" />
+    <test class="com.google.android.clockwork.ClockworkiOSBtThroughput" />
+</configuration>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and setup the device for power test">
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value="local/tmp" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="PowerTests.apk" />
+        <option name="test-file-name" value="GeppettoPowerTest.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/cachesite->/sdcard" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/chrome-command-line->/data/local/chrome-command-line" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/chrome-command-line->/data/local/tmp/chrome-command-line" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/busybox-android->/data/local/busybox-android" />
+        <option name="post-push" value="chmod 555 /data/local/busybox-android" />
+    </target_preparer>
+    <!--  optionally install additional apks from filesystem -->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <!--  optionally remove above apks from filesystem -->
+    <target_preparer class="com.android.tradefed.targetprep.FileCleaner" />
+    <option name="google-device-setup:gservices-setting" key="location:collection_enabled" value="0" />
+    <option name="google-device-setup:secure-setting" key="screensaver_enabled" value="0" />
+    <option name="google-device-setup:audio-silent" value="false"/>
+    <option name="google-device-setup:disable-use-location" value="true" />
+    <option name="google-device-setup:setting" key="screen_brightness_mode" value="0" />
+    <option name="google-device-setup:setting" key="screen_off_timeout" value="1800000" />
+    <option name="google-device-setup:setting" key="dim_screen" value="0" />
+    <option name="google-device-setup:setting" key="notification_light_pulse" value="0" />
+    <option name="google-device-setup:setting" key="accelerometer_rotation" value="0" />
+    <option name="google-device-setup:disable-dialing" value="false" />
+    <option name="google-device-setup:setting-cmd-apk-path" value="/home/android-build/tradefed/SettingsCmd-devkey-1.apk" />
+    <option name="google-device-setup:local-data-path" value="/google/data/ro/teams/tradefed/testdata/power/uipowertest" />
+    <!-- Disable battery saver mode for regular power tests-->
+    <option name="google-device-setup:global-setting" key="low_power" value="0" />
+    <option name="google-device-setup:global-setting" key="low_power_trigger_level" value="0" />
+
+    <!-- Disable ambient and wake up gesture for regular power tests -->
+    <option name="google-device-setup:secure-setting" key="wake_gesture_enabled" value="0" />
+    <option name="google-device-setup:secure-setting" key="doze_enabled" value="0" />
+
+    <!-- Disable devices sending CAST messages to prevent frequent wakeups by WiFi -->
+    <option name="google-device-setup:gservices-setting" key="gms:cast:mdns_device_scanner:is_enabled" value="false"/>
+
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command" value="am broadcast -a android.intent.action.MEDIA_MOUNTED -d file://${EXTERNAL_STORAGE} --receiver-include-background" />
+        <option name="run-command" value="pm disable-user com.google.experimental.touchcollector" />
+        <option name="run-command" value="pm disable-user com.google.android.volta" />
+    </target_preparer>
+
+    <target_preparer class="com.google.android.power.tests.PowerTestCleaner"/>
+
+    <result_reporter class="com.google.android.tradefed.result.RdbRunMetricsResultReporter" />
+    <option name="device-unavail-email:destination" value="avellore@google.com,alanma@google.com" />
+    <option name="invocation-failure-email:destination" value="avellore@google.com,alanma@google.com" />
+    <option name="device-unavail-email:sender" value="tffail@google.com" />
+</configuration>

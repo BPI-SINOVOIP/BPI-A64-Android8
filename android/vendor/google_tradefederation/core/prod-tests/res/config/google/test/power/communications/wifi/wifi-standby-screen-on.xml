@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerWifiStandbyScreenOn" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/wifi" />
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/images/VerizonImage01.jpg->${EXTERNAL_STORAGE}/VerizonImage01.jpg" />
+        <option name="trigger-media-scan" value="true" />
+    </target_preparer>
+
+    <target_preparer class="com.google.android.power.tests.WhirlWindWifiPreparer" >
+        <option name="network-type" value="2G" />
+        <option name="socket-timeout-secs" value="1000.0" />
+        <option name="wifi-security" value="wpa2" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="IdleTestCase-testIdleScreenOn" value="powerWifi" />
+    <option name="schema_suffix" value="wifi-standby-screen-on" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testIdleScreenOn" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="IdleTestCase" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="IdleTestCase-testIdleScreenOn" value="600" />
+        <option name="pre-test-adb-command" value="am start  -a  android.intent.action.VIEW -p com.google.android.apps.photos -t image/* -d file:///mnt/sdcard/VerizonImage01.jpg" />
+        <option name="test_arguments" key="skip_home" value="True" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="700" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

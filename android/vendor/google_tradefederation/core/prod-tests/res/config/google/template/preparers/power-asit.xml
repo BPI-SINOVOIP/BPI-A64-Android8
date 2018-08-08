@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Common build provider and preparers for ASIT templates. -->
+<configuration description="Common build provider and preparers for ASIT templates." >
+    <option name="bugreport-on-invocation-ended" value="true" />
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="screen-always-on" value="on" />
+        <option name="screen-adaptive-brightness" value="off" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GrantPermissionPreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner" />
+</configuration>

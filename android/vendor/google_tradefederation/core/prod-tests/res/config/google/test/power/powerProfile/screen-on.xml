@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="PowerProfileScreenOn" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/ScreenOn.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/shell_scripts/screen.sh->/data/local/screen.sh" />
+        <option name="post-push" value="chmod 555 /data/local/screen.sh" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="IdleTestCase-testIdleScreenOn" value="PowerProfile" />
+    <option name="schema_suffix" value="ScreenOn" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testIdleScreenOn" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="IdleTestCase" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="IdleTestCase-testIdleScreenOn" value="480" />
+        <option name="test_arguments" key="skip_home" value="true" />
+        <option name="pre-test-nohup-command" value="/data/local/screen.sh 0" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="500" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

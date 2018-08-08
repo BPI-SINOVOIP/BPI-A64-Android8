@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Activate a fake OTA, then run an InstrumentationTest">
+    <option name="test-tag" value="FakeOta" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="install-arg" value="-g" />
+        <option name="install-arg" value="-d" />
+        <option name="install-arg" value="-r" />
+        <option name="test-file-name" value="OtaFunctionalTests.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.WifiPreparer" />
+    <target_preparer class="com.google.android.ota.FakeOtaPreparer" />
+    <!-- run postcondition checks -->
+    <test class="com.android.tradefed.testtype.AndroidJUnitTest">
+        <option name="package" value="com.android.functional.otatests" />
+    </test>
+</configuration>

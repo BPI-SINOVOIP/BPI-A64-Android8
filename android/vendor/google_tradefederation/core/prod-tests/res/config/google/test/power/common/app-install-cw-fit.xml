@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Install apks needed for most power tests">
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="install-arg" value="-d" />
+    </target_preparer>
+</configuration>

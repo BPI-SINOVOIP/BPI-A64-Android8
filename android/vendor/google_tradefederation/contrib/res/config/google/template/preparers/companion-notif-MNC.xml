@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Side loading NYC version of notification apk for MNC companion phone. -->
+<configuration description="64 bits GMS and GSA sideload preparers for companion phone." >
+    <device name="companion">
+        <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+            <option name="alt-dir" value="/google/data/ro/teams/tradefed/testdata/clockwork" />
+            <option name="alt-dir-behavior" value="OVERRIDE" />
+            <option name="test-file-name" value="ClockworkNotificationTests.apk" />
+            <option name="install-arg" value="-d" />
+        </target_preparer>
+    </device>
+</configuration>

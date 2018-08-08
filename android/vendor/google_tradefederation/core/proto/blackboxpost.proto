@@ -1,0 +1,197 @@
+// Should be kept in sync with:
+// //depot/google3/wireless/android/test_tools/blackbox2/protos/rpc/posting_service.proto
+syntax = "proto2";
+
+package posting_service_rpc;
+
+option java_package = "com.google.wireless.android.testtools.blackbox.proto";
+option java_outer_classname = "PostServiceProto";
+
+// Describes a build target.
+//
+// Next ID: 6
+message Target {
+  // The label of the target, used in multitarget testing.
+  optional string label = 1;
+
+  // Unique key for a branch. Example: git_nyc-release.
+  optional string branch = 2;
+
+  // Unique key for a target. Example: angler-userdebug.
+  optional string target = 3;
+
+  // Unique monotonically increasing numeric build id from the build server.
+  optional string build_id = 4;
+
+  // Deprecated
+  optional string build_alias = 5 [deprecated = true];
+}
+
+// Message representing result for one metrics in a test suite. A test suite can
+// have many metrics assosiated with it. If a metric belongs directly to a test
+// suite, then test_case_field should be left empty. For better organization of
+// larger test suites it can be split into several test cases and each test case
+// will have its own set of metrics. In this case both test_case_key and
+// metric_key must be specified. The pair test_case_key and metric_key should be
+// unique.
+//
+// Next ID: 7
+message Result {
+  // Unique key for the test case.
+  optional string test_case_key = 1;
+
+  // Unique key for the metric.
+  optional string metric_key = 2;
+
+  // Type of the test result that is being posted. This enum determines what
+  // kind of value is in the value field.
+  enum ResultType {
+    // Benchmark result is a floating point number. For example number of frames
+    // dropped, mW of power used, etc.
+    BENCHMARK = 0;
+
+    // Functional result is a pass or fail result.
+    FUNCTIONAL = 1;
+
+    // Coverage result is number of lines, branches, and instructions missed and
+    // total.
+    COVERAGE = 2;
+  }
+  optional ResultType type = 3;
+
+  // Context link for the result. What this points to depends on the test owner.
+  // Could be for example link to sponge with the logs, code coverage page, link
+  // to test user guide, etc. Test metrics from one test suite could come from
+  // mutiple runs, so each metric could have a different link.
+  optional string url = 4;
+
+  // Value for the test result. The type of value inside depends of the test
+  // type. For benchmark it is floating point, for functional it is pass/fail,
+  // for coverage it is lines, branches, and instructions missed at total.
+  message Value {
+    optional double float_value = 1;
+
+    // Possible result in a functional test.
+    enum FunctionalResult {
+      // Test did not produce a valid result. Could be because it is still
+      // running or it ended with an error.
+      NONE = 0;
+
+      // Test passed.
+      PASS = 1;
+
+      // Test failed.
+      FAIL = 2;
+    }
+    optional FunctionalResult functional_result = 2;
+
+    message CoverageResult {
+      optional int64 lines_missed = 1;
+      optional int64 lines_total = 2;
+      optional int64 branches_missed = 3;
+      optional int64 branches_total = 4;
+      optional int64 instructions_missed = 5;
+      optional int64 instructions_total = 6;
+    }
+    optional CoverageResult coverage_result = 3;
+  }
+  optional Value value = 5;
+
+  // Progress of the test.
+  enum Status {
+    // Test finished without errors.
+    FINISHED = 0;
+
+    // Test was scheduled to start but has not started yet.
+    SCHEDULED = 1;
+
+    // Test started to run.
+    RUNNING = 2;
+
+    // Test finished with an error.
+    ERROR = 3;
+
+    // Test was aborted because it took too long.
+    TIMED_OUT = 4;
+  }
+  optional Status status = 6;
+}
+
+// Request for posting test results.
+//
+// Next ID: 9
+message PostTestResultsRequest {
+  // Unique key for a test suite.
+  optional string test_suite_key = 1;
+
+  // List of build targets that run the test.
+  repeated Target targets = 2;
+
+  // List of test results for the test suite.
+  repeated Result results = 3;
+
+  // The host name of the sender. This is only used for metrics and logging.
+  optional string hostname = 4;
+
+  // The client and version as a freeform string. For example, "tradefed:12345".
+  // This is only used for metrics and logging.
+  optional string client = 5;
+
+  // The URL of the invocation.
+  optional string url = 6;
+
+  // The shard index and count.
+  optional int32 shard_index = 7;
+  optional int32 shard_count = 8 [default = 1];
+}
+
+message PostTestResultsResponse {
+}
+
+// Request for posting information about why the main request was ignored on the
+// client side. This is only used for metrics and logging.
+//
+// Next ID: 7
+message PostIgnoredRequest {
+  // The host name of the sender.
+  optional string hostname = 1;
+
+  // The client and version as a freeform string. For example, "tradefed:12345".
+  optional string client = 2;
+
+  // The test suite key.
+  optional string test_suite = 6;
+
+  // The number of results. This is to keep the request size small.
+  optional int64 result_count = 3;
+
+  // The reason the post was ignored or skipped.
+  optional string reason = 4;
+
+  // The URL of the invocation.
+  optional string url = 5;
+}
+
+// Request for posting information about why the main request was errored on the
+// client side. This is only used for metrics and logging.
+//
+// Next ID: 7
+message PostErrorRequest {
+  // The host name of the sender.
+  optional string hostname = 1;
+
+  // The client and version as a freeform string. For example, "tradefed:12345".
+  optional string client = 2;
+
+  // The test suite key.
+  optional string test_suite = 6;
+
+  // The number of results. This is to keep the request size small.
+  optional int64 result_count = 3;
+
+  // The reason the post had an error.
+  optional string reason = 4;
+
+  // The URL of the invocation.
+  optional string url = 5;
+}

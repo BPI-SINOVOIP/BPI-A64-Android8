@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/test/power/apps/compose-gmail-wifi" />
+    <option name="test-tag" value="powerComposeGmailWifiAOT" />
+
+    <include name="google/test/power/common/aot" />
+    <option name="schema_ru_pair" key="GmailTests-testComposeEmail" value="AOT" />
+</configuration>

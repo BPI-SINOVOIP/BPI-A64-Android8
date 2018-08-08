@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="clockOffBody30MinAmbient" />
+
+    <include name="google/test/power/common/cw-base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/OffBodyTestApp.apk" />
+    </target_preparer>
+    <option name="google-device-setup:set-gservice-setting" key="off_body_eligible_apps" value="com.google.android.wearable.app,com.google.android.wearable.ambient,com.google.android.apps.wearable.settings,com.google.android.clockwork.testapp"/>
+    <option name="google-device-setup:set-gservice-setting" key="location:activity_low_power_mode_enabled" value="false" />
+    <option name="google-device-setup:set-gservice-setting" key="location:sensor_batching_on_watch_enabled" value="true" />
+
+    <option name="schema_ru_pair" key="ClockWorkOffBodyTest-testOffBody30mins" value="ClockWorkScreenOn"/>
+    <option name="schema_suffix" value="OffBody30min"/>
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testOffBody30mins"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="ClockWorkOffBodyTest"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_duration" key="ClockWorkOffBodyTest-testOffBody30mins" value="7200"/>
+        <option name="monsoon_voltage" value="3.8"/>
+        <option name="monsoon_duration" value="7400"/>
+        <option name="monsoon_frequency" value="10"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+    </test>
+
+</configuration>

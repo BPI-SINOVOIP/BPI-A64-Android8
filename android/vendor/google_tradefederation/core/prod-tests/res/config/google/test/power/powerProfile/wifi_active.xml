@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="PowerProfileWifiActive" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/busybox-install" />
+    <include name="google/test/power/common/wifi" />
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/shell_scripts/wifi_active.sh->/data/local/wifi_active.sh" />
+        <option name="post-push" value="chmod 555 /data/local/wifi_active.sh" />
+    </target_preparer>
+
+    <test class="com.google.android.power.tests.PowerProfileRunner">
+        <option name="testcase" value="wifi.active" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="5000" />
+        <option name="ru_name" value="PowerProfile" />
+    </test>
+
+</configuration>

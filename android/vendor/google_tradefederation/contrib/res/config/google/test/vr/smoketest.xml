@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Common configuration for running VR Instrumentation tests">
+  <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+    <option name="apk-path" value="/google/data/ro/teams/vr-framework/testing/vrsmoketest/vrsmoketest.apk" />
+    <option name="apk-path" value="/google/data/ro/teams/vr-framework/testing/vrsmoketest/vrsmoketesttest.apk" />
+    <option name="install-arg" value="-r" />
+  </target_preparer>
+  <test class="com.android.tradefed.testtype.InstrumentationTest">
+    <option name="runner" value="com.google.android.apps.common.testing.testrunner.Google3InstrumentationTestRunner" />
+    <option name="package" value="com.google.vr.apps.vrsmoketest.tests" />
+    <option name="class" value="com.google.vr.apps.vrsmoketest.VrSmokeTestTest" />
+    <option name="logcat-on-failure" value="true" />
+  </test>
+</configuration>

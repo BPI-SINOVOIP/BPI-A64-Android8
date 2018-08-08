@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Downloads build, flashes on device, and ACTS test">
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="sl4a.apk" />
+        <option name="cleanup-apks" value="true" />
+    </target_preparer>
+    <test class="com.google.android.acts.ActsTestRunner">
+        <!-- TODO, the path here is temp location, we will decide where they should be in the future -->
+        <option name="acts-path" value="/usr/local/acts/comms/framework/acts/bin/act.py" />
+        <option name="test-logpath" value="/tmp" />
+    </test>
+</configuration>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Runs the standby test" >
+    <include name="google/automotive/power/mobile_power" />
+
+    <option name="shell-script-path" value="/google/data/ro/teams/tradefed/testdata/power/gearhead/scripts/standby.sh" />
+    <option name="test-tag" value="AutomotivePowerStandBy" />
+    <option name="Test-Name" value="AutomotivePowerStandBy" />
+</configuration>

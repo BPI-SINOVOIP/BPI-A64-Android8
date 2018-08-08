@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Runs notification stress tests">
+    <option name="test-tag" value="notification_stress" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="NotificationStressTests.apk" />
+    </target_preparer>
+
+    <test class="com.android.framework.tests.FrameworkStressTest">
+        <option name="test-package-name" value="com.android.notification.tests" />
+        <option name="test-class-name" value="android.app.NotificationStressTest" />
+        <option name="dashboard-test-label" value="NotificationStressTest" />
+    </test>
+</configuration>

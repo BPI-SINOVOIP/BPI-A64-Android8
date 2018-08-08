@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Runs the test with AR high power mode enabled">
+    <option name="test-tag" value="powerAR_3min" />
+
+    <include name="google/test/power/common/cw-base" />
+    <include name="google/test/power/common/airplane" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/activity-recognition" />
+
+    <option name="clockwork-device-setup:disable-ambient" value="true" />
+    <option name="google-device-setup:set-gservice-setting" key="location:activity_low_power_mode_enabled" value="false" />
+    <option name="google-device-setup:set-gservice-setting" key="location:sensor_batching_on_watch_enabled" value="true" />
+
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="am instrument -e interval_ms 180000 -e class com.google.android.gms.testapps.location.activity.power.ActivityPowerUtil#testRegisterAR -w com.google.android.gms.testapps.location.activity.power/.ARTestRunner" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="IdleTestCase-testIdleScreenOff" value="powerCwSensorBatch" />
+    <option name="schema_suffix" value="Ar_3min_batched" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testIdleScreenOff" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="IdleTestCase" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="IdleTestCase-testIdleScreenOff" value="3600" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_duration" value="3900" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+
+</configuration>

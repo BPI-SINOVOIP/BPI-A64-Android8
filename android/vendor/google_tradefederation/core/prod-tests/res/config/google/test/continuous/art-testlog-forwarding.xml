@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Forwards logs of test ran outside of TF">
+    <option name="test-tag" value="ArtHostBasedTest" />
+    <!-- Would be much nicer if the test runner emitted results elsewhere. Until then, rely on
+    branch+target filtering to ensure this only processes relevant build logs.-->
+    <option name="testlog-regex" value=".*/build.log" />
+    <test class="com.google.android.tradefed.testtype.host.ArtTestlogForwarder" />
+</configuration>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs NLP power test at 1 minute request interval">
+    <include name="google/power2/settings/radio_wifiscan" />
+    <option name="test-tag" value="powerFLPOneMinute" />
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="/data/local/tmp/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="FLPOneMinute" />
+        <option name="config" key="TestDuration" value="1800000" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testFLPBalancedOneMinInterval" />
+        <option name="test_class_name" value="BaseTests" />
+        <option name="test_package_name" value="com.google.android.powertests" />
+        <option name="test_runner_name" value="android.test.InstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="23000" />
+        <option name="ru_name" value="powerLocation" />
+    </test>
+</configuration>

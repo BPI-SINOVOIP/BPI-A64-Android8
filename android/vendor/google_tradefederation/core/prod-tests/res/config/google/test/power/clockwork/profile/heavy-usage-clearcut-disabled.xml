@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="clockHeavyUsageClearcutDisabled" />
+
+    <include name="google/test/power/common/cw-base" />
+    <include name="google/test/power/common/cw-retail-mode" />
+    <include name="google/test/power/common/airplane" />
+    <include name="google/test/power/common/app-install" />
+
+    <option name="google-device-setup:set-gservice-setting" key="cw:clearcut_logging" value="false" />
+
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="heavyClearcutDisabled" />
+    </target_preparer>
+
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testHeavyUsage" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="ClockWorkProfileTests" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_samples" value="60000" />
+        <option name="ru_name" value="ClockWorkProfile" />
+    </test>
+</configuration>

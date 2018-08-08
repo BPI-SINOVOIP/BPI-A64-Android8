@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Android Build API Log Saver" >
+    <log_saver class="com.google.android.tradefed.result.AndroidBuildApiLogSaver">
+    </log_saver>
+</configuration>

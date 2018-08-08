@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<configuration description="Automated user profile test">
+    <include name="google/common/asit-cw-companion-pair-base" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup" >
+        <option name="test-file-name" value="local/tmp" />
+    </target_preparer>
+
+    <!-- target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/aupt/cw-special->/data/local/tmp" />
+    </target_preparer-->
+
+    <option name="test-tag" value="aupt" />
+    <option name="bugreport-on-invocation-ended" value="false" />
+
+    <!-- Additional option that need to be configured:
+        Account username and password
+        Music to play needs to be uploaded to the device if testing music.
+        Email address to which gmail can send replies if testing gmail
+        List of websites to navigate if testing Chrome
+    -->
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster">
+        <option name="delay" value="60000" />
+    </target_preparer>
+
+    <test class="com.google.android.aupt.AuptCompanionTest">
+        <option name="jar-path" value="geppetto.tests.common.jar" />
+        <option name="jar-path" value="geppetto.tests.aupt.jar" />
+        <option name="run-arg" key="runner" value="com.android.test.uiautomator.aupt.AuptTestRunner" />
+
+        <option name="run-arg" key="shortSleep" value="5000" />
+        <option name="run-arg" key="longSleep" value="30000" />
+
+        <option name="run-arg" key="bugreportInterval" value="30" />
+        <option name="run-arg" key="meminfoInterval" value="5" />
+        <option name="run-arg" key="outputLocation" value="aupt-output" />
+
+        <option name="run-arg" key="iterations" value="50" />
+        <option name="run-arg" key="quitOnError" value="true" />
+
+        <option name="bugreport-check-interval" value="5" />
+        <option name="on-test-failure" value="SCREENSHOT" />
+        <option name="sync-time" value="0" />
+    </test>
+
+    <result_reporter class="com.google.android.aupt.AuptLogcatAnalysisReporter" />
+    <result_reporter class="com.google.android.aupt.AuptInspectBugReporter">
+        <option name="suite-key" value="aupt-heavy" />
+        <option name="suite-instance-key" value="standard"/>
+    </result_reporter>
+</configuration>

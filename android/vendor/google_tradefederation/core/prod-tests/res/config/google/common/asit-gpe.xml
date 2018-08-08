@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Common configuration for GPE (Google Play Edition) ASIT -->
+<configuration
+    description="Common GPE ASIT configuration">
+
+    <!--
+    Add this element to include this config:
+    include name="google/common/asit-gpe"
+
+    Configs that include this should provide a "test" element, as well as at least the following
+    options:
+      option name="test-tag" value="..."
+      option name="invocation-failure-email:destination"
+    -->
+    <include name="google/common/asit-base-gpe" />
+    <result_reporter class="com.google.android.tradefed.result.RdbRunMetricsResultReporter" />
+</configuration>

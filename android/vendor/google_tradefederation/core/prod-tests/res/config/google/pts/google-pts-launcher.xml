@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration
+    description="Downloads a device and PTS build, flashes device, and then runs a PTS plan on device">
+    <include name="google/compatibility/common-launcher" />
+    <option name="enable-logcat" value="false" />
+    <option name="test-tag" value="pts" />
+    <option name="cts-device-launch-control:cts-build-flavor" value="pts" />
+    <option name="cts-device-launch-control:cts-package-name" value="android-pts.zip" />
+    <option name="com.google.android.tradefed.testtype.CtsTestLauncher:config-name" value="pts" />
+</configuration>

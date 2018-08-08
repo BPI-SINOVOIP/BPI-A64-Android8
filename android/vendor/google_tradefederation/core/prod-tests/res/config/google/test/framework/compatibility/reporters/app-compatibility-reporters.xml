@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved. -->
+<configuration description="Reporters for reporting app compatibility results">
+    <result_reporter class="com.google.android.tradefed.result.CompatibilityResultReporter">
+        <option name="suite-key" value="asit_AppCompatibility" />
+    </result_reporter>
+</configuration>

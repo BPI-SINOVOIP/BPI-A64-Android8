@@ -1,0 +1,6 @@
+service awbms /system/bin/sh /system/bin/awbms
+    class main
+    user system
+    group shell system
+    seclabel u:r:shell:s0
+    writepid /dev/cpuset/foreground/tasks /dev/stune/foreground/tasks

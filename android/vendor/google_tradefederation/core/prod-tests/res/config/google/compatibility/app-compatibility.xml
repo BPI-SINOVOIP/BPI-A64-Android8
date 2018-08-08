@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved. -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and tests the compability of apps.">
+    <include name="google/common/asit-base" />
+    <option name="test-tag" value="AppCompatibility" />
+    <option name="invocation-failure-email:destination" value="android-asit-failures@google.com" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="AppCompatibilityTest.apk" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" >
+        <option name="account-sync" value="true" />
+        <option name="wait-for-checkin" value="true" />
+    </target_preparer>
+    <!--      must provide test-apk-dir argument -->
+    <test class="com.google.android.compatibility.AppCompatibilityTest" />
+    <result_reporter class="com.google.android.tradefed.result.CompatibilityResultReporter">
+        <option name="suite-key-prefix" value="asit_" />
+    </result_reporter>
+</configuration>

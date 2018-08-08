@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Common loggers, log savers, and result reporters for unbundled templates. -->
+<configuration description="Common loggers, log savers, and result reporters for unbundled templates" >
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <template-include name="log-saver" default="google/template/reporters/android-build-api-log-saver" />
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter">
+        <option name="report-error-email-sender" value="tffail@google.com" />
+        <option name="report-error-email-destination" value="android-test-service+spongefail@google.com" />
+    </result_reporter>
+    <result_reporter class="com.google.android.tradefed.result.InspectBugResultReporter">
+        <option name="report-error-email-sender" value="tffail@google.com" />
+        <option name="report-error-email-destination" value="android-test-service+inspectbugfail@google.com" />
+        <option name="only-report-invocation-failures" value="true" />
+        <option name="suite-key-prefix" value="unbundled_tf_" />
+    </result_reporter>
+    <result_reporter class="com.google.android.tradefed.result.BlackboxResultReporter" />
+</configuration>

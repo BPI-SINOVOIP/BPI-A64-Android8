@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerBusinessProfile" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/days-of-use" />
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/apks/com.facebook.katana.apk" />
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/apks/tunein.player.apk" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOIdle" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFIIdle" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOVoiceCall" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFIVoiceCall" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOSendAndReceiveEmail" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFISendAndReceiveEmail" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOBrowser" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFIBrowser" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOSocialMedia" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFISocialMedia" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOSmsMessaging" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFISmsMessaging" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOMmsMessaging" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFIMmsMessaging" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOVideoPlaying" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFIVideoPlaying" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOPictureBrowsing" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFIPictureBrowsing" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOCameraPreview" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFICameraPreview" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOCameraSnapshot" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFICameraSnapshot" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOCameraVideo" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFICameraVideo" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOMapsNavigation" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFIMapsNavigation" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-RADIOAudioStreaming" value="powerBusinessProfile"/>
+    <option name="schema_ru_pair" key="DoUProfileTests-testBusinessProfile-WIFIAudioStreaming" value="powerBusinessProfile"/>
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testBusinessProfile"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="DoUProfileTests"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_arguments" key="profile_iterations" value="3" />
+        <option name="test_arguments" key="PhoneNumber" value="6502530267" />
+        <option name="test_arguments" key="browser_site_delay_in_seconds" value="15" />
+        <option name="test_arguments" key="url_1" value="http://146.148.91.8/amazon/index.html" />
+        <option name="test_arguments" key="url_2" value="http://146.148.91.8/linkedin/index.html" />
+        <option name="test_arguments" key="url_3" value="http://146.148.91.8/bing/index.html" />
+        <option name="test_arguments" key="url_4" value="http://146.148.91.8/cnn/index.html" />
+        <option name="test_arguments" key="url_5" value="http://146.148.91.8/craigslist/index.html"/>
+        <option name="test_arguments" key="url_6" value="http://146.148.91.8/ebay/index.html" />
+        <option name="test_arguments" key="url_7" value="http://146.148.91.8/espn/index.html" />
+        <option name="test_arguments" key="url_8" value="http://146.148.91.8/google/index.html" />
+        <option name="test_arguments" key="url_9" value="http://146.148.91.8/go/index.html" />
+        <option name="test_arguments" key="url_10" value="http://146.148.91.8/instagram/index.html"/>
+        <option name="test_arguments" key="url_11" value="http://146.148.91.8/tumblr/index.html"/>
+        <option name="test_arguments" key="url_12" value="http://146.148.91.8/msn/index.html" />
+        <option name="test_arguments" key="url_13" value="http://146.148.91.8/rakuten/index.html" />
+        <option name="test_arguments" key="url_14" value="http://146.148.91.8/pinterest/index.html"/>
+        <option name="test_arguments" key="url_15" value="http://146.148.91.8/yelp/index.html" />
+        <option name="test_arguments" key="url_16" value="http://146.148.91.8/wellsfargo/index.html"/>
+        <option name="test_arguments" key="url_17" value="http://146.148.91.8/wikipedia/index.html"/>
+        <option name="test_arguments" key="url_18" value="http://146.148.91.8/wordpress/index.html"/>
+        <option name="test_arguments" key="url_19" value="http://146.148.91.8/yahoo/index.html" />
+        <option name="test_arguments" key="url_20" value="http://146.148.91.8/youtube/index.html" />
+        <option name="test_arguments" key="url_21" value="http://146.148.91.8/bbc/index.html" />
+        <option name="test_arguments" key="url_22" value="http://146.148.91.8/buzzfeed/index.html"/>
+        <option name="test_arguments" key="url_23" value="http://146.148.91.8/capitalone/index.html"/>
+        <option name="test_arguments" key="url_24" value="http://146.148.91.8/economist/index.html"/>
+        <option name="test_arguments" key="url_25" value="http://146.148.91.8/guardian/index.html"/>
+        <option name="test_arguments" key="url_26" value="http://146.148.91.8/imdb/index.html" />
+        <option name="test_arguments" key="url_27" value="http://146.148.91.8/imgur/index.html" />
+        <option name="test_arguments" key="url_28" value="http://146.148.91.8/nytimes/index.html" />
+        <option name="test_arguments" key="url_29" value="http://146.148.91.8/reddit/index.html" />
+        <option name="test_arguments" key="url_30" value="http://146.148.91.8/redfin/index.html" />
+        <option name="test_arguments" key="map_address_1" value="San_Francisco_CA" />
+        <option name="test_arguments" key="map_address_2" value="Sunnyvale" />
+        <option name="test_arguments" key="map_address_3" value="Palo_Alto" />
+        <option name="test_arguments" key="map_address_4" value="Los_Angeles" />
+        <option name="test_arguments" key="map_address_5" value="Berkeley_CA" />
+        <option name="test_duration" key="DoUProfileTests-testBusinessProfile-RADIOIdle" value="3600"/>
+        <option name="test_duration" key="DoUProfileTests-testBusinessProfile-WIFIIdle" value="3600"/>
+        <option name="test_duration" key="DoUProfileTests-testBusinessProfile-RADIOVoiceCall" value="600"/>
+        <option name="test_duration" key="DoUProfileTests-testBusinessProfile-WIFIVoiceCall" value="600"/>
+        <option name="monsoon_voltage" value="4.2"/>
+        <option name="monsoon_duration" value="54000"/>
+        <option name="monsoon_frequency" value="1000"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+    </test>
+</configuration>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="power-test-runner:ru_name" value="BatterySaverMode" />
+     <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command" value="dumpsys battery set usb 0" />
+        <option name="run-command" value="settings put global low_power 1" />
+    </target_preparer>
+</configuration>

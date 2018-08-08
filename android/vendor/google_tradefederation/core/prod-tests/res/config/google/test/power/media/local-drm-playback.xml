@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerLocalDrmPlayback" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/wifi" />
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/newdrm->/sdcard" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/WVInfoLocal.txt->/sdcard/WVInfo.txt" />
+    </target_preparer>
+
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testWVPlayback" />
+        <option name="test_class_name" value="WideVineDrmPowerTest" />
+        <option name="test_package_name" value="com.google.android.powertests" />
+        <option name="test_runner_name" value="android.test.InstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="9000" />
+        <option name="ru_name" value="powerMedia" />
+    </test>
+</configuration>

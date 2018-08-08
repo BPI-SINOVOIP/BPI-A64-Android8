@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- This is a simple configuration that allows to post results directly to blackbox dashboards
+    required options: branch, build-id, product-type, build-flavor, schema_ru_pair (Map<String,
+    String>), schema_result_pair (Map<String, String>)
+
+    For the results to be posted it is required that one device of the given product-type is
+    connected to the host in order to kick the instrumentaiton.
+-->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="VerizonDouResultPoster" />
+
+    <option name="dou_schema" value="DoUVerizonTests-testTotal" />
+    <option name="schema_ru_pair" key="DoUVerizonTests-testTotal" value="VerizonDoU" />
+
+    <option name="schema_ru_pair" key="DoUVerizonTests-testAngryBirds-RADIOAngryBirdsTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testAudioPlayback-RADIOMusicPlayingTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testBackgroundIdle-RADIOBackgroundIdleTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testBrowser-RADIOBrowserTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testBrowser-WIFIBrowserTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testCamera-RADIOVerizonCameraTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testDownloadFile-RADIODownloadTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testIdle-RADIOIdleTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testIdle-WIFIIdleTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testMapsNavigation-BLUETOOTHMapsNavigationTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testMapsNavigation-SPEAKERMapsNavigationTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testMapsSearch-RADIOMapsNavigationTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testMobileHotspot-RADIOVerizonMobileHotspotTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testReceiveExchangeEmail-RADIOReceiveEmailTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testReceiveExchangeEmail-WIFIReceiveEmailTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testReceiveGmail-RADIOReceiveEmailTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testReceiveGmail-WIFIReceiveEmailTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testReceiveMms-RADIOReceiveMessagingTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testReceiveSms-RADIOReceiveMessagingTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testSendExchangeEmail-RADIOEmailTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testSendExchangeEmail-WIFIEmailTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testSendGmail-RADIOEmailTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testSendGmail-WIFIEmailTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testSendMms-RADIOVerizonMessagingTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testSendSms-RADIOVerizonMessagingTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testSlackerRadio-RADIOSlackerTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testStreamingVideo-RADIOYouTubeTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testStreamingVideo-WIFIYouTubeTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testTouchScreen-RADIOVerizonTouchScreenTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testVideoPlayback-RADIOVideoPlayingTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testVideoRecording-RADIOCameraVideoTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testVoiceAndBrowser-RADIOVoiceCallAndBrowserTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testVoiceCall-BLUETOOTHVoiceCallTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testVoiceCall-EARPIECEVoiceCallTest" value="VerizonDoU"/>
+    <option name="schema_ru_pair" key="DoUVerizonTests-testVoiceCommandSearch-RADIOVoiceCommandSearchTest" value="VerizonDoU"/>
+
+    <!-- Positive values indicate score weight, negative a special calculation -->
+    <option name="schema_weight_pair" key="DoUVerizonTests-testAngryBirds-RADIOAngryBirdsTest" value="0.69"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testAudioPlayback-RADIOMusicPlayingTest" value="1.04"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testBackgroundIdle-RADIOBackgroundIdleTest" value="-1.0"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testBrowser-RADIOBrowserTest" value="1.04"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testBrowser-WIFIBrowserTest" value="2.08"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testCamera-RADIOVerizonCameraTest" value="0.14"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testDownloadFile-RADIODownloadTest" value="0.63"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testIdle-RADIOIdleTest" value="29.10"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testIdle-WIFIIdleTest" value="33.26"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testMapsNavigation-BLUETOOTHMapsNavigationTest" value="1.39"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testMapsNavigation-SPEAKERMapsNavigationTest" value="1.39"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testMapsSearch-RADIOMapsNavigationTest" value="0.69"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testMobileHotspot-RADIOVerizonMobileHotspotTest" value="2.08"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testReceiveExchangeEmail-RADIOReceiveEmailTest" value="-1.0"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testReceiveExchangeEmail-WIFIReceiveEmailTest" value="-1.0"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testReceiveGmail-RADIOReceiveEmailTest" value="-1.0"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testReceiveGmail-WIFIReceiveEmailTest" value="-1.0"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testReceiveMms-RADIOReceiveMessagingTest" value="0.35"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testReceiveSms-RADIOReceiveMessagingTest" value="0.35"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testSendExchangeEmail-RADIOEmailTest" value="1.04"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testSendExchangeEmail-WIFIEmailTest" value="1.04"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testSendGmail-RADIOEmailTest" value="0.63"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testSendGmail-WIFIEmailTest" value="1.46"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testSendMms-RADIOVerizonMessagingTest" value="0.56"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testSendSms-RADIOVerizonMessagingTest" value="1.04"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testSlackerRadio-RADIOSlackerTest" value="2.08"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testStreamingVideo-RADIOYouTubeTest" value="0.69"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testStreamingVideo-WIFIYouTubeTest" value="0.69"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testTouchScreen-RADIOVerizonTouchScreenTest" value="6.27"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testVideoPlayback-RADIOVideoPlayingTest" value="0.28"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testVideoRecording-RADIOCameraVideoTest" value="0.28"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testVoiceAndBrowser-RADIOVoiceCallAndBrowserTest" value="0.69"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testVoiceCall-BLUETOOTHVoiceCallTest" value="6.25"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testVoiceCall-EARPIECEVoiceCallTest" value="2.08"/>
+    <option name="schema_weight_pair" key="DoUVerizonTests-testVoiceCommandSearch-RADIOVoiceCommandSearchTest" value="0.69"/>
+
+    <test class="com.google.android.power.tests.DouResultsPoster">
+    </test>
+</configuration>

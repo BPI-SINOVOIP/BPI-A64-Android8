@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and runs memory tests">
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+    </target_preparer>
+    <test class="com.google.android.memory.MemoryTestRunner">
+        <option name="test-class-name" value="SystemHealthTest" />
+        <option name="test-run-key" value="WearGMScoreMemoryTest" />
+        <option name="test-package-name" value="com.google.android.gmscore.wearable.systemhealth" />
+        <option name="runner" value="com.google.android.apps.common.testing.testrunner.Google3InstrumentationTestRunner" />
+    </test>
+</configuration>

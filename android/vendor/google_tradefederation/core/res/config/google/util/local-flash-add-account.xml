@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<configuration description="Utility config to flash local build with wipe, then configure account on device">
+    <include name="google/util/local-flash" />
+    <include name="google/util/account-setup" />
+    <option name="test-tag" value="local-flasher-with-account" />
+</configuration>

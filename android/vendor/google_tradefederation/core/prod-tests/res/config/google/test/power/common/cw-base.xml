@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Base setup for developers to run clockwork power test">
+
+    <!-- com.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:screen-saver" value="off" />
+    <option name="google-device-setup:screen-always-on" value="on" />
+    <option name="google-device-setup:disable-audio" value="false" />
+    <option name="google-device-setup:disable-volta" value="true" />
+    <option name="google-device-setup:nfc" value="off" />
+    <option name="google-device-setup:enable-full-battery-stats-history" value="true" />
+    <option name="google-device-setup:run-command" value="echo 1 > /d/clk/debug_suspend" />
+    <option name="google-device-setup:set-property" key="persist.sys.timezone" value="America/Los_Angeles"/>
+    <option name="google-device-setup:disable-doze" value="true" />
+
+    <!-- com.android.tradefed.targetprep.clockwork.ClockworkDeviceSetup -->
+    <target_preparer class="com.google.android.tradefed.targetprep.clockwork.ClockworkDeviceSetup">
+        <option name="skip-tutorial" value="true" />
+        <option name="test-mode" value="true" />
+    </target_preparer>
+
+    <!-- Workaround for the sync disable. Need to wait for 3 mins for GMS sync back off complete -->
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" >
+        <option name="delay" value="180000" />
+    </target_preparer>
+
+    <target_preparer class="com.google.android.power.tests.PowerTestCleaner" />
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+      <option name="run-command" value="am broadcast -a com.google.android.clockwork.action.POWER_TESTING" />
+    </target_preparer>
+</configuration>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:jacoco="antlib:org.jacoco.ant">
+    <!-- Import JaCoCo Ant tasks -->
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" />
+
+    <jacoco:merge destfile="${dest.file}">
+        <fileset dir="${src.dir}" includes="*.exec"/>
+    </jacoco:merge>
+</project>

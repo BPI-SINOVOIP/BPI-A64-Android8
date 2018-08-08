@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Common base configuration for local runs with Google specific preparers / reporters. -->
+<configuration description="Template based configuration for local runs that fetches test artifact from build server and using sponge logging">
+    <!-- avoid colliding with ASIT tests when running locally -->
+    <option name="test-tag-suffix" value="local" />
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider" >
+        <option name="bootstrap-build-info" value="true" />
+        <option name="skip-download" value="DEVICE_IMAGE" />
+    </build_provider>
+    <include name="google/template/local-common" />
+    <template-include name="test" />
+</configuration>

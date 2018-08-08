@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Set userprofile test specific settings">
+    <option name="google-device-setup:location-collection" value="on" />
+    <option name="google-device-setup:disable-use-location-prompt" value="false" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command" value="dumpsys batterystats --reset" />
+    </target_preparer>
+</configuration>
+

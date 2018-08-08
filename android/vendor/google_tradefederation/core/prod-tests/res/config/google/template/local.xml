@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Common base configuration for local runs with Google specific preparers / reporters. -->
+<configuration description="Template based configuration for local runs using sponge logging">
+    <build_provider class="com.android.tradefed.build.BootstrapBuildProvider" />
+    <template-include name="config" default="google/template/local-common" />
+    <template-include name="test" />
+</configuration>

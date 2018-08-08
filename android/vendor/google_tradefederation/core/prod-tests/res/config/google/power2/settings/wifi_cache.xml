@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and setup the device for power test">
+    <include name="google/common/asit" />
+    <include name="google/power2/settings/power-base" />
+    <option name="google-device-setup:secure-setting" key="wifi_on" value="1" />
+    <option name="google-device-setup:secure-setting" key="location_providers_allowed" value="none" />
+    <option name="google-device-setup:enable-airplane-mode" value="true" />
+    <option name="google-device-setup:wifi-network" value="androidpower2" />
+    <option name="google-device-setup:wifi-psk" value="android1234" />
+    <option name="run-command"
+        value="settings put secure location_providers_allowed -gps" />
+    <option name="run-command"
+        value="settings put secure location_providers_allowed -network" />
+</configuration>

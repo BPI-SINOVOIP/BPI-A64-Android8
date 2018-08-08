@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerChromeFullSitesCacheWifiNoScroll" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/wifi" />
+    <option name="dismiss-dialogs:dismiss-apps" value="Chrome" />
+
+    <option name="schema_ru_pair" key="ChromeTests-testFullSitesNoScroll" value="powerApps"/>
+    <option name="schema_suffix" value="Wifi"/>
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testFullSitesNoScroll"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="ChromeTests"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_arguments" key="browser_site_delay_in_seconds" value="40" />
+        <option name="test_arguments" key="iterations" value="1" />
+        <option name="test_arguments" key="url_1" value="http://146.148.91.8/amazon/index.html" />
+        <option name="test_arguments" key="url_2" value="http://146.148.91.8/msn/index.html" />
+        <option name="test_arguments" key="url_3" value="http://146.148.91.8/cnn/index.html" />
+        <option name="test_arguments" key="url_4" value="http://146.148.91.8/espn/index.html" />
+        <option name="test_arguments" key="url_5" value="http://146.148.91.8/yahoo/index.html" />
+        <option name="monsoon_voltage" value="4.2"/>
+        <option name="monsoon_duration" value="320"/>
+        <option name="monsoon_frequency" value="10"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+    </test>
+</configuration>

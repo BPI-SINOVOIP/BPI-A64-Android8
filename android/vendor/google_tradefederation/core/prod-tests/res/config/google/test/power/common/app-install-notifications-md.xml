@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Install apks needed to send notifications">
+  <!-- Installing APK on the watch side-->
+  <device name="watch">
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="ClockworkNotificationTests.apk" />
+    </target_preparer>
+    <option name="google-device-setup:set-gservice-setting" key="cw:enable_mute_notifications_when_off_body" value="false" />
+  </device>
+  <!-- Installing APK on the companion side-->
+  <device name="companion">
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="alt-dir" value="/google/data/ro/teams/tradefed/testdata/power" />
+        <option name="alt-dir-behavior" value="OVERRIDE" />
+        <option name="test-file-name" value="ClockworkNotificationTests.apk" />
+    </target_preparer>
+  </device>
+</configuration>

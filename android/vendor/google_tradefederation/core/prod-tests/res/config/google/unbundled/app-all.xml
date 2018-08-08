@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2010 Google Inc. All Rights Reserved. -->
+<!-- Required options: branch build-flavor app-package-name package -->
+<configuration description="Installs unbundled app, runs small,medium and large tests">
+    <include name="google/unbundled/common/app-func" />
+    <option name="test-tag" value="UnitTests" />
+
+    <include name="google/unbundled/common/unit-all" />
+
+</configuration>

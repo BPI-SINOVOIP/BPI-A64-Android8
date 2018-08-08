@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Measures startup performance metrics">
+    <option name="test-tag" value="startup_metrics" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:disable" value="true" />
+    <target_preparer class="com.android.tradefed.targetprep.CpuThrottlingWaiter" />
+
+    <test class="com.android.performance.tests.StartupMetricsTest" />
+</configuration>

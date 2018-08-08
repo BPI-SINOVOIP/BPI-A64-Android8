@@ -1,0 +1,285 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.1/dygraph-combined.js"></script>
+<!-- script placeholder -->
+<script type="text/javascript">
+charting = {};
+
+charting.colors = [ "#4285F4", "#34A853", "#EA4335", "#FBBC05" ];
+
+charting.padLeft = function(str, length, character){
+  if (character.length != 1){
+    throw "Invalid padding character";
+  }
+
+  var padding = Array(length + 1).join(character);
+  // making sure the input is treated as String
+  str = str + "";
+  return padding.substring(0, length - str.length) + str;
+}
+
+// generates a converter function.
+charting.msToDateConverter = function(includeMillis) {
+    return function(ms){
+        var date = new Date(ms);
+        var s = charting.padLeft(date.getSeconds(), 2, "0");
+        var m = charting.padLeft(date.getMinutes(), 2, "0");
+        var h = charting.padLeft(date.getHours(),   2, "0");
+        var result = h + ":" + m + ":" + s
+        if(includeMillis){
+          var ms = charting.padLeft(date.getMilliseconds(), 3, "0");
+          result += "." + ms;
+        }
+        return result;
+    }
+}
+
+/* gets the index of the best of approximation for a given x-value */
+charting.getIndex = function(g, value){
+     var min = 0;
+     var max = g.numRows() - 1;
+     var middle = parseInt((max + min) / 2);
+
+     var i = 0;
+     while (max > min){
+        if (g.getValue(middle, 0) > value) {
+          max = middle - 1;
+        } else {
+          min = middle + 1;
+        }
+        middle = parseInt((max + min) / 2);
+     }
+
+     return middle;
+}
+
+charting.getChartMetrics = function(g){
+    var valuesColumn = 1;
+    var timeColumn = 0;
+    var lower = charting.getIndex(g, g.xAxisRange()[0]);
+    var upper = charting.getIndex(g, g.xAxisRange()[1]);
+    var sum = 0;
+    var minValue = Infinity;
+    var maxValue = -Infinity;
+    for (var i = lower; i <= upper; i++){
+        var value = g.getValue(i, valuesColumn);
+        sum += value;
+        minValue = minValue < value ? minValue : value;
+        maxValue = value < maxValue ? maxValue : value;
+    }
+    var average  = sum / (upper - lower + 1);
+    var duration = g.getValue(upper, timeColumn) - g.getValue(lower, timeColumn) + 1;
+    return {
+      average  : Math.round(average  * 1000) / 1000,
+      maxValue : Math.round(maxValue * 1000) / 1000,
+      minValue : Math.round(minValue * 1000) / 1000,
+      duration : duration
+    }
+}
+
+charting.savePNG = function(g){
+  var canvas = g.canvas_.parentElement.getElementsByTagName("canvas")[0];
+  window.location.href = canvas.toDataURL("image/png");
+}
+
+charting.metricsUpdateTimeoutId = 0;
+charting.updateMetrics = function(g){
+  window.clearTimeout(charting.metricsUpdateTimeoutId);
+  charting.metricsUpdateTimeoutId = window.setTimeout(function(){
+      var averageContainer  = document.getElementById("average_container");
+      var maxValueContainer = document.getElementById("max_value_container");
+      var minValueContainer = document.getElementById("min_value_container");
+      var durationContainer = document.getElementById("duration_container");
+      var metrics = charting.getChartMetrics(g)
+      averageContainer.parentElement.style =  "color: " + g.colors_[0];
+      averageContainer.innerHTML =  metrics.average  + " mW";
+      maxValueContainer.parentElement.style = "color: " + g.colors_[0];
+      maxValueContainer.innerHTML = metrics.maxValue + " mW";
+      minValueContainer.parentElement.style = "color: " + g.colors_[0];
+      minValueContainer.innerHTML = metrics.minValue + " mW";
+      durationContainer.parentElement.style = "color: " + g.colors_[0];
+      durationContainer.innerHTML = metrics.duration + " ms";
+  }, 50);
+}
+
+charting.drawCallback = function(g) {
+  charting.updateMetrics(g);
+}
+
+charting.toogleFixedRange = function(e) {
+  if (e.target.checked) {
+    charting.fixRange();
+    return;
+  }
+
+  charting.graph.updateOptions({ valueRange: [null, null] });
+}
+
+charting.fixRange = function() {
+    if (typeof charting.initialMetrics == "undefined" ){
+      charting.initialMetrics = charting.getChartMetrics(charting.graph);
+    }
+
+    var metrics = charting.initialMetrics;
+    var visibleRange = metrics.maxValue - metrics.minValue;
+    var buffer = visibleRange / 10; // 10%
+    var min = metrics.minValue - buffer;
+    var max = metrics.maxValue + buffer;
+    charting.graph.updateOptions({ valueRange: [min, max] });
+}
+
+charting.addXLabelPlaceholder = function() {
+   charting.elements.labelsDiv.className = "empty";
+}
+
+charting.removeXLabelPlaceholder = function() {
+   charting.elements.labelsDiv.className = "";
+}
+
+charting.buildChart = function() {
+  charting.elements = {
+    graphDiv      : document.getElementById("graph_div"),
+    pngButton     : document.getElementById("png_button"),
+    labelsDiv     : document.getElementById("labels_div"),
+    rangeCheckbox : document.getElementById("range_checkbox")
+  }
+
+  var graph = new Dygraph(
+      charting.elements.graphDiv,
+      [$POWERDATA],
+      { ylabel               : 'Power [mW]',
+        xlabel               : 'Time [ms]',
+        legend               : 'always',
+        colors               : charting.colors,
+        interactionModel     : {},
+        showRangeSelector    : true,
+        labelsShowZeroValues : true,
+        labelsDiv            : charting.elements.labelsDiv,
+        labelsSeparateLines  : true,
+        axes: {
+             x: {
+                  axisLabelFormatter: charting.msToDateConverter(false),
+                  valueFormatter: charting.msToDateConverter(true),
+             }
+        },
+        drawCallback       : charting.drawCallback,
+        highlightCallback  : charting.removeXLabelPlaceholder,
+        unhighlightCallback: charting.addXLabelPlaceholder ,
+        clickCallback:        function(minDate, maxDate, yRanges){ console.log("hello"); }
+      });
+  charting.graph = graph;
+
+  charting.elements.pngButton.onclick = function(){ charting.savePNG(graph); };
+  charting.elements.rangeCheckbox.onchange = charting.toogleFixedRange;
+  graph.ready(function(g){
+    charting.fixRange();
+    charting.addXLabelPlaceholder();
+  });
+}
+
+document.addEventListener('DOMContentLoaded', charting.buildChart);
+</script>
+<style type="text/css">
+  .chart_info {
+    overflow: hidden;
+    float: left;
+    padding-left: 10px;
+    min-width: 10%;
+    padding: 15px;
+  }
+
+  .chart_info div {
+    font-weight: bold;
+  }
+
+  .chart_info div span {
+    color: black;
+    font-weight: normal;
+    display: block;
+    float: right;
+  }
+
+  div.clear {
+    clear: both;
+    height: 10px;
+  }
+
+  html {
+    font-family: monospace;
+  }
+
+  #labels_div.empty:before {
+     content: '-- time\00000A'
+  }
+
+  #labels_div:before {
+     white-space: pre;
+     content: 'time: ';
+     font-weight: bold;
+  }
+
+  .dygraph-label.dygraph-xlabel,
+  .dygraph-label.dygraph-ylabel {
+    font-size: 1em;
+    font-weight: bold;
+    color: #757575;
+  }
+
+  #graph_title {
+    text-align: left;
+    font-size: 1em;
+    font-weight: bold;
+    color: #000000;
+  }
+
+  #graph_div {
+    height: 80%;
+  }
+
+  #container {
+    width: 100%;
+  }
+
+  #left_panel {
+    overflow: hidden;
+    min-height: 100%;
+  }
+
+  #right_panel {
+    float: right;
+    width: 200px;
+    min-height: 100%;
+  }
+
+  #user_tools {
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+<div id="container">
+    <div id="right_panel">
+        <div id="labels_div" class="dygraph-legend"></div>
+        <div id="user_tools">
+            <label><input id="range_checkbox" type="checkbox" checked> Fixed Y axis </label>
+            <button id="png_button">Save as png</button>
+            <br>
+            <a href="https://chrome.google.com/webstore/detail/snipit/ehoadneljpdggcbbknedodolkkjodefl" target="_blank">or use sniplt</a>
+        </div>
+    </div>
+    <div id="left_panel" >
+     <div id="graph_title">
+         Power Usage Graph - Voltage: [$VOLTAGE] <br> TestCase: [$TESTCASE]  ([$BUILDFLAVOR]/[$BUILDALIAS]) <br> Overall Average Power = [$AVGPOWER]
+     </div>
+     <div id="graph_div" ></div>
+	 <div class="chart_info">
+           <div>Average:  <span id="average_container"></span></div>
+           <div>Max:      <span id="max_value_container"></span></div>
+           <div>Min:      <span id="min_value_container"></span></div>
+           <div>Duration: <span id="duration_container"></span></div>
+	 </div>
+    </div>
+</div>
+</body>
+</html>

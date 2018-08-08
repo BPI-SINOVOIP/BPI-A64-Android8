@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Common loggers, log savers, and result reporters for AUPT templates. -->
+<configuration description="Common loggers, log savers, and result reporters for AUPT templates" >
+    <result_reporter class="com.google.android.aupt.AuptInspectBugReporter">
+        <option name="suite-key" value="aupt2-heavy" />
+        <option name="suite-instance-key" value="aupt2"/>
+    </result_reporter>
+    <result_reporter class="com.google.android.aupt.AuptInspectBugCompanionReporter">
+        <option name="suite-key" value="aupt2-heavy" />
+        <option name="suite-instance-key" value="aupt2"/>
+    </result_reporter>
+</configuration>

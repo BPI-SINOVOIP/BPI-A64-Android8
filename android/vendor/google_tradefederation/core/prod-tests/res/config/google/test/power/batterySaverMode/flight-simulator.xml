@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/test/power/apps/flight-simulator" />
+    <option name="test-tag" value="powerFlightSimulatorBatterySaverMode" />
+
+    <include name="google/test/power/common/battery-saver-mode" />
+    <option name="schema_ru_pair" key="FlightSimulatorTests-testFlightDemo" value="BatterySaverMode" />
+</configuration>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Camera shot throughput hdr auto.">
+    <option name="test-tag" value="CameraShotLatencyHdrAutoThroughput" />
+    <include name="google/camera/shot_base" />
+
+    <option name="test-methods" value="testPhotoHdrAutoThroughputLatency" />
+</configuration>

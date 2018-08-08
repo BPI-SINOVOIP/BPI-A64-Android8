@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved. -->
+<configuration description="Runs android.support.multidex host tests">
+    <option name="test-tag" value="package_manager_multidex" />
+
+    <test class="com.google.android.frameworks.tests.SupportMultidexHostTest">
+        <option name="app-repository-path" value="/google/data/ro/teams/tradefed/testdata/package_manager/packageManagerApps" />
+    </test>
+</configuration>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Common config for app that reports pass-fail results">
+    <include name="google/unbundled/common/app" />
+
+    <result_reporter class="com.google.android.tradefed.result.LaunchControlResultReporter" />
+    <result_reporter class="com.google.android.tradefed.result.AndroidBuildResultReporter" />
+    <result_reporter class="com.google.android.tradefed.result.NotifilterResultReporter" />
+    <result_reporter class="com.google.android.tradefed.result.BlackboxResultReporter"/>
+</configuration>

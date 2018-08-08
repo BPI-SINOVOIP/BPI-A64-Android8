@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Test to verify if the device can fully boot with functional app framework services -->
+<configuration description="Device Boot Test">
+    <!-- TODO(kevcheng): change this from boot-new to boot when boot-new is gone -->
+    <include name="google/continuous/boot-new" />
+    <option name="test-file-name" value="DeviceHealthTests.apk" />
+    <option name="device-boot-test:disable" value="false" />
+</configuration>

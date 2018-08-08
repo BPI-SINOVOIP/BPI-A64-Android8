@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Run WebViewJankTest on device and get results">
+    <option name="test-tag" value="WebViewJankTest" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:airplane-mode" value="on" />
+    <option name="google-device-setup:screen-saver" value="off" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="UbWebViewJankTests.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/webviewjank/WebViewShell.apk"/>
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/webviewjank/AwJankPages->${EXTERNAL_STORAGE}/AwJankPages" />
+    </target_preparer>
+
+    <test class="com.google.android.jankiness.UiJankinessTest2">
+        <option name="timeout" value="0"/>
+        <option name="sync-time" value="300000" />
+        <option name="reporting-key" value="webviewjanktest" />
+        <option name="run-arg" key="Url" value="${EXTERNAL_STORAGE}/AwJankPages/light/index.html" />
+        <option name="schema-mapping" key="testBrowserPageFling" value="light_fling" />
+        <option name="run-name" value="light_fling" />
+        <option name="instrumentation" value="true" />
+        <option name="package" value="com.android.webview.chromium.tests.jank" />
+        <option name="class" value="com.android.webview.chromium.tests.jank.WebViewFlingTest" />
+        <option name="runner" value="android.test.InstrumentationTestRunner" />
+    </test>
+    <test class="com.google.android.jankiness.UiJankinessTest2">
+        <option name="timeout" value="0"/>
+        <option name="sync-time" value="300000" />
+        <option name="reporting-key" value="webviewjanktest" />
+        <option name="run-arg" key="Url" value="${EXTERNAL_STORAGE}/AwJankPages/heavy/index.html" />
+        <option name="schema-mapping" key="testBrowserPageFling" value="heavy_fling" />
+        <option name="run-name" value="heavy_fling" />
+        <option name="instrumentation" value="true" />
+        <option name="package" value="com.android.webview.chromium.tests.jank" />
+        <option name="class" value="com.android.webview.chromium.tests.jank.WebViewFlingTest" />
+        <option name="runner" value="android.test.InstrumentationTestRunner" />
+    </test>
+    <test class="com.google.android.jankiness.UiJankinessTest2">
+        <option name="timeout" value="0"/>
+        <option name="sync-time" value="300000" />
+        <option name="reporting-key" value="webviewjanktest" />
+        <option name="run-arg" key="Url" value="${EXTERNAL_STORAGE}/AwJankPages/nyt_jank/index.html" />
+        <option name="schema-mapping" key="testBrowserPageFling" value="nyt_fling" />
+        <option name="run-name" value="nyt_fling" />
+        <option name="instrumentation" value="true" />
+        <option name="package" value="com.android.webview.chromium.tests.jank" />
+        <option name="class" value="com.android.webview.chromium.tests.jank.WebViewFlingTest" />
+        <option name="runner" value="android.test.InstrumentationTestRunner" />
+    </test>
+    <test class="com.google.android.jankiness.UiJankinessTest2">
+        <option name="timeout" value="0"/>
+        <option name="sync-time" value="300000" />
+        <option name="reporting-key" value="webviewjanktest" />
+        <option name="run-arg" key="Url" value="${EXTERNAL_STORAGE}/AwJankPages/wikipediaAutomotiveLighting/index.html" />
+        <option name="schema-mapping" key="testBrowserPageFling" value="wiki_fling" />
+        <option name="run-name" value="wiki_fling" />
+        <option name="instrumentation" value="true" />
+        <option name="package" value="com.android.webview.chromium.tests.jank" />
+        <option name="class" value="com.android.webview.chromium.tests.jank.WebViewFlingTest" />
+        <option name="runner" value="android.test.InstrumentationTestRunner" />
+    </test>
+</configuration>

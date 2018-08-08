@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Runs a command from TFC">
+    <build_provider class="com.google.android.tradefed.cluster.ClusterBuildProvider" />
+    <test class="com.google.android.tradefed.cluster.ClusterCommandLauncher" />
+    <log_saver class="com.google.android.tradefed.cluster.ClusterLogSaver" />
+</configuration>

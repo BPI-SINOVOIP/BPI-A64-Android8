@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2010 Google Inc. All Rights Reserved. -->
+<!-- Required options: branch build-flavor app-package-name package -->
+<configuration description="Installs unbundled app, runs small tests">
+    <include name="google/unbundled/common/app-func" />
+    <option name="test-tag" value="SmallSuite" />
+    <option name="wifi:skip" value="true" />
+
+    <!-- test options -->
+    <test class="com.android.tradefed.testtype.InstalledInstrumentationsTest" >
+        <option name="size" value="small" />
+        <option name="test-timeout" value="30000" />
+    </test>
+
+    <!-- result reporter options -->
+    <!--  0 is small -->
+    <option name="sponge:sponge-size" value="0" />
+</configuration>

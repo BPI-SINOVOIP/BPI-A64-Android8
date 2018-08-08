@@ -1,0 +1,24 @@
+#!/vendor/bin/sh
+# An unforunate wrapper script 
+# so that the exit code of pppd may be retrieved
+
+
+PPPD_EXIT=""
+
+/vendor/bin/setprop "net.gprs.ppp-exit" ""
+
+/vendor/bin/log -t pppd "Starting pppd"
+
+/vendor/bin/log -t pppd "PORT: $1"
+/vendor/bin/log -t pppd "USER: $2"
+/vendor/bin/log -t pppd "PSWD: $3"
+/vendor/bin/log -t pppd "CONN: $4"
+/vendor/bin/log -t pppd "DISC: $5"
+
+/system/bin/pppd -chap $1 debug defaultroute noauth connect-delay 5000 ipcp-max-failure 60 nodetach nocrtscts novj noipdefault usepeerdns user "$2" password "$3" connect "$4" disconnect "$5"
+
+PPPD_EXIT=$?
+
+/vendor/bin/log -t pppd "pppd exited with $PPPD_EXIT"
+
+/vendor/bin/setprop "net.gprs.ppp-exit" "$PPPD_EXIT"

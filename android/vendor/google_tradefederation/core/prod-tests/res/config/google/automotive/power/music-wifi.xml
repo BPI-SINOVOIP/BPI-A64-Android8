@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Runs the standby test" >
+    <include name="google/automotive/power/mobile_power" />
+
+    <option name="google-device-setup:secure-setting" key="wifi_on" value="1" />
+    <option name="Monsoon-Samples" value="12000" />
+    <option name="shell-script-path" value="/google/data/ro/teams/tradefed/testdata/power/gearhead/scripts/music.sh" />
+    <option name="test-tag" value="AutomotivePowerMusic_Wifi" />
+    <option name="Test-Name" value="AutomotivePowerMusic_Wifi" />
+</configuration>

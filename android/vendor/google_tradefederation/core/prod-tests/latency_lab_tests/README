@@ -1,0 +1,8 @@
+A manual integration test for using the remote TF functionality
+from latency lab.
+
+Contains a simple client that waits for an available device, flashes it,
+then frees device and shuts down.
+
+To run, must launch TF with remote manager enabled, then
+run TODO: insert script

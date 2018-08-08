@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Gaming engine Unity functionality test">
+    <option name="test-tag" value="game_unity" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:screen-saver" value="off" />
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/gameengines/UnityPlayerProxyActivity.apk"/>
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/gameengines/Unity.RuntimeTests.AndroidJUnitRunner.apk"/>
+    </target_preparer>
+
+    <test class="com.android.tradefed.testtype.InstrumentationTest">
+        <option name="package" value="Unity.RuntimeTests.AndroidJUnitRunner" />
+    </test>
+</configuration>

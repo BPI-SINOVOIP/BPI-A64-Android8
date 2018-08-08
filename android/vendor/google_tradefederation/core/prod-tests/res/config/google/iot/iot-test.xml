@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!-- Copyright 2013 Google Inc. All Rights Reserved -->
+    <!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and runs WiFi stress tests">
+    <include name="google/common/asit" />
+
+    <!-- com.google.android.tradefed.build.DeviceLaunchControlProvider -->
+    <option name="test-tag" value="iot_test" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:disable-dialing" value="false" />
+    <option name="google-device-setup:secure-setting" key="screensaver_enabled" value="0" />
+    <option name="google-device-setup:enable-airplane-mode" value="true" />
+    <option name="google-device-setup:disable-use-location" value="true" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="ConnectivityManagerTest.apk" />
+        <option name="test-file-name" value="DownloadManagerTestApp.apk" />
+        <option name="test-file-name" value="mediaframeworktest.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" >
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/iot/com.magicandroidapps.iperf-1.apk"/>
+    </target_preparer>
+
+    <!-- Prepare for browsing test -->
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/iot/top10->/${EXTERNAL_STORAGE}/popular_urls.txt"/>
+        <!-- Make ChromeTest use short wait time -->
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/url-test-short-wait->/${EXTERNAL_STORAGE}/url-test-short-wait"/>
+        <!-- disable Chrome First Run Experience -->
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/chrome-command-line" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/tmp/chrome-command-line" />
+    </target_preparer>
+
+    <test class="com.google.android.iot.InteroperabilityTest">
+        <option name="external-download-uri" value="http://10.0.1.1:8080/dm_apps/" />
+        <option name="media-source" value="http://10.0.1.1:8080/videos/" />
+    </test>
+    <!-- com.android.tradefed.result.DeviceUnavailEmailResultReporter -->
+    <option name="device-unavail-email:destination" value="xiaw@google.com" />
+
+    <!-- com.android.tradefed.result.InvocationFailureEmailResultReporter -->
+    <option name="invocation-failure-email:destination" value="xiaw@google.com" />
+</configuration>

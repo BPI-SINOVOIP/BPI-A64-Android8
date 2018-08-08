@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="batteryMusicPlayback" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+    <option name="dismiss-dialogs:dismiss-apps" value="PlayMusic" />
+
+    <option name="google-device-setup:local-data-path" value="/google/data/ro/teams/tradefed/testdata/power/uipowertest" />
+    <option name="google-device-setup:trigger-media-mounted" value="true" />
+
+    <option name="schema_ru_pair" key="MusicTests-testLocalPlaybackBatteryDrain" value="BatteryDrain" />
+
+    <test class="com.google.android.power.tests.BatteryDrainTestRunner">
+        <option name="test_method" value="testLocalPlaybackBatteryDrain" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="MusicTests" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_arguments" key="album_name" value="Internal Illusions, External Delusions" />
+        <option name="test_arguments" key="song_name" value="Oceanic Dawn" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

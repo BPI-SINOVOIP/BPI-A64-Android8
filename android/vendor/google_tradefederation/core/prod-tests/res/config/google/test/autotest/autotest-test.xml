@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved. -->
+<configuration description="Runs Autotest test in TradeFed.">
+    <test class="com.google.android.autotest.AutotestLauncher"/>
+    <template-include name="reporters" default="empty" />
+</configuration>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Camera stress back camera video capture long.">
+    <option name="test-tag" value="backVideoCaptureLong" />
+    <include name="google/camera/stress_base" />
+
+    <option name="camera2-stress:test-methods" value="testBackCameraVideoCaptureLongDuration" />
+    <option name="instrumentation-arg" key="imageCount" value="6" />
+    <option name="instrumentation-arg" key="videoDurationMs" value="600000" />
+</configuration>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Automated user profile test for clockwork">
+    <include name="google/test/clockwork/common/aupt" />
+
+    <option name="test-tag" value="aupt-clockwork-retail" />
+    <option name="google-device-setup:disable-dialing" value="true" />
+
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="am broadcast -a com.google.android.clockwork.action.START_RETAIL_MODE" />
+    </target_preparer>
+
+    <test class="com.google.android.aupt.AuptTest">
+        <option name="instrumentation" value="true" />
+        <option name="package" value="com.android.test.uiautomator.aupt" />
+        <option name="record-kmsg" value="true" />
+        <option name="runner" value="android.support.test.aupt.AuptTestRunner" />
+
+        <option name="run-arg" key="disable_ime" value="true" />
+        <option name="run-arg" key="shortSleep" value="5000" />
+        <option name="run-arg" key="longSleep" value="30000" />
+
+        <option name="run-arg" key="bugreportInterval" value="30" />
+        <option name="run-arg" key="meminfoInterval" value="5" />
+        <option name="run-arg" key="outputLocation" value="aupt-output" />
+        <option name="run-arg" key="shuffle" value="true" />
+
+        <option name="run-arg" key="iterations" value="100" />
+
+        <option name="bugreport-check-interval" value="5" />
+        <option name="on-test-failure" value="SCREENSHOT" />
+        <option name="sync-time" value="30000" />
+    </test>
+</configuration>

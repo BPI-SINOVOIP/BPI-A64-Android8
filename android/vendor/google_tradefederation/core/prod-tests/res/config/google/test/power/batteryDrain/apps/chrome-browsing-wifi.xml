@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="batteryChromeBrowsingWifi" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/wifi" />
+    <option name="dismiss-dialogs:dismiss-apps" value="Chrome" />
+
+    <include name="google/test/power/batteryDrain/apps/chrome-browsing-base" />
+    <option name="schema_ru_pair" key="ChromeTests-testChromeBatteryDrain" value="BatteryDrain"/>
+    <option name="schema_suffix" value="Wifi"/>
+</configuration>

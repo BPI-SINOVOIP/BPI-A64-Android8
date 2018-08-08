@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved. -->
+<configuration description="The harness config for downloading a TF build, and launching a separate java process to execute the tests and report the results." >
+    <option name="null-device" value="true" />
+    <!--  need to use 'SmallSuite' so results can be posted to launch control -->
+    <option name="test-tag" value="SmallSuite" />
+    <build_provider class="com.google.android.tradefed.build.TfLaunchControlProvider" />
+    <test class="com.android.tradefed.testtype.TfTestLauncher" >
+        <option name="config-name" value="google/tf/unit-runner" />
+        <option name="max-run-time" value="5m" />
+    </test>
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <template-include name="log-saver" default="google/template/reporters/android-build-api-log-saver" />
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+    <result_reporter class="com.android.tradefed.result.FailureEmailResultReporter" >
+        <option name="sender" value="tffail@google.com" />
+    </result_reporter>
+    <template-include name="reporters" default="empty" />
+    <template-include name="coverage-reporter" default="empty" />
+</configuration>

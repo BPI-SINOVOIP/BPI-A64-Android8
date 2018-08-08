@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+   <include name="google/power2/ClockWork/settings/power-base" />
+   <option name="test-tag" value="clockMusicPlayback" />
+   <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="musicPlayback" />
+        <option name="config" key="TestDuration" value="400000" />
+        <option name="config" key="Album_Name" value="Awaara Bhanware (Sapnay)" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/media/apps/MusicPlaybackTest.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/media/mp3->/sdcard/Music/" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="clockWork" value="true" />
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testMusicPlayback" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="ClockWorkTests" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_samples" value="6000" />
+        <option name="ru_name" value="ClockWorkScreenOff" />
+    </test>
+</configuration>

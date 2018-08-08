@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Run Shadowgrid on device and get results">
+    <option name="test-tag" value="shadowgrid" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/airplane" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value="local/tmp" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="chmod 755 /data/benchmarktest/hwuimacro/hwuimacro*"/>
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" >
+        <option name="test-file-name" value="PowerPerfTest.apk" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="shadowgrid" />
+    </target_preparer>
+
+    <test class="com.google.android.performance.PowerPerformanceTest">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testPowerPerf" />
+        <option name="test_class_name" value="PowerPerfTest" />
+        <option name="test_package_name" value="com.android.powerperf.tests" />
+        <option name="test_runner_name" value="android.test.InstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="18000" />
+        <option name="script_content" value="/data/benchmarktest/hwuimacro/hwuimacro|#ABI32#| --onscreen shadowgrid2 150 > /data/local/tmp/perfdata.out"/>
+        <option name="ru_name" value="shadowgridv2" />
+        <option name="use-power-reporter" value="false" />
+    </test>
+
+</configuration>

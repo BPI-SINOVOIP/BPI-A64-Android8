@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Test to verify if the device can fully boot with functional app framework services -->
+<configuration description="GCE Boot Test">
+    <option name="logcat-options" value="-b all" />
+    <option name="test-tag" value="BootTest" />
+    <!-- Gce enabled this configuration -->
+    <device_options class="com.google.android.tradefed.device.GceAvdTestDeviceOptions" />
+    <device_requirements class="com.google.android.tradefed.device.GoogleDeviceSelectionOptions" />
+    <!-- The boot test configuration -->
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="skip-download" value="DEVICE_IMAGE" />
+        <option name="skip-download" value="BOOTLOADER" />
+        <option name="skip-download" value="BASEBAND" />
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+    <option name="tcp-device" value="true" />
+    <test class="com.google.android.asit.GceBootTest">
+        <!-- disable the instrumentation health tests at the end -->
+        <option name="disable" value="true" />
+    </test>
+    <device_recovery class="com.google.android.tradefed.device.GceDeviceRecovery" />
+    <include name="google/template/reporters/asit" />
+    <result_reporter class="com.android.tradefed.result.TestFailureEmailResultReporter" />
+    <template-include name="reporters" default="empty" />
+</configuration>

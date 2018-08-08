@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Test to verify that fastboot can successfully flash a device -->
+<configuration description="Device Fastboot Test">
+    <option name="test-tag" value="FastbootTest" />
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+        <option name="files-filter" value="fastboot" />
+    </build_provider>
+
+    <test class="com.android.fastboot.tests.FastbootTest">
+        <option name="flasher-class" value="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" />
+    </test>
+
+    <include name="google/template/reporters/asit" />
+
+    <template-include name="reporters" default="empty" />
+</configuration>

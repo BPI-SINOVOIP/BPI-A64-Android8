@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Configuration for App Helper test reporting." >
+    <!-- Note, this is not an actual test - this posts UI files to Sponge. -->
+    <test class="com.android.tradefed.result.LogFilesReporter">
+        <option name="upload-dir" value="/sdcard/apphelper-screenshots/" />
+        <option name="clean-upload-pattern" value="true" />
+    </test>
+    <!-- Include the standard templated unit test reporters. -->
+    <include name="google/template/reporters/unit-reporter" />
+</configuration>

@@ -1,0 +1,19 @@
+LOCAL_PATH:= $(call my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := ntfs-3g
+LOCAL_MODULE := ntfs-3g
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := EXECUTABLES
+
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := ntfs-3g.probe
+LOCAL_MODULE := ntfs-3g.probe
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := EXECUTABLES
+
+include $(BUILD_PREBUILT)
+

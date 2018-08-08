@@ -1,0 +1,10 @@
+Release Date: 2017/06/09
+build Tag: OPR1.170608.004
+Build ID: 4086450
+Branch: oc-release
+Total test modules: 116 of 116
+Total passed test cases: 2926
+Total failed test cases: 86
+Total test execution time: 2h 39m 39s
+Release decision: DISTRIBUTE VTS only
+

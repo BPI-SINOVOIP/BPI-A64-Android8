@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/settings/radio" />
+    <option name="test-tag" value="powerYoutubeRadio" />
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="YoutubeVideoPlaybackRadio" />
+        <option name="config" key="TestCase_idle" value="YoutubeVideoPlaybackRadioIdle" />
+        <option name="config" key="ScreenOffTime" value="600000" />
+        <option name="config" key="TestDuration" value="480000" />
+        <option name="config" key="VideoName" value="Big Buck Bunny animation (1080p HD)" />
+        <option name="config" key="VideoLink" value="http://www.youtube.com/watch?v=XSGBVzeBUbk" />
+        <option name="config" key="FullScreen" value="true" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testPlayYoutube" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="YoutubeTests" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="12800" />
+        <option name="ru_name" value="ActiveUseRadio" />
+    </test>
+</configuration>

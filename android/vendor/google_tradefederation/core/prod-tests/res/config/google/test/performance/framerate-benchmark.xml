@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<configuration description="Runs framerate benchmark test">
+    <option name="test-tag" value="GeppettoFrameRateBenchmark" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:airplane-mode" value="on" />
+    <option name="google-device-setup:wifi" value="off" />
+    <option name="google-device-setup:screen-saver" value="off" />
+    <option name="google-device-setup:location-gps" value="off" />
+    <option name="google-device-setup:location-network" value="off" />
+    <option name="google-device-setup:set-property" key="viewancestor.profile_rendering" value="true" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value="local/tmp" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="DummyIME.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/framerate/leofs.android.free-1.apk"/>
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/framerate/com.magicwach.rdefense_free-1.apk"/>
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/uiautomation/launchtests.conf->${EXTERNAL_STORAGE}/launchtests.conf"/>
+    </target_preparer>
+
+    <test class="com.google.android.geppetto.FrameratePerformanceTest">
+        <option name="jar-path" value="geppetto.tests.platform.frameratetests.jar"/>
+        <option name="jar-path" value="geppetto.tests.common.jar"/>
+        <option name="class" value="bogus class" />
+        <option name="run-arg" key="disable_ime" value="true" />
+        <option name="test-case" key="testAllAppsToWorkspace" value="com.android.test.uiautomator.platform.framerate.FrameRateTests" />
+        <option name="test-case" key="testWorkspaceToAllApps" value="com.android.test.uiautomator.platform.framerate.FrameRateTests" />
+        <option name="test-case" key="testRCSimulatorDemo" value="com.android.test.uiautomator.platform.framerate.GameTests" />
+        <option name="test-case" key="testRoboDefense" value="com.android.test.uiautomator.platform.framerate.GameTests" />
+    </test>
+</configuration>

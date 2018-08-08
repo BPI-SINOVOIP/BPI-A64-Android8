@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Runs gearhead power test" >
+
+    <include name="google/unbundled/common/app" />
+    <option name="bugreport-on-invocation-ended" value="true" />
+    <option name="app-launch-control:hostname" value="lcproxy.googleplex.com" />
+    <option name="app-launch-control:protocol" value="https" />
+    <option name="app-launch-control:whitelist" value="gh-power" />
+    <option name="app-launch-control:query-type" value="LATEST_WHITELISTED_CL" />
+
+    <option name="wifi:skip" value="true" />
+    <option name="google-device-setup:disable" value="false" />
+    <option name="google-device-setup:enable-airplane-mode" value="true" />
+    <option name="google-device-setup:disable-use-location" value="true" />
+    <option name="google-device-setup:secure-setting" key="location_providers_allowed" value="none" />
+    <option name="google-device-setup:setting" key="screen_brightness_mode" value="0" />
+    <option name="google-device-setup:setting" key="screen_brightness" value="0" />
+    <option name="google-device-setup:setting" key="notification_light_pulse" value="0" />
+    <option name="google-device-setup:setting" key="accelerometer_rotation" value="0" />
+    <option name="google-device-setup:secure-setting" key="screensaver_enabled" value="0" />
+    <option name="google-device-setup:secure-setting" key="wifi_on" value="0" />
+    <option name="google-device-setup:setting-cmd-apk-path" value="/home/android-build/tradefed/SettingsCmd-devkey-1.apk" />
+
+    <!-- optionally push files from host filesystem to device -->
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+
+    <!-- install other gearhead apks from filesystem -->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+
+    <!-- default all the system props to false, since they are not needed and will avoid
+    extra reboot -->
+    <option name="audio-silent" value="false" />
+    <option name="disable-dialing" value="false" />
+
+    <test class="com.google.android.automotive.tests.AutoMobilePowerTestRunner">
+        <option name="Monsoon-Voltage" value="4.2" />
+        <option name="Monsoon-Samples" value="36000" />
+        <option name="RU-Name" value="AutomotivePower" />
+    </test>
+
+     <result_reporter class="com.google.android.tradefed.result.RdbUnbundledRunMetricsResultReporter" />
+
+</configuration>

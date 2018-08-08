@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+   <include name="google/power2/sensor/ambient-temperature-base" />
+   <option name="test-tag" value="powerAmbientTemperatureBatched" />
+   <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="AmbientTemperature" />
+        <option name="config" key="TestCase_idle" value="AmbientTemperatureIdle" />
+        <option name="config" key="Rate" value="40000" />
+        <option name="config" key="BatchLatency" value="9999000000" />
+        <option name="config" key="TestDuration" value="900000" />
+        <option name="config" key="IdleTestDuration" value="300000" />
+    </target_preparer>
+</configuration>

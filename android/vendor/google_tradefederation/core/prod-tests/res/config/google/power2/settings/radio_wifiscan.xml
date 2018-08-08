@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and setup the device for power test">
+    <include name="google/common/asit" />
+    <include name="google/power2/settings/power-base" />
+    <!-- Turn off the location aggrement -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command"
+        value="content insert --uri content://com.google.settings/partner --bind value:s:1 --bind name:s:network_location_opt_in"/>
+        <option name="run-command"
+        value="content insert --uri content://com.google.settings/partner --bind value:s:1 --bind name:s:use_location_for_services"/>
+        <option name="run-command"
+        value="content insert --uri content://settings/secure --bind value:s:network --bind name:s:location_providers_allowed"/>
+        <option name="run-command"
+        value="content insert --uri content://settings/secure --bind value:s:+network --bind name:s:location_providers_allowed"/>
+        <option name="run-command"
+        value="content insert --uri content://settings/secure --bind value:s:0 --bind name:s:wifi_on"/>
+    </target_preparer>
+    <option name="google-device-setup:setting" key="auto_time_zone" value="0" />
+    <option name="google-device-setup:setting" key="auto_time" value="0" />
+    <option name="google-device-setup:global-setting" key="wifi_scan_always_enabled" value="1" />
+    <option name="google-device-setup:secure-setting" key="wifi_on" value="0" />
+    <option name="google-device-setup:enable-airplane-mode" value="false" />
+</configuration>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<configuration description="Runs EMMC performance tests">
+    <option name="test-tag" value="emmc_performance_test" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value="local/tmp" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="chmod 755 /data/local/tmp/rand_emmc_perf*"/>
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.StopServicesSetup">
+        <option name="service" value="sdcard" />
+        <option name="service" value="ril-daemon" />
+        <option name="service" value="media" />
+        <option name="service" value="drm" />
+        <option name="service" value="keystore" />
+        <option name="service" value="tf_daemon" />
+        <option name="service" value="bluetoothd" />
+        <option name="service" value="hciattach" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.CpuThrottlingWaiter" />
+
+    <test class="com.android.performance.tests.EmmcPerformanceTest" />
+</configuration>

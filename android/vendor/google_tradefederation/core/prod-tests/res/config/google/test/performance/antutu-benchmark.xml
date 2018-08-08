@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Run AnTuTu Benchmark on device and get results">
+    <option name="test-tag" value="AnTuTuBenchmark" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:airplane-mode" value="on" />
+    <!-- in case the benchmark app needs to install an embeded 64-bit variant -->
+    <option name="google-device-setup:install-non-market-apps" value="ON" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="AnTuTuUiAutomatorTest.apk" />
+        <option name="alt-dir" value="/google/data/ro/teams/tradefed/testdata/third_party_perf" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/third_party_perf/Antutu-5070100.apk"/>
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.CpuThrottlingWaiter" />
+    <!-- Left blank so some configs can add their own run command -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+
+    <test class="com.google.android.performance.AnTuTuBenchmarkTest">
+        <option name="package" value="com.google.android.test.antutuuiautomator" />
+        <option name="class" value="com.google.android.test.antutuuiautomator.AnTuTuTest" />
+        <option name="instrumentation" value="true" />
+        <option name="run-name" value="antutuuiautomator-5070100" />
+        <option name="runner" value="android.test.InstrumentationTestRunner" />
+    </test>
+</configuration>

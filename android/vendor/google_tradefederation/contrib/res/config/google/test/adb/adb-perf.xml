@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<configuration description="Runs adb tests">
+    <option name="null-device" value="true" />
+
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="files-filter" value="adb"/>
+        <option name="skip-download" value="DEVICE_IMAGE" />
+        <option name="skip-download" value="TESTS_ZIP" />
+        <option name="skip-download" value="BOOTLOADER" />
+        <option name="skip-download" value="BASEBAND" />
+    </build_provider>
+
+    <target_preparer class="com.google.android.adb.AdbStopServerPreparer"/>
+
+    <test class="com.google.android.adb.AdbPerformanceTest"/>
+
+    <template-include name="reporters" default="empty" />
+</configuration>

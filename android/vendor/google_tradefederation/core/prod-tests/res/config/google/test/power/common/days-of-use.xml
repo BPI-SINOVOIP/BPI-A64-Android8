@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Set the location provider to network and gps and turn on wifi">
+    <option name="google-device-setup:airplane-mode" value="off" />
+    <option name="google-device-setup:wifi" value="on" />
+    <option name="google-device-setup:bluetooth" value="off" />
+    <option name="google-device-setup:disable-dialing" value="false" />
+    <option name="google-device-setup:disable-doze" value="false" />
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/uipowertest->${EXTERNAL_STORAGE}/uipowertest" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/images->${EXTERNAL_STORAGE}" />
+        <option name="trigger-media-scan" value="true" />
+    </target_preparer>
+    <include name="google/test/power/common/user-location-reporting" />
+</configuration>

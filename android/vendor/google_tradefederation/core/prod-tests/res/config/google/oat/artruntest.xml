@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved. -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes device, pushes the tests, and runs the art run-test with Valgrind.">
+    <include name="google/common/asit-base" />
+    <option name="test-tag" value="ArtRunTests" />
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup" >
+        <option name="test-file-name" value= "art-run-tests"/>
+        <option name="test-file-name" value= "nativetest/art/x86/libarttest.so"/>
+        <option name="test-file-name" value= "nativetest/art/arm/libarttest.so"/>
+        <option name="test-file-name" value= "nativetest64/art/arm64/libarttest.so"/>
+        <!-- libarttestd.so depends on libartd.so-->
+        <option name="test-file-name" value="lib/libart.so" />
+        <option name="test-file-name" value="lib64/libart.so" />
+        <!-- arm64/ doesn't exist for 32bit arm device.-->
+        <option name="throw-if-not-found" value="false" />
+    </target_preparer>
+    <test class="com.google.android.oat.ArtRunTest" />
+
+    <template-include name="reporters" default="empty" />
+</configuration>

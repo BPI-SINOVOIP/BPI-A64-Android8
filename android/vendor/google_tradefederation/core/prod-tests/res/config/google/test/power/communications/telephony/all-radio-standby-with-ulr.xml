@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerTelephonyAllRadioStandbyWithULR" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/radio-wifi-location" />
+    <include name="google/test/power/common/user-location-reporting" />
+    <option name="google-device-setup:bluetooth" value="on" />
+
+     <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="service call phone 100 i32 1 i32 10" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="IdleTestCase-testIdleScreenOff" value="powerTelephony"/>
+    <option name="schema_suffix" value="AllRadioStandbyWithULR"/>
+    <include name="google/test/power/common/reboot" />
+    <include name="google/test/power/common/disable-doze" />
+
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testIdleScreenOff"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="IdleTestCase"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_duration" key="IdleTestCase-testIdleScreenOff" value="1800"/>
+        <option name="monsoon_voltage" value="4.2"/>
+        <option name="monsoon_duration" value="1900"/>
+        <option name="monsoon_frequency" value="10"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+    </test>
+</configuration>

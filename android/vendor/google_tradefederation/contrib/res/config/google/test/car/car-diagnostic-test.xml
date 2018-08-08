@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Run car diagnostics end-to-end test">
+    <option name="test-tag" value="car-diagnostic-test" />
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="install-arg" value="-d -r"/>
+    </target_preparer>
+    <test class="com.google.android.car.CarDiagnosticTest" />
+</configuration>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and runs WiFi stress tests">
+    <include name="google/common/asit" />
+    <option name="set-test-harness" value="true" />
+    <option name="test-tag" value="wifi_stress_test" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="ConnectivityManagerTest.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="svc wifi enable" />
+        <option name="run-command" value="am startservice com.google.android.apps.wearable.settings/com.google.android.clockwork.settings.wifi.WifiSettingsService" />
+        <option name="run-command" value="dumpsys activity service com.google.android.apps.wearable.settings/com.google.android.clockwork.settings.wifi.WifiSettingsService securenetdhcp 2 'androidwifi'" />
+        <option name="run-command" value="am stopservice com.google.android.apps.wearable.settings/com.google.android.clockwork.settings.wifi.WifiSettingsService" />
+    </target_preparer>
+    <test class="com.android.wireless.tests.WifiStressTest">
+        <option name="ap-iteration" value="100" />
+        <option name="idle-time" value="30" />
+        <option name="reconnect-iteration" value="100" />
+        <option name="reconnect-password" value="androidwifi" />
+        <option name="reconnect-ssid" value="securenetdhcp" />
+        <option name="reconnection-test" value="false" />
+        <option name="scan-iteration" value="100" />
+        <option name="scan-test" value="true" />
+        <option name="skip-set-device-screen-timeout" value="true" />
+        <option name="tether-test" value="false" />
+        <option name="wifi-only" value="true" />
+    </test>
+    <option name="device-unavail-email:destination" value="asit-lab-admin@google.com" />
+    <option name="invocation-failure-email:sender" value="tffail@google.com" />
+</configuration>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerChromeFullSitesLocal" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+    <option name="dismiss-dialogs:dismiss-apps" value="Chrome" />
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/cached_pages->/sdcard" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="ChromeTests-testFullSites" value="powerApps"/>
+    <option name="schema_ru_pair" key="ChromeTests-testFullSites-idle" value="powerAppsIdle"/>
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testFullSites"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="ChromeTests"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_duration" key="ChromeTests-testFullSites-idle" value="600" />
+        <option name="test_arguments" key="browser_site_delay_in_seconds" value="20" />
+        <option name="test_arguments" key="iterations" value="1" />
+        <option name="test_arguments" key="url_1" value="file:///sdcard/cached_pages/amazon.html" />
+        <option name="test_arguments" key="url_2" value="file:///sdcard/cached_pages/msn.html" />
+        <option name="test_arguments" key="url_3" value="file:///sdcard/cached_pages/cnn.html" />
+        <option name="test_arguments" key="url_4" value="file:///sdcard/cached_pages/espn.html" />
+        <option name="test_arguments" key="url_5" value="file:///sdcard/cached_pages/yahoo.html" />
+        <option name="monsoon_voltage" value="4.2"/>
+        <option name="monsoon_duration" value="900"/>
+        <option name="monsoon_frequency" value="10"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+    </test>
+</configuration>

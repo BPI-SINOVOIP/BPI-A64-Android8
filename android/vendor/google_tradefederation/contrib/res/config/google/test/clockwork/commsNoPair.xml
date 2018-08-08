@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Automated user profile test for clockwork">
+     <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value="nativetest/net_test_btcore/net_test_btcore" />
+        <option name="test-file-name" value="nativetest/net_test_device/net_test_device" />
+        <option name="test-file-name" value="nativetest/net_test_hci/net_test_hci" />
+        <option name="test-file-name" value="nativetest/net_test_osi/net_test_osi" />
+    </target_preparer>
+
+    <option name="test-tag" value="clockwork_native_comms_no_pairing" />
+    <test class="com.android.tradefed.testtype.GTest">
+        <option name="module-name" value="net_test_btcore" />
+        <option name="native-test-device-path" value="/data/nativetest/net_test_btcore" />
+        <option name="before-test-cmd" value="stop" />
+        <option name="before-test-cmd" value="sleep 1" />
+        <option name="after-test-cmd" value="start" />
+    </test>
+    <test class="com.android.tradefed.testtype.GTest">
+        <option name="module-name" value="net_test_device" />
+        <option name="native-test-device-path" value="/data/nativetest/net_test_device" />
+        <option name="before-test-cmd" value="stop" />
+        <option name="before-test-cmd" value="sleep 1" />
+        <option name="after-test-cmd" value="start" />
+    </test>
+    <test class="com.android.tradefed.testtype.GTest">
+        <option name="module-name" value="net_test_hci" />
+        <option name="native-test-device-path" value="/data/nativetest/net_test_hci" />
+        <option name="before-test-cmd" value="stop" />
+        <option name="before-test-cmd" value="sleep 1" />
+        <option name="after-test-cmd" value="start" />
+    </test>
+    <test class="com.android.tradefed.testtype.GTest">
+        <option name="module-name" value="net_test_osi" />
+        <option name="native-test-device-path" value="/data/nativetest/net_test_osi" />
+        <option name="before-test-cmd" value="stop" />
+        <option name="before-test-cmd" value="sleep 1" />
+        <option name="after-test-cmd" value="start" />
+    </test>
+</configuration>

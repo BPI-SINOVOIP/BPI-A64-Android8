@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Companion setup for Fit paired phone">
+
+    <target_preparer class="com.google.android.tradefed.targetprep.clockwork.ClockworkCompanionAllocator" />
+    <target_preparer class="com.google.android.tradefed.targetprep.clockwork.CompanionDeviceSetup">
+        <option name="set-property" key="persist.sys.timezone" value="America/Los_Angeles"/>
+        <option name="bluetooth" value="off"/>
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.companion.CompanionRunCommandTargetPreparer">
+        <option name="run-command" value="pm enable com.google.android.wearable.app "/>
+    </target_preparer>
+
+</configuration>

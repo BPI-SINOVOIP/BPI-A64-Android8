@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/settings/wifi_cache" />
+    <option name="test-tag" value="powerChromeFullSitesCacheWifiNoScroll" />
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="Browser_UrlDelay" value="40000" />
+        <option name="config" key="Browser_Url_1" value="http://146.148.91.8/old/cached_pages/amazon2/index.html" />
+        <option name="config" key="Browser_Url_2" value="http://146.148.91.8/old/cached_pages/msn2/index.html" />
+        <option name="config" key="Browser_Url_3" value="http://146.148.91.8/old/cached_pages/cnn2/index.html" />
+        <option name="config" key="TestCase" value="ChromeFullSiteCacheNoScroll" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testFullSitesNoScroll" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="ChromeTests" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="3000" />
+        <option name="ru_name" value="ActiveUseWifi" />
+    </test>
+</configuration>

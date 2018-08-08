@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<configuration description="Test that collects the memory usage when applications start">
+    <option name="test-tag" value="memoryusage" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="MemoryUsage.apk" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer">
+        <option name="account-sync" value="true" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <!-- disable Chrome First Run Experience -->
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/chrome-command-line" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/tmp/chrome-command-line" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="content insert --uri content://com.google.settings/partner --bind value:s:1 --bind name:s:network_location_opt_in" />
+        <option name="run-command" value="content update --uri content://com.google.settings/partner --bind value:s:1 --where name=\'network_location_opt_in\'" />
+        <option name="run-command" value="content insert --uri content://com.google.settings/partner --bind value:s:1 --bind name:s:use_location_for_services" />
+        <option name="run-command" value="content update --uri content://com.google.settings/partner --bind value:s:1 --where name=\'use_location_for_services\'" />
+        <option name="run-command" value="content update --uri content://settings/secure --bind value:s:gps,network --where name=\'location_providers_allowed\'" />
+    </target_preparer>
+
+    <test class="com.google.android.memory.MemoryUsageTest" />
+</configuration>

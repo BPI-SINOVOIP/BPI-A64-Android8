@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<member>
+  <name>assessment</name>
+  <value>
+    <int>13</int>
+  </value>
+</member>
+<member>
+  <name>create_schemas</name>
+  <value>
+    <boolean>1</boolean>
+  </value>
+</member>
+<member>
+  <name>description</name>
+  <value>
+    <string>Holy description, batman!</string>
+  </value>
+</member>
+<member>
+  <name>details</name>
+  <value>
+    <struct>
+      <T>Serial DData thing1</T>
+      <T>Serial DData thing2</T>
+    </struct>
+  </value>
+</member>
+<member>
+  <name>external_link</name>
+  <value>
+    <string>http://www.google.com/</string>
+  </value>
+</member>
+<member>
+  <name>override</name>
+  <value>
+    <boolean>0</boolean>
+  </value>
+</member>

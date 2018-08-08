@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor build-id test-tag -->
+<configuration description="Run system stability on clockwork">
+    <option name="bugreport-on-invocation-ended" value="false" />
+    <option name="test-tag" value="ClockworkMonkeyRetailTest" />
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="svc power stayon true" />
+        <option name="run-command" value="am broadcast -a com.google.android.clockwork.action.START_RETAIL_MODE" />
+    </target_preparer>
+    <test class="com.android.monkey.MonkeyBase">
+        <option name="category" value="android.intent.category.HOME" />
+        <option name="category" value="android.intent.category.LAUNCHER" />
+        <option name="category" value="android.intent.category.MONKEY" />
+        <option name="target-count" value="125000" />
+        <option name="idle-time" value="0" />
+        <!-- 600 minute timeout for the monkey -->
+        <option name="monkey-timeout" value="600" />
+        <option name="retry-on-failure" value="true" />
+        <option name="option" value="--monitor-native-crashes" />
+        <option name="option" value="--throttle 0" />
+        <option name="option" value="--pct-motion 90" />
+        <option name="option" value="--pct-touch 5" />
+        <option name="option" value="--pct-syskeys 5" />
+    </test>
+    <result_reporter class="com.google.android.tradefed.result.InspectBugResultReporter">
+        <option name="suite-key" value="system_retail_stability" />
+        <!-- Default suite-instance-key to 0 so that there's a common value across all suites -->
+        <option name="suite-instance-key" value="0" />
+    </result_reporter>
+</configuration>

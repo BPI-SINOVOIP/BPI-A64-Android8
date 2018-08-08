@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Turn on bluetooth with airplane mode on">
+    <!-- Installing APK on the watch side-->
+    <device name="watch">
+      <!-- com.android.tradefed.targetprep.GoogleDeviceSetup -->
+      <option name="google-device-setup:auto-update-timezone" value="off" />
+      <option name="google-device-setup:auto-update-time" value="off" />
+      <option name="google-device-setup:location-gps" value="off" />
+      <option name="google-device-setup:location-network" value="off" />
+      <option name="google-device-setup:airplane-mode" value="on" />
+      <option name="google-device-setup:bluetooth" value="on" />
+    </device>
+</configuration>

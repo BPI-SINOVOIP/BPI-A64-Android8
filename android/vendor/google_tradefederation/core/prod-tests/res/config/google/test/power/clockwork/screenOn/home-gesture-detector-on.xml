@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="gestureDetectionOn" />
+
+    <include name="google/test/power/common/cw-base" />
+    <include name="google/test/power/common/airplane" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="GestureDetectorPowerTests.apk" />
+    </target_preparer>
+
+    <option name="google-device-setup:set-gservice-setting" key="cw:gesture_control_enabled" value="true"/>
+
+    <option name="schema_ru_pair" key="HomeStreamGestureDetectorTest-testStaticGestureDetectorOn" value="powerCwMotionDetection"/>
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testStaticGestureDetectorOn"/>
+        <option name="test_package" value="com.android.clockwork.gestures.detector.powertests" />
+        <option name="test_class" value="HomeStreamGestureDetectorTest"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_duration" key="HomeStreamGestureDetectorTest-testStaticGestureDetectorOn" value="300"/>
+        <option name="monsoon_voltage" value="3.8"/>
+        <option name="monsoon_duration" value="500"/>
+        <option name="monsoon_frequency" value="10"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+    </test>
+</configuration>

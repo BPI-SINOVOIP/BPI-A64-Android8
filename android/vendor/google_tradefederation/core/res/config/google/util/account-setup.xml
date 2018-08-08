@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<configuration description="Includes all dependencies required to perform WiFi and Google Account setup on device">
+    <include name="google/util/wifi-setup" />
+    <include name="google/util/account" />
+    <option name="google-device-setup:set-global-setting" key="verifier_verify_adb_installs" value="0" />
+    <option name="google-device-setup:disconnect-wifi-after-test" value="false" />
+    <option name="google-device-setup:run-command" value="am start -a com.android.setupwizard.FOUR_CORNER_EXIT" />
+</configuration>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Download, flash device, runs app smoke test">
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="AppSmoke.apk" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAppsSetup">
+        <option name="vending-auto-update" value="OFF" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+    <target_preparer class="com.google.android.monkey.MonkeyAccountPreparer" >
+        <option name="account-sync" value="true" />
+    </target_preparer>
+    <option name="test-tag" value="DeviceSmokeTests" />
+    <test class="com.android.tradefed.testtype.InstrumentationTest" >
+        <option name="package" value="android.test.appsmoke" />
+        <option name="runner" value="android.support.test.runner.AndroidJUnitRunner" />
+    </test>
+    <option name="screenshot-on-failure" value="true" />
+</configuration>

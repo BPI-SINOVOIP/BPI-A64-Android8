@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 Google Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Runs a multi device compatibility test suite in the lab">
+    <!-- Current limitation: device name tags will not be passed down since that would assume that
+         every configuration being launched use the same names. -->
+    <template-include name="log-saver" default="google/template/reporters/android-build-api-log-saver" />
+    <device name="device1">
+        <build_provider class="com.google.android.tradefed.build.CtsDeviceLaunchControlProvider" >
+            <option name="cts-extra-artifact" value="google-tradefed.jar" />
+            <option name="cts-extra-artifact" value="google-tf-prod-tests.jar" />
+            <option name="cts-query-type" value="NOTIFY_TEST_BUILD" />
+            <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+        </build_provider>
+        <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+            <option name="userdata-flash" value="WIPE" />
+        </target_preparer>
+        <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+            <option name="disable-dialing" value="false" />
+            <option name="disable-audio" value="false" />
+        </target_preparer>
+        <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+            <!-- disable Chrome First Run Experience -->
+            <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/chrome-command-line" />
+            <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/tmp/chrome-command-line" />
+        </target_preparer>
+        <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+        <target_preparer class="com.google.android.tradefed.targetprep.CtsSettingsSetup" />
+        <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+        <target_preparer class="com.android.tradefed.targetprep.CrashCollector" />
+    </device>
+
+    <device name="device2">
+        <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+             <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+        </build_provider>
+        <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+             <option name="userdata-flash" value="WIPE" />
+        </target_preparer>
+        <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+            <option name="disable-dialing" value="false" />
+            <option name="disable-audio" value="false" />
+        </target_preparer>
+        <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+            <!-- disable Chrome First Run Experience -->
+            <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/chrome-command-line" />
+            <option name="push" value="/google/data/ro/teams/tradefed/testdata/browser/chrome-command-line->/data/local/tmp/chrome-command-line" />
+        </target_preparer>
+        <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+        <target_preparer class="com.google.android.tradefed.targetprep.CtsSettingsSetup" />
+        <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+        <target_preparer class="com.android.tradefed.targetprep.CrashCollector" />
+    </device>
+
+    <option name="enable-logcat" value="false" />
+    <option name="test-tag" value="cts" />
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <test class="com.google.android.tradefed.testtype.CtsTestLauncher">
+        <option name="max-run-time" value="1h30m" />
+        <option name="run-jar" value="hosttestlib.jar" />
+        <option name="run-jar" value="tradefed.jar" />
+        <option name="config-name" value="cts-automated" />
+    </test>
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter"/>
+    <result_reporter class="com.android.tradefed.result.InvocationFailureEmailResultReporter" >
+        <option name="sender" value="tffail@google.com" />
+    </result_reporter>
+</configuration>

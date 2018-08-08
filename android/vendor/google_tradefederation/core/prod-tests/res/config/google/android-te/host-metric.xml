@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved. -->
+<configuration description="Android TE config for host metric reporting to TF Monitor">
+    <object type="host_metric_agent"
+        class="com.google.android.tradefed.util.hostmetric.HostMetricAgent">
+        <option name="task-queue-name" value="metric-queue" />
+        <option name="task-queue-account"
+            value="96178536574-i53dc44t8jg8ec4i1ggb866e84dkthp3@developer.gserviceaccount.com" />
+        <option name="task-queue-key-path"
+            value="/google/data/ro/teams/tradefed/configs/96178536574-key.p12" />
+    </object>
+    <device_monitor class="com.google.android.tradefed.util.hostmetric.HostMetricMonitor" />
+</configuration>

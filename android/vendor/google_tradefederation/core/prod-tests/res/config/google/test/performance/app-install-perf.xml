@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<configuration description="Runs app install performance tests">
+    <option name="test-tag" value="app_install_perf" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:airplane-mode" value="on" />
+    <target_preparer class="com.android.tradefed.targetprep.CpuThrottlingWaiter" />
+
+    <test class="com.android.performance.tests.AppInstallTest" />
+</configuration>

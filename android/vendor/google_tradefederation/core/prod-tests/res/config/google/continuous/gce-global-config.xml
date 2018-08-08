@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved. -->
+<configuration description="Global config to enable creating gce devices">
+    <device_manager class="com.google.android.tradefed.device.GoogleDeviceManager">
+       <option name="max-gce-devices" value="20" />
+    </device_manager>
+</configuration>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/test/power/media/photos-video-playback" />
+    <option name="test-tag" value="powerPhotosPlaybackBatterySaverMode" />
+
+    <include name="google/test/power/common/battery-saver-mode" />
+    <option name="schema_ru_pair" key="PhotosTests-testVideoPlaybackThroughIntent" value="BatterySaverMode" />
+    <option name="schema_ru_pair" key="PhotosTests-testVideoPlaybackThroughIntent-idle" value="BatterySaverModeIdle" />
+</configuration>

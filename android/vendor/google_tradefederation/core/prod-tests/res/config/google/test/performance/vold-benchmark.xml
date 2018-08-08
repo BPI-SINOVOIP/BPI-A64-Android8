@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Runs storage benchmark tests">
+    <option name="test-tag" value="vold_bench_test" />
+    <target_preparer class="com.google.android.tradefed.targetprep.HardwarePerformancePreparer">
+        <option name="cpu-governor" value="performance" />
+        <option name="stop-run-time-screen" value="true" />
+    </target_preparer>
+    <test class="com.google.android.performance.VoldBenchMarkTest">
+        <option name="iterations" value="100" />
+        <option name="volumes" value="private" />
+    </test>
+</configuration>

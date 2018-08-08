@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerDuoPreview" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/apks/faketachyon/FakeTachyon.apk"/>
+    </target_preparer>
+
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="schema_ru_pair" key="DuoPowerTests-testDuoPreview" value="powerApps"/>
+        <option name="test_method" value="testDuoPreview"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="DuoPowerTests"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_duration" key="DuoPowerTests-testDuoPreview" value="300"/>
+        <option name="monsoon_voltage" value="4.2"/>
+        <option name="monsoon_duration" value="450"/>
+        <option name="monsoon_frequency" value="10"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+        <option name="pre-test-adb-command" value="am start -n com.google.android.apps.faketachyon/com.google.android.apps.tachyon.fake.FakeControllerActivity --es com.google.android.apps.faketachyon.ACTION bypass_onboarding" />
+    </test>
+</configuration>

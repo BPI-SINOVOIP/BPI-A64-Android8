@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<!-- Common configuration for ASIT (Automated System Integration Test). -->
+<configuration
+    description="Common ASIT configuration">
+
+    <!--
+    Add this element to include this config:
+    include name="google/common/asit"
+
+    Configs that include this should provide a "test" element, as well as at least the following
+    options:
+      option name="test-tag" value="..."
+      option name="invocation-failure-email:destination"
+    -->
+    <include name="google/common/asit-base" />
+    <result_reporter class="com.google.android.tradefed.result.RdbRunMetricsResultReporter" />
+    <result_reporter class="com.google.android.tradefed.result.InspectBugResultReporter">
+        <option name="suite-key-prefix" value="asit_" />
+    </result_reporter>
+</configuration>

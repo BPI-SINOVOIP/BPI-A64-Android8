@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Common build provider and preparers for flashing target images with a different system image.">
+     <!-- Device is where the unbundled app will be installed. It is also the device that is flashed.-->
+     <device name="device">
+        <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        </build_provider>
+    </device>
+    <!-- Placeholder to download the system image. -->
+    <device name="system_build">
+        <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        </build_provider>
+        <!-- Force the device to be null. -->
+        <option name="null-device" value="true" />
+    </device>
+    <!-- Install images onto device-->
+    <multi_target_preparer class="com.google.android.tradefed.targetprep.GsiMultiFlashPreparer" />
+</configuration>

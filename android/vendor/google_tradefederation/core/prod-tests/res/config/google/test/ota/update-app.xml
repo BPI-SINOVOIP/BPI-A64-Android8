@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Activate a fake OTA, then run an InstrumentationTest">
+    <include name="google/test/ota/fake" />
+    <option name="class" value="com.android.functional.otatests.SystemUpdateAppTest" />
+    <option name="instrumentation-arg" key="update_urgency" value="RECOMMENDED" />
+    <option name="update-priority" value="RECOMMENDED" />
+</configuration>

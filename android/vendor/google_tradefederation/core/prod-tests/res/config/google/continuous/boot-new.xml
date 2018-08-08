@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Test to verify if the device can fully boot with functional app framework services -->
+<!-- TODO(kevcheng): rename this to boot.xml once old boot.xml is gone -->
+<configuration description="Device Boot Test">
+    <option name="test-tag" value="BootTest" />
+    <option name="logcat-options" value="-b all" />
+    <test class="com.google.android.asit.DeviceBootTest" >
+        <option name="disable" value="true" />
+    </test>
+
+</configuration>

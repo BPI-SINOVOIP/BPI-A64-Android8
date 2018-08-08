@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerDoUHeavyUsage" />
+
+    <include name="google/test/power/common/cw-pairing-base" />
+    <include name="google/test/power/common/gps" />
+    <include name="google/test/power/common/app-install-profile" />
+    <option name="google-device-setup:enable-full-battery-stats-history" value="false" />
+    <option name="clockwork-device-setup:disable-gaze" value="true" />
+
+    <test class="com.google.android.power.tests.BatteryDrainPairingTestRunner">
+        <option name="schema_ru_pair" key="ClockworkPairingPowerTests-testHeavyUsageBatteryDrainWear" value="powerCwBatteryDrain" />
+        <option name="schema_suffix" value="PairHeavyUsage" />
+        <option name="test_method" value="testHeavyUsageBatteryDrainWear" />
+        <option name="test_package" value="com.google.android.clockwork.powertests" />
+        <option name="test_class" value="ClockworkPairingPowerTests" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="pre-test-nohup-command" value="dumpsys deviceidle disable deep" />
+        <option name="run-companion-instrumentation" value="true" />
+        <option name="companion_test_method" value="testHeavyUsageBatteryDrainCompanion" />
+        <option name="companion_test_package" value="com.google.android.clockwork.powertests" />
+        <option name="companion_test_class" value="ClockworkPairingPowerTests" />
+        <option name="companion_test_runner" value="android.test.InstrumentationTestRunner" />
+    </test>
+</configuration>

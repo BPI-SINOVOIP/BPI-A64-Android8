@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved
+     This config should not be run by itself except in outstanding
+     circumstances where explicitly instructed to do so.
+-->
+<configuration description="Options for app helper tests that don't require an account.">
+    <option name="test-tag-suffix" value="no-account" />
+    <option name="monkey-account:disable" value="true" />
+</configuration>

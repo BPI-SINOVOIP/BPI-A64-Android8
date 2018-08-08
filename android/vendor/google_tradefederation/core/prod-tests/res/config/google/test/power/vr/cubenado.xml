@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerVRCubenado" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+
+     <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/power/cubenado/CPD047_Cubenado_Preset.apk"/>
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="mkdir -p ${EXTERNAL_STORAGE}/Android/obb/com.cupid.cubenado" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+         <option name="push" value="/google/data/ro/teams/tradefed/testdata/power/cubenado/preset.conf->${EXTERNAL_STORAGE}/Android/obb/com.cupid.cubenado/preset.conf "/>
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="VRPowerTest-testCubenadoPowerTest" value="powerVR" />
+    <option name="schema_suffix" value="Cubenado" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testCubenadoPowerTest" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="VRPowerTest" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="VRPowerTest-testCubenadoPowerTest" value="300" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="400" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

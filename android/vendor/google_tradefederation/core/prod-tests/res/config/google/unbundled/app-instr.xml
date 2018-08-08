@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved. -->
+<configuration description="setups app, and runs all installed instrumentation tests and reports to rdb">
+    <include name="google/unbundled/common/app-func" />
+    <!-- test-tag option must be provided -->
+    <test class="com.android.tradefed.testtype.InstalledInstrumentationsTest" />
+</configuration>

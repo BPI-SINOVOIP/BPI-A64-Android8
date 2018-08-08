@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/settings/airplane" />
+    <option name="test-tag" value="batteryGalleryPlayback" />
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="interpolate" value="true" />
+        <option name="config" key="TestCase" value="GalleryVideoPlayback" />
+        <option name="config" key="ScreenOffTime" value="120000" />
+        <option name="config" key="TestDuration" value="300000" />
+        <option name="config" key="VideoFilePath" value="${EXTERNAL_STORAGE}/uipowertest/big_bunny_1080p_aac_192k_44.1k_p37.mp4" />
+        <option name="config" key="FullScreen" value="true" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.BatteryDrainRunner">
+        <option name="test-case-name" value="testVideoLoopPlayback" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="GalleryTests" />
+        <option name="test_runner-name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="ru-name" value="BatteryDrain" />
+    </test>
+</configuration>

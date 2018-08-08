@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved. -->
+<configuration description="Flashes device, pushes runtime benchmark tests to the device, runs the tests, and posts the results to the dashboard.">
+    <include name="google/common/asit" />
+    <option name="invocation-failure-email:destination" value="android-asit-failures@google.com" />
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer"/>
+    <!-- Will need to specify the test jars to push to the device. E.g.:
+    <option name="push" value="/google/data/ro/teams/tradefed/testdata/vm_perf/CaffeineMark/caffeinemark.jar->/data/local/tmp/caffeinemark.jar"/>
+    -->
+    <target_preparer class="com.android.tradefed.targetprep.PushFileInvoker">
+        <option name="test-file-name" value="local/tmp/perf-setup.sh" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.StopServicesSetup"/>
+    <test class="com.google.android.oat.RuntimePerfTest" />
+    <!-- Will need to specify how to run the benchmarks as well as how to parse the corresponding results.
+        <option name="test-label" value="CaffeineMark"/>
+        <option name="perf-tests-jarfiles" value="/data/local/tmp/caffeinemark.jar"/>
+        <option name="perf-main-class" value="CaffeineMarkEmbeddedApp" />
+        <option name="perf-results-regex" value="(.*) = (\d+).*"/>
+    -->
+</configuration>

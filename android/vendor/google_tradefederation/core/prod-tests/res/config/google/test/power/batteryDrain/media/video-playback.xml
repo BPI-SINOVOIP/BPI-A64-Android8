@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="batteryGalleryPlayback" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+
+    <option name="google-device-setup:local-data-path" value="/google/data/ro/teams/tradefed/testdata/power/uipowertest" />
+    <option name="google-device-setup:trigger-media-mounted" value="true" />
+
+    <option name="schema_ru_pair" key="PhotosTests-testVideoPlaybackThroughIntentBatteryDrain" value="BatteryDrain"/>
+
+    <test class="com.google.android.power.tests.BatteryDrainTestRunner">
+        <option name="test_method" value="testVideoPlaybackThroughIntentBatteryDrain"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="PhotosTests"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_arguments" key="video_file_path" value="${EXTERNAL_STORAGE}/uipowertest/big_bunny_1080p_aac_192k_44.1k_p37.mp4" />
+        <option name="test_arguments" key="video_duration" value="600" />
+    </test>
+</configuration>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Preparers for multi user devices -->
+<configuration description="Preparers for multi-user devices" >
+    <target_preparer class="com.google.android.tradefed.targetprep.CreateUserPreparer" >
+        <option name="user" value="test-user" />
+        <option name="switch" value="test-user" />
+    </target_preparer>
+</configuration>
+

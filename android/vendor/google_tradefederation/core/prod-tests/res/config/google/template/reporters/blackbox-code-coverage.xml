@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<!-- Result reporter for reporting Code Coverage result to Blackbox. -->
+<configuration description="Reporting code coverage results to Blackbox">
+    <result_reporter class="com.google.android.tradefed.result.BlackboxCodeCoverageReporter" />
+</configuration>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Camera stress back camera video hfr 240fps.">
+    <option name="test-tag" value="backHfr240FpsCapture" />
+    <include name="google/camera/stress_base" />
+
+    <option name="camera2-stress:test-methods" value="testBackCameraHFR240FPSVideoCapture" />
+    <option name="instrumentation-arg" key="videoCount" value="400" />
+    <option name="instrumentation-arg" key="videoDurationMs" value="10000" />
+</configuration>

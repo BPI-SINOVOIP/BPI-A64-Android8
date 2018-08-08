@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="clockMusicPlayback" />
+
+    <include name="google/test/power/common/cw-base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+    <option name="clockwork-device-setup:disable-ambient" value="true" />
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/media/apps/MusicPlaybackTest.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/media/mp3->/sdcard/Music/" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="MusicTests-testClockworkTestMusicPlayback" value="powerCwMusicPlayback" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testClockworkTestMusicPlayback" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="MusicTests" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="MusicTests-testClockworkTestMusicPlayback" value="400" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_duration" value="600" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

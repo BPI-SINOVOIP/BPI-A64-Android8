@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration
+    description="Common definitions for installing app and doing optional related setup for the app ">
+
+    <!--  this setup assumes either device will be wiped, or emulator launched from clean data -->
+    <!--  thus all teardown type options are disabled -->
+
+    <!-- series of preparers to optionally wipe + setup physical device. Disabled by default -->
+    <include name="google/unbundled/common/device-setup" />
+
+    <!-- optionally launch emulator using local SDK avd. Need to provide new-emulator to enable -->
+    <target_preparer class="com.android.tradefed.targetprep.LocalSdkAvdPreparer" />
+
+    <!-- optionally launch emulator using CROW. Need to provide new-emulator to enable
+    Need to explicitly enable this preparer and disable the LocalSdkAvdPreparer by adding the following
+    local-sdk-preparer:disable and crow-preparer:no-disable -->
+    <target_preparer class="com.google.android.tradefed.targetprep.CrowEmulatorPreparer" />
+
+    <!-- inject the device info into the build object, so reporters can make use of it -->
+    <target_preparer class="com.android.tradefed.targetprep.DeviceBuildInfoInjector" />
+
+    <!-- setup wifi. configs that do not want wifi should set wifi:skip -->
+    <target_preparer class="com.android.tradefed.targetprep.WifiPreparer" />
+
+    <!-- optionally add google account -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" />
+    <target_preparer class="com.google.android.tradefed.targetprep.SettingsSetup">
+        <!-- enable mock location -->
+        <option name="secure-setting" key="mock_location" value="1" />
+         <!-- We need to first agree to opt-in so that the following settings take effect; since order is not guaranteed, we have to break it up into two separate instances. -->
+        <!--Opt-in for pre-JB -->
+        <option name="secure-setting" key="network_location_opt_in" value="1" />
+        <!--Opt-in for JB+, prevent 'Location Consent' dialog from appearing -->
+        <option name="google-partner-setting" key="network_location_opt_in" value="1" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.SettingsSetup">
+        <option name="secure-setting" key="location_providers_allowed" value="network" />
+        <option name="google-partner-setting" key="use_location_for_services" value="1" />
+    </target_preparer>
+    <!-- Turn off the location agreement -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" >
+        <option name="run-command"
+        value="pm disable-user com.android.vending"/>
+    </target_preparer>
+
+    <!-- Install apps in zip files -->
+    <target_preparer class="com.android.tradefed.targetprep.InstallAllTestZipAppsSetup" >
+        <option name="disable" value="true" />
+    </target_preparer>
+
+    <!-- actually install the app -->
+    <target_preparer class="com.android.tradefed.targetprep.AppSetup" >
+        <option name="uninstall" value="false" />
+        <option name="reboot" value="false" />
+    </target_preparer>
+
+    <!-- optionally do not install a new GmsCore apk by default -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GmsCoreInstaller">
+        <option name="version" value="NONE" />
+    </target_preparer>
+
+    <!-- EmailPreparer is used to optionally set up an account within the Email app, this is a
+      separate account than from Gmail.
+      Needs to go after AppSetup to ensure up to date Email app handles the account creation -->
+    <target_preparer class="com.google.android.tradefed.targetprep.EmailPreparer">
+        <option name="google-version" value="true" />
+    </target_preparer>
+
+    <!-- optionally install additional arbitrary files from build -->
+    <target_preparer class="com.android.tradefed.targetprep.AdditionalFilesInstaller" />
+
+    <!-- optionally push files from host filesystem to device -->
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+
+    <!-- optionally install arbitrary other apks from filesystem -->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+
+    <!-- Optionally wait a bit or reboot to make sure the unbundled app is installed fully -->
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" />
+
+    <!-- Optionally allow alternate directories and use test-file-name -->
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" />
+</configuration>

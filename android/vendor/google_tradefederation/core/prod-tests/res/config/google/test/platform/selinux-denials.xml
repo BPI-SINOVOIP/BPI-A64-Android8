@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<configuration description="Runs the selinux-denials tests.">
+    <option name="test-tag" value="selinux_denials_count" />
+
+    <test class="com.android.security.tests.SELinuxDenialsTests">
+        <option name="selinux-domains-file" value="/google/data/ro/teams/tradefed/testdata/security/selinux-domains.txt" />
+    </test>
+</configuration>

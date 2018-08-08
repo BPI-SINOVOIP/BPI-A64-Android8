@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Runs the Google Camera App Helper Tests. (+App, Test->Tests).">
+    <include name="google/test/continuous/app_helper_test_base" />
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup" >
+        <option name="disable-playstore" value="true" />
+    </target_preparer>
+    <option name="instrumentation-arg" key="class" value="'android.platform.test.helpers.tests.GoogleCameraHelperTest'" />
+</configuration>

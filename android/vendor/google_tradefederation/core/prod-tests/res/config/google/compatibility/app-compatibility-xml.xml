@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved. -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and tests the compatibility of apps.">
+    <include name="google/common/asit-base" />
+    <option name="test-tag" value="AppCompatibilityExtended" />
+    <option name="bugreport-on-invocation-ended" value="true" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="AppCompatibilityTest.apk" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" >
+        <option name="account-sync" value="true" />
+        <option name="wait-for-checkin" value="true" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="pm disable com.google.android.talk"/>
+    </target_preparer>
+    <!--  must provide test-apk-dir argument-->
+    <test class="com.google.android.compatibility.AppCompatibilityTest" />
+    <result_reporter class="com.android.tradefed.result.XmlResultReporter" />
+    <result_reporter class="com.android.tradefed.result.EmailResultReporter">
+        <option name="sender" value="android-devrel-dpe@google.com"/>
+    </result_reporter>
+</configuration>

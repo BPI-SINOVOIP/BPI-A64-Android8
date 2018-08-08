@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Incremental OTA update">
+    <option name="test-tag" value="CwIncrementalOtaFromBUT" />
+    <!-- apply the OTA itself -->
+    <test class="com.google.android.clockwork.ota.ClockworkSideloadOtaStabilityTest">
+        <option name="max-install-time" value="600" />
+    </test>
+</configuration>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Test to calculate the succesive boot delays and granular boot info -->
+<configuration description="Device Boot Test">
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer">
+        <option name="account-sync" value="true" />
+    </target_preparer>
+    <option name="first-boot" value="false" />
+    <test class="com.google.android.asit.DeviceBootTest" />
+</configuration>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Result reporters for reporting test information to Blackbox. -->
+<configuration description="Result reporters for reporting test information to Blackbox" >
+    <result_reporter class="com.google.android.tradefed.result.BlackboxResultReporter" />
+</configuration>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs NLP power test at 1 minute request interval">
+    <option name="test-tag" value="powerFLPOneMinute" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/radio-wifiscan" />
+
+    <option name="schema_ru_pair" key="LocationTests-testFlpBalanced" value="powerLocation" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testFlpBalanced" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="LocationTests" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="LocationTests-testFlpBalanced" value="1800" />
+        <option name="test_arguments" key="interval_seconds" value="60" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="2100" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>

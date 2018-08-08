@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/settings/wifi" />
+    <option name="test-tag" value="powerComposeGmailWifi" />
+    <!-- Test need to specify the specifc recipient -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" >
+        <option name="account-name" value="latitudepowertest1@gmail.com" />
+        <option name="account-password" value="android1234" />
+        <option name="account-sync" value="true" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="ComposeGmailWifi" />
+        <option name="config" key="ToAddress" value="powertest@gmail.com" />
+        <option name="config" key="Subject" value="Test" />
+        <option name="config" key="BodyMessage" value="This is a test" />
+        <option name="config" key="Iteration" value="50" />
+        <option name="config" key="InputThrottle" value="300" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testComposeEmail" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="GmailTests" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="12000" />
+        <option name="ru_name" value="ActiveUseWifi" />
+    </test>
+</configuration>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Runs Flatland benchmark">
+    <option name="test-tag" value="flatland-test" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:airplane-mode" value="on" />
+    <option name="google-device-setup:screen-saver" value="off" />
+    <option name="google-device-setup:location-gps" value="off" />
+    <option name="google-device-setup:location-network" value="off" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value="local/tmp" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.HardwarePerformancePreparer">
+        <option name="cpu-governor" value="performance" />
+        <option name="stop-run-time-screen" value="true" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="chmod 755 /data/local/tmp/flatland*"/>
+    </target_preparer>
+
+    <test class="com.android.graphics.tests.FlatlandTest" />
+</configuration>

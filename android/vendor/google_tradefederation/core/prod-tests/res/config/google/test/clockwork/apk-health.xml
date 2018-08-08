@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Device health Test that verifies no crashed on a fully booted device with a sideloaded apk.">
+    <option name="test-tag" value="bootHealthCwHome" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="DeviceHealthTests.apk" />
+    </target_preparer>
+    <!-- Use "install-apk:apk-path to specify the apk you want to sideloaded in test config-->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <test class="com.android.tradefed.testtype.AndroidJUnitTest">
+        <option name="package" value="com.android.devicehealth.tests" />
+    </test>
+</configuration>

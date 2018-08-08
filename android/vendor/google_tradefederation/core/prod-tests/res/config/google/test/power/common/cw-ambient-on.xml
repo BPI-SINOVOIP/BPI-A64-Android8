@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="force ambient screen to stay on">
+    <option name="pre-test-adb-command" value="am broadcast -a com.google.android.clockwork.settings.SYNC_AMBIENT_DISABLED --ez ambient_disabled false" />
+</configuration>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Turn on bluetooth with airplane mode on">
+    <option name="google-device-setup:auto-update-timezone" value="off" />
+    <option name="google-device-setup:auto-update-time" value="off" />
+    <option name="google-device-setup:location-gps" value="off" />
+    <option name="google-device-setup:location-network" value="off" />
+    <option name="google-device-setup:wifi" value="off" />
+    <option name="google-device-setup:airplane-mode" value="on" />
+    <option name="google-device-setup:bluetooth" value="on" />
+</configuration>

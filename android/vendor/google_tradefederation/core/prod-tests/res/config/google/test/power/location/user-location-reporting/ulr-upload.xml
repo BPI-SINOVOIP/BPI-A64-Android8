@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Runs the test with ULR enabled and uploading data">
+    <option name="test-tag" value="powerULRUpload" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/radio-wifiscan" />
+    <include name="google/test/power/common/busybox-install" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/user-location-reporting" />
+
+    <!-- com.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:set-gservice-setting" key="user_location_reporting:moving_phone_latency_millis" value="1200000" />
+    <option name="google-device-setup:set-gservice-setting" key="user_location_reporting:stationary_phone_latency_millis" value="1200000" />
+
+    <option name="schema_ru_pair" key="IdleTestCase-testIdleScreenOff" value="powerLocation"/>
+    <option name="schema_suffix" value="UlrUpload"/>
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testIdleScreenOff"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="IdleTestCase"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_duration" key="IdleTestCase-testIdleScreenOff" value="3600"/>
+        <option name="monsoon_voltage" value="4.2"/>
+        <option name="monsoon_duration" value="3800"/>
+        <option name="monsoon_frequency" value="10"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+    </test>
+</configuration>

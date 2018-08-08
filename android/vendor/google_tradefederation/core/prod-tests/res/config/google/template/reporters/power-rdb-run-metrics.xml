@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Result reports for reporting run metrics to RDB. -->
+<configuration description="Result reports for reporting run metrics to RDB">
+    <result_reporter class="com.google.android.tradefed.result.PowerRunMetricsReporter">
+      <option name="report-on-failure" value="true"/>
+    </result_reporter>
+    <result_reporter class="com.android.tradefed.result.JsonHttpTestResultReporter">
+        <!-- disabled by default -->
+        <option name="disable" value="true" />
+        <option name="posting-endpoint" value="https://android-master-ingest.skia.org/upload" />
+    </result_reporter>
+</configuration>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Google Inc. All Rights Reserved -->
+<configuration description="Run Vellamo Benchmark on device and get results">
+    <option name="test-tag" value="VellamoBenchmark" />
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/third_party_perf/Vellamo.3202.apk"/>
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.CpuThrottlingWaiter" />
+
+    <test class="com.android.performance.tests.VellamoBenchmark" />
+</configuration>

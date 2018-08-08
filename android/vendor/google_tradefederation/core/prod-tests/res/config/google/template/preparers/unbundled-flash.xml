@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Common build provider and preparers for unbundled templates that include flashing a device. -->
+<configuration description="Common build provider and preparers for unbundled templates that include flashing a device." >
+     <!-- Device is where the unbundled app will be installed. It is also the device that is flashed.-->
+     <device name="device">
+        <!-- Gce enabled this configuration -->
+        <device_options class="com.google.android.tradefed.device.GceAvdTestDeviceOptions" />
+        <device_requirements class="com.google.android.tradefed.device.GoogleDeviceSelectionOptions" />
+        <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        </build_provider>
+        <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+            <option name="userdata-flash" value="WIPE" />
+        </target_preparer>
+        <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+            <option name="setting" key="screen_brightness_mode" value="0" />
+            <option name="setting" key="screen_brightness" value="30" />
+        </target_preparer>
+        <target_preparer class="com.google.android.tradefed.targetprep.GrantPermissionPreparer" />
+        <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner" />
+    </device>
+    <!-- This is mainly a place holder to download the ub app -->
+    <device name="ub_app">
+        <build_provider class="com.google.android.tradefed.build.AppLaunchControlProvider">
+        </build_provider>
+        <!-- Force the device to be null. This second device is mainly a place holder. -->
+        <option name="null-device" value="true" />
+    </device>
+    <!--Install apks onto device-->
+    <multi_target_preparer class="com.google.android.tradefed.targetprep.UnbundledAppSetup" />
+</configuration>

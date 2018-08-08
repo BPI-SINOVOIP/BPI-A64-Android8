@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Install NYC or later version of notification app -->
+<configuration description="64 bits GMS and GSA sideload preparers for companion phone." >
+    <device name="companion">
+        <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+            <option name="test-file-name" value="ClockworkNotificationTests.apk" />
+            <option name="install-arg" value="-d" />
+            <option name="cleanup-apks" value="true" />
+        </target_preparer>
+    </device>
+</configuration>

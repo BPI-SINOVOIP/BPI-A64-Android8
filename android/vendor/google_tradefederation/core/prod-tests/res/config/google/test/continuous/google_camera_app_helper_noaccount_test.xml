@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Runs the Google Camera App Helper Tests with no account. (+App, Test->Tests).">
+    <include name="google/test/continuous/google_camera_app_helper_test" />
+    <include name="google/test/continuous/app_helper_no_account_options" />
+</configuration>

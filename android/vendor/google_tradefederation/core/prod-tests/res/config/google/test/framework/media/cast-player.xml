@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Run live streams test with cast player">
+    <option name="test-tag" value="cast-player" />
+
+    <test class="com.google.android.apps.mediashell.CastReceiverTestRunner">
+        <option name="run-name" value="cast-player" />
+        <option name="test-count" value="1" />
+        <option name="testrun-timeout" value="60" />
+    </test>
+</configuration>

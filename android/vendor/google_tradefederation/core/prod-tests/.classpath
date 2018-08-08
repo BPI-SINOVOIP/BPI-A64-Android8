@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="res"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ddmlib"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/google-tradefed"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/google-tradefed-tests"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/tf-prod-tests"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/tradefederation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/tradefederation-tests"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/loganalysis"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/tf-remote-client"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/vendor/unbundled_google/libraries/apiary/libs/core/lib/google-oauth-client-1.22.0.jar"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/vendor/unbundled_google/libraries/apiary/libs/core/lib/google-api-client-1.22.0.jar"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/vendor/unbundled_google/libraries/apiary/libs/core/lib/jackson-core-2.1.3.jar"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/vendor/unbundled_google/libraries/apiary/libs/core/lib/google-http-client-jackson2-1.22.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved. -->
+<configuration description="The harness config for downloading logs of tests that ran during the 'build' phase." >
+    <option name="null-device" value="true" />
+    <build_provider class="com.google.android.tradefed.build.TestlogProvider" />
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+    <template-include name="test" default="empty" />
+    <template-include name="reporters" default="empty" />
+    <template-include name="coverage-reporter" default="empty" />
+    <template-include name="log-saver" default="google/template/reporters/android-build-api-log-saver" />
+
+</configuration>

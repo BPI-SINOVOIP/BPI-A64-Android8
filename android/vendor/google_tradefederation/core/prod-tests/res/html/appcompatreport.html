@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>[$PASS_INFO] - App Compatibility Test</title>
+<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+<script>
+$(function(){
+  $('.stacktrace_rest').hide();
+  var hidePassed=function(){
+     $("tr.passed_test_item").hide();
+  }
+  $('#failed_only').change(function(){
+    if($(this).is(':checked')){
+     hidePassed();
+    }
+    else{
+     $("tr").show()
+    }
+  });
+  hidePassed();
+  $('.stacktrace_lineone').on('mouseenter',function(){
+    var t=this;$(t).attr('going_blur','1');
+    setTimeout(function(){
+      if($(t).attr('going_blur')=='1'){
+        $('.stacktrace_rest').not($(t).find('.stacktrace_rest')).slideUp();
+        $(t).find('.stacktrace_rest').slideDown();
+        $(t).attr('going_blur','0');
+      }
+     },500)
+   }).on('mouseleave',function(){
+    $(this).attr('going_blur','0')
+   });
+})</script>
+</head>
+<body>
+  <h1>App Compatibility Test </h1>
+  [$BUILD_INFO]<br/><br/><hr/>
+  <input id="failed_only" type="checkbox" checked="true">Show Failed Only</input>
+  <table border='1'>
+    <tr><th>Test Name</th><th>Test Package Name</th><th>Status [$PASS_INFO]</th><th>Stacktrace</th></tr>
+    [$TABLE_CONTENT]
+  </table>
+</body>
+</html>

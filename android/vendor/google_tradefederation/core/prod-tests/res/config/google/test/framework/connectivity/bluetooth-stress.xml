@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Bluetooth stress tests">
+    <option name="test-tag" value="bluetooth_stress" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="BluetoothTests.apk" />
+    </target_preparer>
+    <!-- Left blank so some configs can add their own run command -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+
+    <test class="com.android.bluetooth.tests.BluetoothStressTest" />
+</configuration>

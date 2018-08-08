@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<!-- Common base configuration for ASIT (Automated System Integration Test). -->
+<configuration
+    description="Common base ASIT configuration with no rdb or inspect bug reporting">
+
+    <!-- Gce enabled this configuration -->
+    <device_options class="com.google.android.tradefed.device.GceAvdTestDeviceOptions" />
+    <device_requirements class="com.google.android.tradefed.device.GoogleDeviceSelectionOptions" />
+
+    <!-- base configuration -->
+    <option name="bugreport-on-invocation-ended" value="true" />
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+        <option name="userdata-flash" value="WIPE" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="set-system-setting" key="screen_brightness_mode" value="0" />
+        <option name="set-system-setting" key="screen_brightness" value="30" />
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GrantPermissionPreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner" />
+
+    <!-- Include ASIT reporters -->
+    <include name="google/template/reporters/asit" />
+
+</configuration>

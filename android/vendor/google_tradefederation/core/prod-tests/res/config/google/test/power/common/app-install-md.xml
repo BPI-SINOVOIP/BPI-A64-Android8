@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Install apks needed most power tests on watch">
+  <!-- Installing APK on the watch side-->
+  <device name="watch">
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="alt-dir" value="/google/data/ro/teams/tradefed/testdata/power" />
+        <option name="test-file-name" value="Power.apk" />
+      </target_preparer>
+
+      <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+  </device>
+</configuration>

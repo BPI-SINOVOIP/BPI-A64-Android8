@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Common definitions for app build provider, unbundled setup and reporting">
+    <!--
+    Common config to be used for all unbundled configs that get app builds from launch control.
+    Includes all common setup pieces to all unbundled configs, as well as reporting except for rdb.
+    Includers will need to set test-tag
+    -->
+    <build_provider class="com.google.android.tradefed.build.AppLaunchControlProvider">
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+    <include name="google/unbundled/common/setup" />
+    <include name="google/unbundled/common/report" />
+</configuration>

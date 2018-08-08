@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <include name="google/power2/ClockWork/settings/power-screen-off" />
+    <option name="test-tag" value="clockSMD" />
+    <target_preparer class="com.android.tradefed.targetprep.KeyValueConfigPreparer" >
+        <option name="path" value="${EXTERNAL_STORAGE}/PowerTests.conf" />
+        <option name="separator" value="=" />
+        <option name="config" key="TestCase" value="SMD" />
+        <option name="config" key="TestCase_idle" value="SMDIdle" />
+        <option name="config" key="Rate" value="40000" />
+        <option name="config" key="BatchLatency" value="0" />
+        <option name="config" key="TestDuration" value="900000" />
+        <option name="config" key="IdleTestDuration" value="300000" />
+    </target_preparer>
+    <test class="com.google.android.power.tests.PowerTestRunner">
+        <option name="clockWork" value="true" />
+        <option name="report_unit_mw" value="true" />
+        <option name="test_case_name" value="testSMD" />
+        <option name="test_package_name" value="com.android.test.uiautomator.platform.powertests" />
+        <option name="test_class_name" value="SensorPowerTests" />
+        <option name="test_runner_name" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_samples" value="30000" />
+        <option name="ru_name" value="ClockWorkScreenOff" />
+    </test>
+</configuration>

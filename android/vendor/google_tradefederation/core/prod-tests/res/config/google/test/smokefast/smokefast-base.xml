@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved. -->
+
+<configuration description="Functional test base config">
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:screen-saver" value="off" />
+    <option name="google-device-setup:location-gps" value="off" />
+    <option name="google-device-setup:location-network" value="off" />
+    <option name="google-device-setup:battery-saver-mode" value="off"/>
+    <option name="google-device-setup:disable-playstore" value="true" />
+
+    <!-- need to specify a test-file-name option -->
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" />
+    <!-- need to specify a package option -->
+    <test class="com.android.tradefed.testtype.InstrumentationTest">
+        <option name="screenshot-on-failure" value="true" />
+    </test>
+</configuration>

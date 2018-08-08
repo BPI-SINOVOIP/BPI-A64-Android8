@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+
+<!-- This configuration is intented to be used with lab-base template -->
+<configuration description="Android accessibility test base config">
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:screen-saver" value="off" />
+    <option name="google-device-setup:location-gps" value="off" />
+    <option name="google-device-setup:location-network" value="off" />
+    <option name="google-device-setup:battery-saver-mode" value="off"/>
+
+    <!-- Need to specify test-file name -->
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" />
+    <!-- need to configure account-name, account-password, account-sync, sync-then-off options -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" />
+    <!-- any special run command options needed -->
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" />
+    <!-- Need to specify test package or class -->
+    <test class="com.android.tradefed.testtype.AndroidJUnitTest" >
+        <option name="runner" value="android.support.test.runner.AndroidJUnitRunner" />
+        <option name="screenshot-on-failure" value="true" />
+    </test>
+    <!-- not a real test, added for uploading test result files -->
+    <test class="com.android.tradefed.result.LogFilesReporter">
+        <option name="upload-dir" value="/sdcard/Download/A11y_Scanner/" />
+        <option name="clean-upload-pattern" value="true" />
+    </test>
+</configuration>

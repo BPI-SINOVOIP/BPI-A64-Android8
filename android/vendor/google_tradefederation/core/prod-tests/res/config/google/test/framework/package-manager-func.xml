@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<configuration description="Runs download manager host-based tests">
+    <option name="test-tag" value="package_manager" />
+
+    <test class="com.android.framework.tests.PackageManagerHostTests">
+        <option name="app-repository-path" value="/google/data/ro/teams/tradefed/testdata/package_manager/packageManagerApps" />
+    </test>
+</configuration>

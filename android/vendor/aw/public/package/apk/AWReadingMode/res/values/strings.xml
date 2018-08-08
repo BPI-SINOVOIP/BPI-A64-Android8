@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ReadingMode</string>
+    <string name="readingmode_title_normal">Switch to ReadingMode</string>
+    <string name="readingmode_title_readingmode">Switch to Normal</string>
+    <string name="readingmode_summary">Reading mode reduces display\u2019s background glare.</string>
+
+</resources>

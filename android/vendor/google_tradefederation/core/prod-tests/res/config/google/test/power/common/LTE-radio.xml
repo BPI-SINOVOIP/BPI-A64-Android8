@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Changes preferred network type to LTE">
+    <include name="google/test/power/common/radio" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <!-- RAT constants derived from frameworks/opt/telephony/proto/telephony.proto -->
+        <option name="run-command" value="settings put global preferred_network_mode1 12" />
+        <!-- Opening the settings app to ensure the UI gets updated -->
+        <option name="run-command" value="am start -n com.android.phone/.MobileNetworkSettings" />
+    </target_preparer>
+    <include name="google/test/power/common/reboot" />
+    <include name="google/test/power/common/disable-doze" />
+</configuration>

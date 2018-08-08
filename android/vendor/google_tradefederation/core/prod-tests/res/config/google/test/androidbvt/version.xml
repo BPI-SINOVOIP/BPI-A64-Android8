@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Android BVT test base config">
+    <include name="google/test/androidbvt/androidbvt" />
+    <target_preparer class="com.google.android.ota.VersionCachePreparer">
+        <option name="use-first-version" value="true" />
+    </target_preparer>
+    <option name="tests-zip-app:test-file-name" value="OtaFunctionalTests.apk" />
+    <option name="package" value="com.android.functional.otatests" />
+    <option name="class" value="com.android.functional.otatests.SystemUpdateTest" />
+</configuration>

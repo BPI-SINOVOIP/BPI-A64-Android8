@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Common build provider and preparers for Clockwork ASIT templates. -->
+<configuration
+    description="Interruption action to phone or watch and verifies bluetooth connection">
+    <option name="test-tag" value="CwInterruptStress" />
+    <test class="com.google.android.clockwork.ClockworkInterruptStressTest" />
+</configuration>

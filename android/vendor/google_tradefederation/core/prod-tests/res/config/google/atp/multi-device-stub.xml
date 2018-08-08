@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<configuration description="Multi device stub test example in ATP">
+    <!-- Some option for the whole configuration-->
+    <option name="test-tag" value="multi-device-stub" />
+
+    <!-- Each device configuration -->
+    <device name="device1">
+        <build_provider class="com.google.android.tradefed.build.ATPStubLaunchControlProvider" />
+    </device>
+
+    <!-- A device tag can be completely empty if it doesn't require any setup -->
+    <device name="device2">
+        <build_provider class="com.google.android.tradefed.build.ATPStubLaunchControlProvider" />
+    </device>
+
+    <!-- preparer that affects all the devices, called after the individual target_preparer -->
+    <!-- Not required: If you have none, you can remove all the 'multi_target_preparer' -->
+    <multi_target_preparer class="com.android.tradefed.targetprep.multi.StubMultiTargetPreparer" />
+
+    <!-- logger in verbose for the example -->
+    <template-include name="log-saver" default="google/template/reporters/android-build-api-log-saver" />
+
+    <!-- tests that will be ran -->
+    <test class="com.google.android.tradefed.testtype.ATPMultiDeviceStubTest" />
+
+    <!-- result reporters -->
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+
+</configuration>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon serialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <test class="com.google.android.power.tests.BatteryDrainTestRunner">
+        <option name="test_method" value="testChromeBatteryDrain"/>
+        <option name="test_package" value="com.google.android.platform.powertests"/>
+        <option name="test_class" value="ChromeTests"/>
+        <option name="test_runner" value="android.test.InstrumentationTestRunner"/>
+        <option name="test_arguments" key="browser_site_delay_in_seconds" value="40" />
+        <option name="test_arguments"  key="url_1" value="http://146.148.91.8/old/cached_pages/amazon2/index.html" />
+        <option name="test_arguments"  key="url_2" value="http://146.148.91.8/old/cached_pages/msn2/index.html" />
+        <option name="test_arguments"  key="url_3" value="http://146.148.91.8/old/cached_pages/cnn2/index.html" />
+        <option name="test_arguments"  key="url_4" value="http://146.148.91.8/old/cached_pages/espn/index.html"/>
+        <option name="test_arguments"  key="url_5" value="http://146.148.91.8/old/cached_pages/baidu/index.html"/>
+        <option name="test_arguments"  key="url_6" value="http://146.148.91.8/old/cached_pages/craigslist/index.html"/>
+        <option name="test_arguments"  key="url_7" value="http://146.148.91.8/old/cached_pages/wikipedia/index.html"/>
+        <option name="test_arguments"  key="url_8" value="http://146.148.91.8/old/cached_pages/facebook/index.html"/>
+        <option name="test_arguments"  key="url_9" value="http://146.148.91.8/old/cached_pages/yahoo/index.html"/>
+        <option name="test_arguments"  key="url_10" value="http://146.148.91.8/old/cached_pages/ebay/index.html"/>
+        <option name="test_arguments"  key="url_11" value="http://146.148.91.8/old/cached_pages/pinterest/index.html"/>
+        <option name="test_arguments"  key="url_12" value="http://146.148.91.8/old/cached_pages/tumblr/index.html"/>
+        <option name="test_arguments"  key="url_13" value="http://146.148.91.8/old/cached_pages/linkedin/index.html"/>
+        <option name="test_arguments"  key="url_14" value="http://146.148.91.8/old/cached_pages/go/index.html"/>
+        <option name="test_arguments"  key="url_15" value="http://146.148.91.8/old/cached_pages/blogger/index.html"/>
+        <option name="test_arguments"  key="url_16" value="http://146.148.91.8/old/cached_pages/bing/index.html"/>
+        <option name="test_arguments"  key="url_17" value="http://146.148.91.8/old/cached_pages/youtube/index.html"/>
+        <option name="test_arguments"  key="url_18" value="http://146.148.91.8/old/cached_pages/twitter/index.html"/>
+        <option name="test_arguments"  key="url_19" value="http://146.148.91.8/old/cached_pages/google/index.html"/>
+        <option name="test_arguments"  key="url_20" value="http://146.148.91.8/old/cached_pages/hao123/index.html"/>
+        <option name="wait_for_disconnect_signal" value="true"/>
+    </test>
+</configuration>

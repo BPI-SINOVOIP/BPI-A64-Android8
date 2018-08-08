@@ -1,0 +1,8 @@
+release Date: 2017/06/07
+Build Tag: OPR1.170607.001
+Build ID: 4075682
+Branch: oc-release
+Note: Invocation did not complete due to the device becoming not available.
+Release decision: ABANDON
+Bug: b/62481465
+

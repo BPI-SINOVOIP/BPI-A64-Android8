@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerDoUBenchmarkApp" />
+
+    <include name="google/test/power/common/base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/radio-wifi-location" />
+    <include name="google/test/power/common/user-location-reporting" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="alt-dir" value="/google/data/ro/teams/tradefed/testdata/power/apks" />
+        <option name="test-file-name" value="BatteryBenchmarkApp.apk" />
+    </target_preparer>
+
+    <option name="schema_ru_pair" key="CameraTests-testImageCapture" value="powerDoUBenchmarkApp" />
+    <option name="schema_ru_pair" key="GalleryTests-testGalleryScroll" value="powerDoUBenchmarkApp" />
+    <option name="schema_ru_pair" key="IdleTests-testIdle" value="powerDoUBenchmarkApp" />
+    <option name="schema_ru_pair" key="VideoCameraTests-testVideoRecord" value="powerDoUBenchmarkApp"/>
+    <option name="schema_ru_pair" key="VideoTests-testVideoPlayback" value="powerDoUBenchmarkApp"/>
+    <option name="schema_ru_pair" key="WebViewTests-testBrowserScroll" value="powerDoUBenchmarkApp"/>
+    <option name="schema_ru_pair" key="AudioStreamingTests-testAudioStreaming" value="powerDoUBenchmarkApp" />
+    <option name="schema_ru_pair" key="TypeTests-testType" value="powerDoUBenchmarkApp" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_package" value="com.android.dou" />
+        <option name="test_runner" value="com.android.dou.DoUTestRunner" />
+        <option name="test_arguments" key="iterations" value="1" />
+        <option name="test_arguments" key="idle_test_in_loop" value="1" />
+        <option name="test_arguments" key="fake_battery_device" value="True" />
+        <option name="test_arguments" key="skip_home" value="True" />
+        <option name="monsoon_voltage" value="4.2" />
+        <option name="monsoon_duration" value="2850" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+    </test>
+</configuration>
+

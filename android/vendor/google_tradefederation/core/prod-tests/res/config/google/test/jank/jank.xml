@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Runs UI performance tests">
+    <!-- need to specify a test-tag option -->
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="screen-saver" value="off" />
+        <option name="location-gps" value="off" />
+        <option name="location-network" value="off" />
+        <option name="battery-saver-mode" value="off" />
+        <option name="disable-playstore" value="true" />
+    </target_preparer>
+
+    <!-- any special test files to be pushed -->
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+    <!-- need to specify a test-file-name option -->
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" />
+    <!-- need to specify a apk-path option -->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <!-- need to configure account-name, account-password, account-sync, sync-then-off options -->
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" />
+    <!-- any special run command options needed -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.TemperatureThrottlingWaiter" />
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" />
+    <target_preparer class="com.android.tradefed.targetprep.CrashCollector" />
+    <!-- need to specify a package option -->
+    <test class="com.android.tradefed.testtype.UiAutomatorTest">
+        <option name="instrumentation" value="true"/>
+        <option name="runner" value="android.test.InstrumentationTestRunner" />
+        <option name="on-test-failure" value="SCREENSHOT" />
+    </test>
+</configuration>

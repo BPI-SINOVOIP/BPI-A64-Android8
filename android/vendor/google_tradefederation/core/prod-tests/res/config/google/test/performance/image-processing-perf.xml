@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Runs image processing benchmark test">
+    <option name="test-tag" value="image-processing-test" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:screen-saver" value="off" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="ImageProcessing.apk" />
+    </target_preparer>
+
+    <test class="com.android.graphics.tests.ImageProcessingTest" />
+</configuration>

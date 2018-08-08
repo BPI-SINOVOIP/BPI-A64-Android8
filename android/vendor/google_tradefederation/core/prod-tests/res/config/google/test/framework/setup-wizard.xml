@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved. -->
+<configuration description="Test configuration for Setup Wizard UI tests.">
+    <option name="test-tag" value="setup_wizard" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:disable" value="true" />
+
+    <!-- Optionally wait a bit or reboot to make sure the unbundled app is installed fully. -->
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" />
+    <!-- Install the test apk. Provide a path to apk with apk-path parameter. -->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <!-- Enable verboase logging for SetupWizard. -->
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="setprop log.tag.SetupWizard VERBOSE"/>
+    </target_preparer>
+
+    <!-- Run the test. -->
+    <test class="com.android.tradefed.testtype.UiAutomatorTest">
+        <option name="instrumentation" value="true" />
+        <option name="runner" value="android.support.test.uiautomator.UiAutomatorInstrumentationTestRunner" />
+        <option name="package" value="com.google.android.gms.auth.tests" />
+        <option name="class" value="com.google.android.gms.uitest.auth.SetupWizardTests#testSetupWizard_addExistingAccount_withDefaultSettings" />
+    </test>
+    <!-- Note, this is not an actual test - this is a component to post files from the previous test run to Sponge. -->
+    <test class="com.android.tradefed.result.LogFilesReporter">
+        <option name="upload-dir" value="/data/data/com.google.android.gms.auth.tests/files/" />
+        <option name="clean-upload-pattern" value="true" />
+    </test>
+</configuration>

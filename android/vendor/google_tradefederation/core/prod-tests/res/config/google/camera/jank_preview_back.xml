@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Camera jank preview back.">
+    <option name="test-suite-tag" value="camera_jank" />
+    <option name="test-tag" value="CameraJankBackCameraPreview" />
+    <include name="google/camera/jank_base" />
+
+    <option name="class" value="com.android.camera.jank.CameraPreviewJankTest#testBackCameraPreview" />
+    <option name="run-arg" key="iteration" value="1" />
+</configuration>

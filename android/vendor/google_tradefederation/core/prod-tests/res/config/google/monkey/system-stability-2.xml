@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor build-id test-tag -->
+<configuration description="Run application monkey">
+    <include name="google/common/asit-base" />
+    <option name="bugreport-on-invocation-ended" value="false" />
+    <option name="test-tag" value="MonkeyApplicationTest" />
+    <option name="google-device-setup:local-data-path" value="/google/data/ro/teams/tradefed/testdata/monkey_system/sdcard" />
+    <option name="google-device-setup:setting" key="screen_brightness_mode" value="0" />
+    <option name="google-device-setup:setting" key="screen_brightness" value="10" />
+
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="rm -r ${EXTERNAL_STORAGE}/DCIM"/>
+    </target_preparer>
+    <!-- Left blank so some configs can push -->
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/monkey_system/vending_preferences.xml->/data/data/com.android.vending/shared_prefs/vending_preferences.xml" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/monkey_system/AndroidMail.Main.xml->/data/data/com.android.email/shared_prefs/AndroidMail.Main.xml" />
+        <option name="post-push" value="chmod 0777 /data/data/com.android.vending/shared_prefs/vending_preferences.xml" />
+    </target_preparer>
+    <!-- Left blank so unbundled apps can be added -->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleAccountPreparer" >
+        <option name="account-name" value="androidmonkeyapp00@gmail.com" />
+        <option name="account-password" value="androidtest" />
+        <option name="account-sync" value="true" />
+        <option name="sync-then-off" value="300" />
+    </target_preparer>
+    <!-- Left blank so some configs can set up email -->
+    <target_preparer class="com.google.android.tradefed.targetprep.EmailPreparer">
+        <option name="google-version" value="true" />
+    </target_preparer>
+    <test class="com.android.monkey.MonkeyBase">
+        <option name="category" value="android.intent.category.LAUNCHER" />
+        <option name="target-count" value="125000" />
+        <option name="idle-time" value="0" />
+        <!-- 30 minute timeout for the monkey -->
+        <option name="monkey-timeout" value="30" />
+        <option name="retry-on-failure" value="true" />
+        <option name="option" value="--monitor-native-crashes" />
+    </test>
+    <result_reporter class="com.google.android.tradefed.result.InspectBugResultReporter">
+        <option name="suite-key" value="application_stability" />
+        <!-- Default suite-instance-key to 0 so that there's a common value across all suites -->
+        <option name="suite-instance-key" value="0" />
+        <option name="procedure-data" key="rdb_server" value="http://android-rdb-posting.corp.google.com/services/" />
+    </result_reporter>
+</configuration>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<!-- TODO: This configuration file should replace the contents of the stability-common after its
+        success has been validated -->
+<configuration description="common definitions for stability monkey">
+    <option name="upload-file-pattern" key="/data/anr/traces.txt" value="TEXT" />
+    <option name="upload-file-pattern" key="/data/anr/anr_*" value="TEXT" />
+    <option name="test-tag" value="MonkeyComboTest_StabilityMonkey" />
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+        <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+    </build_provider>
+    <device_recovery class="com.google.android.tradefed.device.NcdDeviceRecovery"/>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="rm -r ${EXTERNAL_STORAGE}/DCIM"/>
+    </target_preparer>
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup" >
+        <option name="wifi-network" value="GoogleGuest" />
+        <option name="local-data-path" value="/google/data/ro/teams/tradefed/testdata/monkey_system/sdcard" />
+    </target_preparer>
+    <!-- Left blank so unbundled apps can be added -->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" />
+    <target_preparer class="com.google.android.tradefed.targetprep.DeviceLauncherConfigurator" />
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" >
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/monkey_system/vending_preferences.xml->/data/data/com.android.vending/shared_prefs/vending_preferences.xml" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/monkey_system/AndroidMail.Main.xml->/data/data/com.android.email/shared_prefs/AndroidMail.Main.xml" />
+        <option name="post-push" value="chmod 0777 /data/data/com.android.vending/shared_prefs/vending_preferences.xml" />
+    </target_preparer>
+    <target_preparer class="com.google.android.monkey.MonkeyAccountPreparer" >
+        <option name="account-sync" value="true" />
+        <option name="sync-then-off" value="300" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.FolderSaver" />
+    <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner" />
+    <test class="com.android.monkey.MonkeyBase">
+        <option name="category" value="android.intent.category.LAUNCHER" />
+        <option name="target-count" value="125000" />
+        <option name="idle-time" value="0" />
+        <!-- options for generating ANR report -->
+        <option name="anr-report-script" value="/google/data/ro/teams/tradefed/testdata/monkey/bin/bugreport" />
+        <option name="anr-report-storage-backend-base-path" value="/auto/android-test/www/" />
+        <option name="anr-report-storage-backend-url-prefix" value="http://android-test/www/" />
+        <option name="anr-report-storage-path" value="test_logs/monkey-anr-reports" />
+    </test>
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <template-include name="log-saver" default="google/template/reporters/android-build-api-log-saver" />
+    <result_reporter class="com.google.android.tradefed.result.SpongeResultReporter" />
+    <result_reporter class="com.google.android.tradefed.result.InspectBugResultReporter">
+        <option name="suite-key" value="system_stability" />
+        <!-- Default suite-instance-key to 0 so that there's a common value across all suites -->
+        <option name="suite-instance-key" value="0" />
+    </result_reporter>
+</configuration>

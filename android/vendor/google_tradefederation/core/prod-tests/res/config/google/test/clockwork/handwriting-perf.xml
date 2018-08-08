@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration description="Handwriting Performance Test">
+    <option name="test-tag" value="CwHandwritingPerformance" />
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/ime/handwriting_userstrokes/->/sdcard/hwr" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/ime/ink_benchmark_config.pb->/sdcard/ink_benchmark_config.pb" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" >
+        <option name="test-file-name" value="ClockworkIMETest.apk" />
+        <option name="test-file-name" value="HandwritingRunner.apk" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster">
+        <option name="delay" value="300000" />
+    </target_preparer>
+    <test class="com.google.android.clockwork.HandwritingTest" >
+        <option name="folder" value="/sdcard/hwr" />
+    </test>
+</configuration>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration
+    description="Running bluetooth throughput test">
+    <option name="test-tag" value="CwBluetoothThroughputNYC" />
+    <test class="com.google.android.clockwork.ClockworkBluetoothThroughput" />
+</configuration>

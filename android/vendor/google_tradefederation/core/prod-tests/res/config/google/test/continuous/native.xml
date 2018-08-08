@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved. -->
+<configuration description="Runs the native unit gtests.">
+    <!-- FIXME make this configurable for local runs -->
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup" >
+        <!-- To run all the tests uncomment this or provide it via command line -->
+        <!-- <option name="test-file-name" value= "nativetest"/> -->
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer" />
+    <target_preparer class="com.android.tradefed.targetprep.CrashCollector" />
+    <test class="com.android.tradefed.testtype.GTest">
+        <option name="prepend-filename" value="true"/>
+    </test>
+</configuration>

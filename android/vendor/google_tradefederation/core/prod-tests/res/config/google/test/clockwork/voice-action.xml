@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration description="Voice action test">
+    <include name="google/test/clockwork/common/voice-action" />
+    <option name="test-tag" value="CwVoiceInputActions" />
+    <option name="language" value="en" />
+    <result_reporter class="com.google.android.tradefed.result.RdbRunMetricsResultReporter" />
+    <test class="com.google.android.clockwork.VoiceInputStress">
+        <option name="iteration" value="1" />
+        <option name="latency" value="false" />
+    </test>
+</configuration>

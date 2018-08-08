@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="clockClearcut" />
+
+    <include name="google/test/power/common/cw-base" />
+    <include name="google/test/power/common/app-install" />
+    <include name="google/test/power/common/airplane" />
+    <option name="clockwork-device-setup:disable-ambient" value="true" />
+    <option name="test-file-name" value="ClearcutLoggingTestApp.apk" />
+
+    <option name="schema_ru_pair" key="IdleTestCase-testPartialWakelock" value="powerCwIdleSystemScreenOff" />
+    <option name="schema_suffix" value="Clearcut" />
+
+    <test class="com.google.android.power.tests.MonsoonTestRunner">
+        <option name="test_method" value="testPartialWakelock" />
+        <option name="test_package" value="com.google.android.platform.powertests" />
+        <option name="test_class" value="IdleTestCase" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="IdleTestCase-testPartialWakelock" value="600" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_duration" value="800" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+        <option name="pre-test-adb-command" value="am startservice -a com.google.android.clockwork.clearcutloggingtest.START_CLEARCUT_LOGGING --el logging_interval_ms 10000 --el logging_period_ms 1800000" />
+    </test>
+</configuration>

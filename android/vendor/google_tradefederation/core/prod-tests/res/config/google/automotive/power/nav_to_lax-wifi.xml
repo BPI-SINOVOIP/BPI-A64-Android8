@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 Google Inc. All Rights Reserved -->
+<configuration description="Runs the standby test" >
+    <include name="google/automotive/power/mobile_power" />
+
+    <option name="google-device-setup:enable-airplane-mode" value="false" />
+    <option name="google-device-setup:secure-setting" key="wifi_on" value="1" />
+    <option name="google-device-setup:disable-use-location" value="false" />
+    <option name="google-device-setup:secure-setting" key="location_providers_allowed" value="gps" />
+
+    <option name="Monsoon-Samples" value="12000" />
+    <option name="shell-script-path" value="/google/data/ro/teams/tradefed/testdata/power/gearhead/scripts/nav_to_lax.sh" />
+    <option name="test-tag" value="AutomotivePowerNavToLAX_Wifi" />
+    <option name="Test-Name" value="AutomotivePowerNavToLAX_Wifi" />
+</configuration>

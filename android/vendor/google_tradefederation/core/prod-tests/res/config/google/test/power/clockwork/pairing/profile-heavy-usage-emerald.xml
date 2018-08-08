@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Required input: monsoon_serialno monsoonserialno -->
+<configuration description="Downloads build, flashes on device, and runs power test">
+    <option name="test-tag" value="powerPairHeavyUsage" />
+
+    <include name="google/test/power/common/cw-pairing-base" />
+    <include name="google/test/power/common/gps" />
+    <include name="google/test/power/common/app-install-profile" />
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/audioinputstresstest->/data/data/com.google.android.wearable.app" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <!-- Enable audio injector -->
+        <option name="run-command" value="am broadcast -a com.google.android.clockwork.settings.TOGGLE_AUDIO_INJECTOR" />
+    </target_preparer>
+
+    <option name="clockwork-device-setup:disable-gaze" value="true" />
+
+    <option name="schema_ru_pair" key="ClockworkPairingPowerTests-testHeavyUsageWear" value="ClockWorkPairingProfile" />
+    <option name="schema_suffix" value="PairHeavyUsage" />
+
+    <test class="com.google.android.power.tests.MonsoonPairingTestRunner">
+        <option name="test_method" value="testHeavyUsageWear" />
+        <option name="test_package" value="com.google.android.clockwork.powertests" />
+        <option name="test_class" value="ClockworkPairingPowerTests" />
+        <option name="test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="test_duration" key="ClockworkPairingPowerTests-testHeavyUsageWear" value="3600" />
+        <option name="monsoon_voltage" value="3.8" />
+        <option name="monsoon_duration" value="3800" />
+        <option name="monsoon_frequency" value="10" />
+        <option name="wait_for_disconnect_signal" value="true" />
+        <option name="pre-test-nohup-command" value="am instrument -e interval_ms 300000 -e class com.google.android.gms.testapps.location.activity.power.ActivityPowerUtil#testRegisterAR -w com.google.android.gms.testapps.location.activity.power/.ARTestRunner" />
+        <option name="pre-test-nohup-command" value="dumpsys deviceidle disable" />
+        <option name="run-companion-instrumentation" value="true" />
+        <option name="companion_test_method" value="testHeavyUsageCompanion" />
+        <option name="companion_test_package" value="com.google.android.clockwork.powertests" />
+        <option name="companion_test_class" value="ClockworkPairingPowerTests" />
+        <option name="companion_test_runner" value="android.test.InstrumentationTestRunner" />
+        <option name="companion_test_timeout" value="5400" />
+    </test>
+</configuration>

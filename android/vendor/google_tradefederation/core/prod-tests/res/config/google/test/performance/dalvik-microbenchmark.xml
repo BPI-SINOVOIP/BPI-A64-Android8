@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Runs Dalvik performance microbenchmark tests">
+    <option name="test-tag" value="dalvik_microbenchmark" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value="dalvikperf" />
+        <option name="test-file-name" value="dalvikperf64" />
+        <option name="throw-if-not-found" value="false" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="cp /data/dalvikperf/RunPerf.jar /data/dalvikperf64/" />
+    </target_preparer>
+
+    <test class="com.google.android.performance.DalvikPerformanceTest" />
+</configuration>

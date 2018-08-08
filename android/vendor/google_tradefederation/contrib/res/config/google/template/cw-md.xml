@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<!-- Template for Clockwork Multi device test paired with pairing util. -->
+<configuration description="Template for Clockwork ASIT for multi devices">
+    <option name="bugreportz-on-invocation-ended" value="true" />
+    <!-- Device preparer for watch -->
+    <include name="google/template/preparers/watch" />
+    <!-- Device preparer for phone -->
+    <include name="google/template/preparers/companion" />
+    <multi_target_preparer class="com.google.android.clockwork.targetprep.PairingMultiTargetPreparer"/>
+    <template-include name="test" default="empty" />
+    <include name="google/template/reporters/asit" />
+    <template-include name="reporters" default="empty" />
+</configuration>
