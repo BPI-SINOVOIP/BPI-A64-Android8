@@ -1,11 +1,10 @@
 # BPI-A64-Android 8.1
 
-----------
-
 **Prepare**
 
 Please download oversize files from this [link](https://pan.baidu.com/s/1PCvnVxngNy_D73SI4nZObQ) and merge them to the source code. 
 
+Get the docker image from [Sinovoip Docker Hub](https://hub.docker.com/r/sinovoip/bpi-build-android-7/) , Build the android source with this docker environment.
 
 ----------
 
