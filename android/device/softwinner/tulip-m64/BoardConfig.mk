@@ -46,7 +46,7 @@ DEVICE_MATRIX_FILE := device/softwinner/tulip-m64/configs/compatibility_matrix.x
 # wifi and bt configuration
 # 1. Wifi Configuration
 
-BOARD_WIFI_VENDOR := realtek
+BOARD_WIFI_VENDOR := broadcom
 
 # 1.1 broadcom wifi configuration
 # BOARD_USR_WIFI: ap6181/ap6210/ap6212/ap6330/ap6335
@@ -59,8 +59,8 @@ ifeq ($(BOARD_WIFI_VENDOR), broadcom)
     BOARD_WLAN_DEVICE           := bcmdhd
     WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 
-    BOARD_USR_WIFI := ap6255
-    include hardware/broadcom/wlan/bcmdhd/firmware/$(BOARD_USR_WIFI)/device-bcm.mk
+    BOARD_USR_WIFI := ap6212
+    include hardware/aw/wlan/firmware/firmware.mk
 endif
 
 # 1.2 realtek wifi configuration
