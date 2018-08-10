@@ -705,10 +705,12 @@ const char *get_fw_path_p2p()
     return selected_wifi.fw_path_p2p;
 }
 
-void get_driver_module_arg(char* arg)
+void get_driver_module_arg(char* arg, int mode)
 {
     char module_arg[256] = {0};
     const char *vendor_name = get_wifi_vendor_name();
+
+    ALOGE("get_driver_module_arg mode=%d", mode);
 
     if(strcmp(vendor_name, "realtek") == 0) {
         const char *driver_module_arg = "ifname=wlan0 if2name=p2p0";
@@ -716,7 +718,8 @@ void get_driver_module_arg(char* arg)
     } else if(strcmp(vendor_name, "broadcom") == 0) {
         const char *nvram_path = "nvram_path=/system/vendor/modules/nvram";
         const char *config_path = "config_path=/system/vendor/modules/config";
-        snprintf(module_arg, sizeof(module_arg), "%s_%s.txt %s_%s.txt",
+        snprintf(module_arg, sizeof(module_arg), "%s %s_%s.txt %s_%s.txt",
+        	(mode == 1) ? "op_mode=2" : "",
                 nvram_path, get_wifi_module_name(), config_path, get_wifi_module_name());
     }else if(strcmp(get_wifi_vendor_name(), "xradio") == 0) {
         const char *driver_module_arg = "";

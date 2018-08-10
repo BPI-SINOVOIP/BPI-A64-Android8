@@ -27,7 +27,7 @@ const char *get_wifi_driver_name();
 const char *get_fw_path_sta();
 const char *get_fw_path_ap();
 const char *get_fw_path_p2p();
-void get_driver_module_arg(char* arg);
+void get_driver_module_arg(char* arg, int mode);
 const char *get_supplicant_para(int set_p2p_supported);
 
 #if __cplusplus

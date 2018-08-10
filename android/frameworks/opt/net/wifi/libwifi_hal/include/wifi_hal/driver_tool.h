@@ -36,7 +36,7 @@ class DriverTool {
 
   // These methods allow manipulation of the WiFi driver.
   // They all return true on success, and false otherwise.
-  virtual bool LoadDriver();
+  virtual bool LoadDriver(int mode);
   virtual bool UnloadDriver();
   virtual bool IsDriverLoaded();
 

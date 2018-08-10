@@ -27,7 +27,7 @@ extern "C"
  *
  * @return 0 on success, < 0 on failure.
  */
-int wifi_load_driver();
+int wifi_load_driver(int mode);
 
 /**
  * Unload the Wi-Fi driver.

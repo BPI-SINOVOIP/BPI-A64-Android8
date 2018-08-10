@@ -140,7 +140,7 @@ int is_wifi_driver_loaded(const char* wifi_driver_name) {
 #endif
 }
 
-int wifi_load_driver() {
+int wifi_load_driver(int mode) {
 #ifdef WIFI_DRIVER_MODULE_PATH
   char module_path[128] = {0};
   char module_arg[128] = {0};
@@ -149,7 +149,7 @@ int wifi_load_driver() {
     return 0;
   }
   LOG(ERROR) << "wifi_load_driver: Start to insmod " << wifi_driver_name << ".ko";
-  get_driver_module_arg(module_arg);
+  get_driver_module_arg(module_arg, mode);
   LOG(ERROR) << "module_arg= " << module_arg;
   if (!strstr(WIFI_DRIVER_MODULE_PATH, ".ko")) {
     snprintf(module_path, sizeof(module_path), "%s%s.ko", WIFI_DRIVER_MODULE_PATH, wifi_driver_name);

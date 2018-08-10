@@ -60,7 +60,7 @@ bool WifiModeController::isFirmwareModeChangeNeeded(IfaceType type) {
 }
 
 bool WifiModeController::changeFirmwareMode(IfaceType type) {
-  if (!driver_tool_->LoadDriver()) {
+  if (!driver_tool_->LoadDriver(convertIfaceTypeToFirmwareMode(type))) {
     LOG(ERROR) << "Failed to load WiFi driver";
     return false;
   }

@@ -44,8 +44,8 @@ bool DriverTool::TakeOwnershipOfFirmwareReload() {
   return true;
 }
 
-bool DriverTool::LoadDriver() {
-  return ::wifi_load_driver() == 0;
+bool DriverTool::LoadDriver(int mode) {
+  return ::wifi_load_driver(mode) == 0;
 }
 
 bool DriverTool::UnloadDriver() {
