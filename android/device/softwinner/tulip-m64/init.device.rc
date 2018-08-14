@@ -11,6 +11,8 @@ on boot
     write /proc/sys/vm/page-cluster 0
     write /proc/sys/vm/swappiness 80
 
+# led
+   insmod /vendor/modules/leds-sunxi.ko
 
     #insmod gsensor module
     #insmod /vendor/modules/bma250.ko
@@ -34,3 +36,6 @@ on property:sys.boot_completed=1
 #insmod ir module
     insmod /vendor/modules/sunxi-ir-rx.ko
     insmod /vendor/modules/ir-nec-decoder.ko
+
+# 40pin
+    insmod /vendor/modules/gpio-sunxi.ko

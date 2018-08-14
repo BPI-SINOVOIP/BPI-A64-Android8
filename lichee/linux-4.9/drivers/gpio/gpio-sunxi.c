@@ -325,12 +325,21 @@ static int gpio_sw_resume(struct device *dev)
 	return 0;
 }
 
-static struct device_attribute gpio_sw_class_attrs[] = {
-	__ATTR(cfg, 0664, cfg_sel_show, cfg_sel_store),
-	__ATTR(pull, 0664, pull_show, pull_store),
-	__ATTR(drv, 0664, drv_level_show, drv_level_store),
-	__ATTR(data, 0664, data_show, data_store),
-	__ATTR_NULL,
+static DEVICE_ATTR(cfg, 0664, cfg_sel_show, cfg_sel_store);
+static DEVICE_ATTR(pull, 0664, pull_show, pull_store);
+static DEVICE_ATTR(drv, 0664, drv_level_show, drv_level_store);
+static DEVICE_ATTR(data, 0664, data_show, data_store);
+
+static struct attribute *gpio_sw_class_attrs[] = {
+	&dev_attr_cfg.attr,
+	&dev_attr_pull.attr,
+	&dev_attr_drv.attr,
+	&dev_attr_data.attr,
+	NULL
+};
+
+static const struct attribute_group gpio_sw_class_attr_group = {
+	.attrs = gpio_sw_class_attrs,
 };
 
 static struct device_attribute easy_light_attr =
@@ -370,10 +379,15 @@ gpio_sw_classdev_register(struct device *parent,
 					  gpio_sw_cdev->name);
 	if (IS_ERR(gpio_sw_cdev->dev))
 		return PTR_ERR(gpio_sw_cdev->dev);
+
 	if (easy_light_used && strlen(pdata->link)) {
 		if (sysfs_create_file(&gpio_sw_cdev->dev->kobj, &easy_light_attr.attr))
 			pr_err("gpio_sw: sysfs_create_file fail\n");
 	}
+
+	if (sysfs_create_group(&gpio_sw_cdev->dev->kobj, &gpio_sw_class_attr_group))
+		pr_err("gpio_sw: sysfs_create_file fail\n");
+
 	down_write(&gpio_sw_list_lock);
 	list_add_tail(&gpio_sw_cdev->node, &gpio_sw_list);
 	up_write(&gpio_sw_list_lock);
@@ -566,7 +580,7 @@ static struct platform_driver gpio_sw_driver = {
 		   },
 };
 
-static void __exit gpio_sw_exit(void)
+static void gpio_sw_exit(void)
 {
 	int i, cnt;
 	struct gpio_config config;
@@ -624,7 +638,7 @@ static int sunxi_init_gpio_probe(struct platform_device *pdev)
 
 	gpio_sw_class->suspend = gpio_sw_suspend;
 	gpio_sw_class->resume = gpio_sw_resume;
-	gpio_sw_class->class_attrs = (struct class_attribute *)gpio_sw_class_attrs;
+	//gpio_sw_class->class_attrs = (struct class_attribute *)gpio_sw_class_attrs;
 
 	if (of_property_read_u32(node, "easy_light_used", &easy_light_used)) {
 		easy_light_used = 0;
@@ -740,8 +754,14 @@ static int __init sunxi_gpio_init(void)
 	return 0;
 }
 
+static void __exit sunxi_gpio_exit(void)
+{
+	gpio_sw_exit();
+	platform_driver_unregister(&sunxi_gpio_driver);
+}
+
 module_init(sunxi_gpio_init);
-module_exit(gpio_sw_exit);
+module_exit(sunxi_gpio_exit);
 
 MODULE_AUTHOR("yanjianbo");
 MODULE_DESCRIPTION("SW GPIO USER driver");
