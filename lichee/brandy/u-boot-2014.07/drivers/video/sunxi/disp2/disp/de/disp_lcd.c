@@ -1286,8 +1286,6 @@ s32 disp_lcd_set_bright(struct disp_device *lcd, u32 bright)
 	struct disp_manager *mgr = NULL;
 	struct disp_smbl *smbl = NULL;
 
-	return 0;
-
 	if ((NULL == lcd) || (NULL == lcdp)) {
 		DE_WRN("NULL hdl!\n");
 		return DIS_FAIL;
