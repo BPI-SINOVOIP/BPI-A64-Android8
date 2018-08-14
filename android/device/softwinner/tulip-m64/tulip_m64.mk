@@ -120,7 +120,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.product.first_api_level=27
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=160
+    ro.sf.lcd_density=120
 
 # limit dex2oat threads to improve thermals
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -171,8 +171,8 @@ PRODUCT_NAME := tulip_m64
 PRODUCT_DEVICE := tulip-m64
 # PRODUCT_BOARD must equals the board name in kernel
 PRODUCT_BOARD := m64
-PRODUCT_MODEL := QUAD-CORE A64 m64
-PRODUCT_MANUFACTURER := Allwinner
+PRODUCT_MODEL := BPI M64
+PRODUCT_MANUFACTURER := Sinovoip
 
 # sensor XML
 PRODUCT_COPY_FILES += \
