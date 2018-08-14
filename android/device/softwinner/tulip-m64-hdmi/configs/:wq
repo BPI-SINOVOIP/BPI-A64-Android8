@@ -1,0 +1,11 @@
+on boot
+    # MAC Program
+    mkdir /data/misc/bluedroid 0770 bluetooth net_bt_admin
+    exec - root system -- /vendor/xbin/macprog.sh
+    chmod 775 /data/misc/wifi
+
+    # Bluetooth
+    # UART device
+    chmod 0660 /dev/ttyS1
+    chown bluetooth net_bt_admin /dev/ttyS1
+

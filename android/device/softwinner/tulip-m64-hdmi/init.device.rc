@@ -1,0 +1,41 @@
+on init
+    # Load persistent dm-verity state
+    verity_load_state
+
+on early-boot
+    # Update dm-verity state and set partition.*.verified properties
+    verity_update_state
+
+on boot
+    # Read one page at a time for swap (default is 8)
+    write /proc/sys/vm/page-cluster 0
+    write /proc/sys/vm/swappiness 80
+
+# led
+   insmod /vendor/modules/leds-sunxi.ko
+
+    #insmod gsensor module
+    #insmod /vendor/modules/bma250.ko
+#tp
+    chown system system /sys/devices/platform/soc/twi0/i2c-0/0-0038/input/input3/runtime_suspend
+
+### csi module
+    insmod /vendor/modules/videobuf2-core.ko
+    insmod /vendor/modules/videobuf2-memops.ko
+    insmod /vendor/modules/videobuf2-v4l2.ko
+    insmod /vendor/modules/videobuf2-dma-contig.ko
+    insmod /vendor/modules/vfe_io.ko
+    insmod /vendor/modules/ov5640.ko
+    insmod /vendor/modules/vfe_v4l2.ko
+
+on property:sys.boot_completed=1
+#inmod tp module
+    #insmod /vendor/modules/ft5x16_ts.ko
+    #insmod /vendor/modules/gt9xxnew_ts.ko
+
+#insmod ir module
+    insmod /vendor/modules/ir-nec-decoder.ko
+    insmod /vendor/modules/sunxi-ir-rx.ko
+
+# 40pin
+    insmod /vendor/modules/gpio-sunxi.ko
