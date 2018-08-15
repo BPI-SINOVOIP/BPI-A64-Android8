@@ -28,8 +28,9 @@ int sunxi_key_init(void)
 
 	reg_val = sunxi_key_base->ctrl;
 	reg_val &= ~((7 << 1) | (0xffU << 24));
+	/* bpi, disable lradc
 	reg_val |=  LRADC_HOLD_EN;
-	reg_val |=  LRADC_EN;
+	reg_val |=  LRADC_EN;*/
 	sunxi_key_base->ctrl = reg_val;
 
 	/* disable all key irq */
