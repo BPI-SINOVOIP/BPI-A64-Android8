@@ -1054,7 +1054,7 @@ static int geth_open(struct net_device *ndev)
 	if (ret)
 		goto err;
 
-	ret = sunxi_mac_reset((void *)priv->base, &sunxi_udelay, 10000);
+	ret = sunxi_mac_reset((void *)priv->base, &sunxi_udelay, 50000);
 	if (ret) {
 		netdev_err(ndev, "Initialize hardware error\n");
 		goto desc_err;
@@ -1108,8 +1108,6 @@ err:
 	geth_clk_disable(priv);
 	if (priv->is_suspend)
 		napi_enable(&priv->napi);
-
-	geth_power_off(priv);
 
 	return ret;
 }
