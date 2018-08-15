@@ -93,14 +93,15 @@ endif
 # 2. Bluetooth Configuration
 # make sure BOARD_HAVE_BLUETOOTH is true for every bt vendor
 
-BOARD_BLUETOOTH_VENDOR := realtek
+BOARD_BLUETOOTH_VENDOR := broadcom
 
 # 2.1 broadcom bt configuration
 # BOARD_HAVE_BLUETOOTH_NAME: ap6210/ap6212/ap6330/ap6335
 ifeq ($(BOARD_BLUETOOTH_VENDOR), broadcom)
     BOARD_HAVE_BLUETOOTH := true
     BOARD_HAVE_BLUETOOTH_BCM := true
-    BOARD_HAVE_BLUETOOTH_NAME := ap6255
+    BOARD_HAVE_BLUETOOTH_NAME := ap6212
+    BOARD_CUSTOM_BT_CONFIG := $(TOP_DIR)device/softwinner/$(basename $(TARGET_DEVICE))/configs/bluetooth/vnd_$(basename $(TARGET_DEVICE)).txt
     BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(TOP_DIR)device/softwinner/$(basename $(TARGET_DEVICE))/configs/bluetooth/
 endif
 

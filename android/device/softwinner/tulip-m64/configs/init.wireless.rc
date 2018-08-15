@@ -6,6 +6,6 @@ on boot
 
     # Bluetooth
     # UART device
-    chmod 0660 /dev/rtk_btusb
-    chown bluetooth net_bt_admin /dev/rtk_btusb
+    chmod 0660 /dev/ttyS1
+    chown bluetooth net_bt_admin /dev/ttyS1
 
