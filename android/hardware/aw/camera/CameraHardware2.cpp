@@ -2544,7 +2544,7 @@ void CameraHardware::makeFDOrientionArray()
 
 void CameraHardware::getCurrentOriention(int * oriention, int compensation,bool reverse,int re_direction)
 {
-    char rota[100];
+    char rota[PROPERTY_VALUE_MAX];
     property_get("sys.current.rotation",rota,"Unknow");
     mOriention = atoi(rota);
     //LOGV("FDOriention: %d",mFDOriention[mOriention]);
