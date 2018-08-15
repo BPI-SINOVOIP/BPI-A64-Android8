@@ -38,7 +38,7 @@ __BEGIN_DECLS
 
 typedef struct prop_info prop_info;
 
-#define PROP_VALUE_MAX  92
+#define PROP_VALUE_MAX  149
 
 /*
  * Sets system property `key` to `value`, creating the system property if it doesn't already exist.
