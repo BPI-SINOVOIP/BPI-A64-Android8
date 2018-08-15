@@ -45,4 +45,6 @@
     <bool name="def_bluetooth_on">false</bool>
     <bool name="def_accelerometer_rotation">false</bool>
 
+    <bool name="def_lockscreen_disabled">true</bool>
+
 </resources>
