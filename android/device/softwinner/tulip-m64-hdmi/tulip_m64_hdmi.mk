@@ -120,7 +120,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.product.first_api_level=27
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=217
+    ro.sf.lcd_density=213
 
 # limit dex2oat threads to improve thermals
 PRODUCT_PROPERTY_OVERRIDES += \
