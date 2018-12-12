@@ -54,6 +54,24 @@ static int axp_probe(void)
 {
 	u8  pmu_type;
 	u8  acin_path;
+	u8  pmu_reason;
+
+	/* boot reason */
+	if(axp_i2c_read(AXP81X_ADDR, BOOT_POWER81X_OTG_STATUS, &pmu_reason))
+	{
+		printf("axp read error\n");
+		return -1;
+	}
+	else
+	{
+		printf("pmu_reason = %x\n", pmu_reason);
+		pmu_reason &= 0xF8;
+		if(axp_i2c_write(AXP81X_ADDR, BOOT_POWER81X_OTG_STATUS, pmu_reason))
+		{
+			printf("axp write error\n");
+			return -1;
+		}
+	}
 
 	/* bpi, set VBUS current limit from 1500mA to 3500mA */
 	if(axp_i2c_read(AXP81X_ADDR, BOOT_POWER81X_ACIN_PATH, &acin_path))
