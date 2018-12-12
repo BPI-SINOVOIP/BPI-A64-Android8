@@ -1944,11 +1944,11 @@ static int mmc_startup(struct mmc *mmc)
 		return err;
 	}
 
-	MMCDBG("mmc->card_caps 0x%x, ddr caps: 0x%x\n", mmc->card_caps, mmc->card_caps & MMC_MODE_DDR_52MHz);
-	MMCINFO("host caps: 0x%x\n", mmc->cfg->host_caps);
+	printf("mmc->card_caps 0x%x, ddr caps: 0x%x\n", mmc->card_caps, mmc->card_caps & MMC_MODE_DDR_52MHz);
+	printf("host caps: 0x%x\n", mmc->cfg->host_caps);
 	/* Restrict card's capabilities by what the host can do */
 	mmc->card_caps &= mmc->cfg->host_caps;
-	MMCDBG("mmc->card_caps 0x%x, ddr caps: 0x%x\n", mmc->card_caps, mmc->card_caps & MMC_MODE_DDR_52MHz);
+	printf("mmc->card_caps 0x%x, ddr caps: 0x%x\n", mmc->card_caps, mmc->card_caps & MMC_MODE_DDR_52MHz);
 #if 0
 	if (!(mmc->card_caps & MMC_MODE_DDR_52MHz) && !IS_SD(mmc)) {
 		if (mmc->speed_mode == HSDDR52_DDR50)
@@ -2522,6 +2522,8 @@ void mmc_update_config_for_sdly(struct mmc *mmc)
 		goto __ERROR_END;
 	}
 
+	printf("mmc_update_config_for_sdly, mmc_no = %d\n", host->mmc_no);
+
 	f3210 = sdly->tm4_smx_fx[0*2 + 0]; //sdly->tm4_sm0_f3210;
 	ret = fdt_setprop_u32(working_fdt, nodeoffset, "sdc_tm4_sm0_freq0", f3210);
 	if(ret < 0) {
@@ -2600,13 +2602,14 @@ void mmc_update_config_for_sdly(struct mmc *mmc)
 	null_hsddr = 1;
 	if (mmc->card_caps & MMC_MODE_DDR_52MHz)
 	{
+		printf("hsddr capable\n");
 		imd = HSDDR52_DDR50;
 		for (ifreq=2; ifreq>=2; ifreq--) /*1-25MHz; 2-50MHz; 3-100MHz; 4-150MHz; 5-200MHz*/
 		{
 			dly = host->tm4.sdly[imd*MAX_CLK_FREQ_NUM+ifreq];
 			if (dly != 0xFF){
 				max_hsddr = sunxi_select_freq(mmc, imd, ifreq);
-				MMCINFO("hsddr %d-%d\n", ifreq, max_hsddr);
+				printf("hsddr %d-%d\n", ifreq, max_hsddr);
 				null_hsddr = 0;
 				break;
 			}
@@ -2615,13 +2618,14 @@ void mmc_update_config_for_sdly(struct mmc *mmc)
 	null_hs200 = 1;
 	if (mmc->card_caps & MMC_MODE_HS200)
 	{
+		printf("hs200 capable\n");
 		imd = HS200_SDR104;
 		for (ifreq=5; ifreq>=2; ifreq--) /*1-25MHz; 2-50MHz; 3-100MHz; 4-150MHz; 5-200MHz*/
 		{
 			dly = host->tm4.sdly[imd*MAX_CLK_FREQ_NUM+ifreq];
 			if (dly != 0xFF) {
 				max_hs200 = sunxi_select_freq(mmc, imd, ifreq);
-				MMCINFO("hs200 %d-%d\n", ifreq, max_hs200);
+				printf("hs200 %d-%d\n", ifreq, max_hs200);
 				null_hs200= 0;
 				break;
 			}
@@ -2631,6 +2635,7 @@ void mmc_update_config_for_sdly(struct mmc *mmc)
 	if ((mmc->card_caps & (MMC_MODE_HS400|MMC_MODE_8BIT))
 		== (MMC_MODE_HS400|MMC_MODE_8BIT))
 	{
+		printf("HS400 capable\n");
 		imd = HS400;
 		for (ifreq=5; ifreq>=2; ifreq--) /*1-25MHz; 2-50MHz; 3-100MHz; 4-150MHz; 5-200MHz*/
 		{
@@ -2640,7 +2645,7 @@ void mmc_update_config_for_sdly(struct mmc *mmc)
 			dsdly = host->tm4.dsdly[ifreq];
 			if ((dly != 0xff) && (dsdly != 0xff)) {
 				max_hs400 = sunxi_select_freq(mmc, imd, ifreq);
-				MMCINFO("hs400 %d-%d\n", ifreq, max_hs400);
+				printf("hs400 %d-%d\n", ifreq, max_hs400);
 				null_hs400 = 0;
 				break;
 			}
@@ -2670,17 +2675,17 @@ void mmc_update_config_for_sdly(struct mmc *mmc)
 	else
 		clear_hsddr = 0;
 
-	MMCINFO("%d %d %d: %d %d %d\n", null_hs200, null_hs400, null_hsddr, clear_hs200, clear_hs400, clear_hsddr);
+	printf("%d %d %d: %d %d %d\n", null_hs200, null_hs400, null_hsddr, clear_hs200, clear_hs400, clear_hsddr);
 
 	if (clear_hs400)
 	{
 		ret = fdt_delprop(working_fdt, nodeoffset, "mmc-hs400-1_8v");
 		if (ret == 0) {
-			MMCINFO("delete mmc-hs400-1_8v from dtb\n");
+			printf("delete mmc-hs400-1_8v from dtb\n");
 		} else if (ret == -FDT_ERR_NOTFOUND){
-			MMCINFO("no mmc-hs400-1_8v!\n");
+			printf("no mmc-hs400-1_8v!\n");
 		} else {
-			MMCINFO("update dtb fail, delete mmc-hs400-1_8v fail\n");
+			printf("update dtb fail, delete mmc-hs400-1_8v fail\n");
 		}
 	}
 
@@ -2688,11 +2693,11 @@ void mmc_update_config_for_sdly(struct mmc *mmc)
 	{
 		ret = fdt_delprop(working_fdt, nodeoffset, "mmc-hs200-1_8v");
 		if (ret == 0) {
-			MMCINFO("delete mmc-hs200-1_8v from dtb\n");
+			printf("delete mmc-hs200-1_8v from dtb\n");
 		} else if (ret == -FDT_ERR_NOTFOUND){
-			MMCINFO("no mmc-hs200-1_8v!\n");
+			printf("no mmc-hs200-1_8v!\n");
 		} else {
-			MMCINFO("update dtb fail, delete mmc-hs200-1_8v fail\n");
+			printf("update dtb fail, delete mmc-hs200-1_8v fail\n");
 		}
 	}
 
@@ -2700,11 +2705,11 @@ void mmc_update_config_for_sdly(struct mmc *mmc)
 	{
 		ret = fdt_delprop(working_fdt, nodeoffset, "mmc-ddr-1_8v");
 		if (ret == 0) {
-			MMCINFO("delete mmc-ddr-1_8v from dtb\n");
+			printf("delete mmc-ddr-1_8v from dtb\n");
 		} else if (ret == -FDT_ERR_NOTFOUND){
-			MMCINFO("no mmc-ddr-1_8v!\n");
+			printf("no mmc-ddr-1_8v!\n");
 		} else {
-			MMCINFO("update dtb fail, delete mmc-ddr-1_8v fail\n");
+			printf("update dtb fail, delete mmc-ddr-1_8v fail\n");
 		}
 	}
 
