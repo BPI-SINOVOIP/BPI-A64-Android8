@@ -1154,6 +1154,8 @@ int hwc_setBlank(int display)
 tv_para_t tv_mode[]=
 {
 	/* 1'st is default */
+	{DISP_TV_MOD_1024_600P,        1024,   600,  60, 0},
+	{DISP_TV_MOD_1280_800P,        1280,   800,  60, 0},
 	{DISP_TV_MOD_1080P_60HZ,       1920,   1080, 60, 0},
 	{DISP_TV_MOD_720P_60HZ,        1280,   720,  60, 0},
 

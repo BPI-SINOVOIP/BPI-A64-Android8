@@ -118,8 +118,10 @@ char displayName[5][10] = {
 tv_para_t hdmi_support[]=
 {
 	/* 1'st is default */
-	{DISP_TV_MOD_1080P_60HZ,       1920,   1080, 60, 0},
+	{DISP_TV_MOD_1024_600P,        1024,   600,  60, 0},
+	{DISP_TV_MOD_1280_800P,	       1280,   800,  60, 0},
 	{DISP_TV_MOD_720P_60HZ,        1280,   720,  60, 0},
+	{DISP_TV_MOD_1080P_60HZ,       1920,   1080, 60, 0},
 
 	{DISP_TV_MOD_480I,             720,    480, 60, 0},
 	{DISP_TV_MOD_576I,             720,    576, 60, 0},
@@ -1935,16 +1937,19 @@ loop:
 			ret = ioctl(dispFd, DISP_HDMI_SUPPORT_MODE, arg);
 		}
 		if((ret > 0) || all_support
-			|| (numbconfig && hdmi_support[i].mode == DISP_TV_MOD_1080P_24HZ_3D_FP))
+			|| (numbconfig && hdmi_support[i].mode == DISP_TV_MOD_1080P_24HZ_3D_FP)) {
 			hdmi_support[i].support = 1;
-
+			ALOGE("hdmi_support[%d] resolution support\n", i);
+		}
 		else {
 			hdmi_support[i].support = 0;
+			ALOGE("hdmi_support[%d] resolution not support\n", i);
 			continue;
 		}
 
 		if (hdmi_support[i].mode == display->default_mode) {
 			fix = numbconfig;
+			ALOGE("hdmi_support[%d] fix resolution\n", i);
 		}
 		numbconfig++;
 	}
@@ -2311,7 +2316,6 @@ int displayDeviceInit(Display_t ***display)
 		hwdisplay = toHwDisplay(disp);
 		disp->displayOpration = &sunxiDisplayOpr;
 		disp->displayId = i;
-		disp->default_mode = DISP_TV_MOD_1080P_60HZ;
 
 		arg[0] = i;
 		arg[1] = (unsigned long)&hwdisplay->type;
@@ -2320,6 +2324,11 @@ int displayDeviceInit(Display_t ***display)
 			ALOGV("get [Disp%d] output type is not NONE!\n", i);
 		else
 			ALOGE("get [Disp%d] output type is NONE!\n", i);
+
+		ALOGE("get [Disp%d] output type %d output mode %d \n", i, hwdisplay->type.type, hwdisplay->type.mode);
+
+		//bpi, get default mode from bsp
+		disp->default_mode = hwdisplay->type.mode;
 
 		if (hwdisplay->type.type == DISP_OUTPUT_TYPE_LCD) {
 			ALOGD("find Permanent display:%d", i);
