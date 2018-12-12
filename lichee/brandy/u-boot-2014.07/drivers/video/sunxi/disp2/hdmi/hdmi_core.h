@@ -30,7 +30,9 @@
 #define HDMI1280_1024       (1+0x110)
 #define HDMI1024_768        (2+0x110)
 #define HDMI900_540         (3+0x110)
-#define HDMI1920_720        (4 + 0x110)
+#define HDMI1920_720        (4+0x110)
+#define HDMI1024_600        (5+0x110)
+#define HDMI1280_800        (6+0x110)
 
 #define HDMI_State_Idle 			 0x00
 #define HDMI_State_Wait_Hpd			 0x02
