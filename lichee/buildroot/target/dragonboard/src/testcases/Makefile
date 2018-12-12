@@ -39,3 +39,4 @@ all:
 	make -C hcitools
 	make -C getevent
 	make -C sensorhubtester
+	make -C stress
