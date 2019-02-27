@@ -40,9 +40,9 @@ cp -rf output/* rootfs/dragonboard/
 
 echo "generating rootfs..."
 
-NR_SIZE=`du -sm rootfs | awk '{print $1}'`
-NEW_NR_SIZE=$(((($NR_SIZE+32)/16)*16))
-#NEW_NR_SIZE=360
+#NR_SIZE=`du -sm rootfs | awk '{print $1}'`
+#NEW_NR_SIZE=$(((($NR_SIZE+32)/16)*16))
+NEW_NR_SIZE=256
 TARGET_IMAGE=rootfs.ext4
 
 echo "blocks: $NR_SIZE"M" -> $NEW_NR_SIZE"M""
