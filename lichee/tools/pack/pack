@@ -84,6 +84,7 @@ PACK_SECURE=${FLAGS_secure}
 PACK_MODE=${FLAGS_mode}
 PACK_FUNC=${FLAGS_function}
 PACK_VSP=${FLAGS_vsp}
+PACK_TIME=`date +%Y-%m-%d`
 
 ROOT_DIR=`pwd`
 TOOLS_DIR="${ROOT_DIR}/pctools/linux"
@@ -449,32 +450,32 @@ function do_prepare()
 	sed -i 's/\\\\/\//g' out/image.cfg
 	sed -i 's/^imagename/;imagename/g' out/image.cfg
 
-	IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_DEBUG}"
+	IMG_NAME="${PACK_TIME}-${PACK_CHIP}-${PACK_PLATFORM}-8.1-bpi-${PACK_BOARD}-${PACK_DEBUG}"
 
 	if [ "x${PACK_SIG}" != "xnone" ]; then
-		IMG_NAME="${IMG_NAME}_${PACK_SIG}"
+		IMG_NAME="${IMG_NAME}-${PACK_SIG}"
 	fi
 
 	if [ "x${PACK_MODE}" = "xdump" -o "x${PACK_MODE}" = "xota_test" -o "x${PACK_MODE}" = "xcrashdump" ] ; then
-		IMG_NAME="${IMG_NAME}_${PACK_MODE}"
+		IMG_NAME="${IMG_NAME}-${PACK_MODE}"
 	fi
 
 	if [ "x${PACK_FUNC}" = "xprvt" ] ; then
-		IMG_NAME="${IMG_NAME}_${PACK_FUNC}"
+		IMG_NAME="${IMG_NAME}-${PACK_FUNC}"
 	fi
 
 	if [ "x${PACK_SECURE}" = "xsecure" ] ; then
-		IMG_NAME="${IMG_NAME}_${PACK_SECURE}"
+		IMG_NAME="${IMG_NAME}-${PACK_SECURE}"
 	fi
 
 	if [ "x${PACK_FUNC}" = "xprev_refurbish" ] ; then
-		IMG_NAME="${IMG_NAME}_${PACK_FUNC}"
+		IMG_NAME="${IMG_NAME}-${PACK_FUNC}"
 	fi
 
 	if [ "x${PACK_SECURE}" != "xnone" -o "x${PACK_SIG}" != "xnone" ]; then
 		MAIN_VERION=`awk  '$0~"MAIN_VERSION"{printf"%d", $3}' out/version_base.mk`
 
-		IMG_NAME="${IMG_NAME}_v${MAIN_VERION}.img"
+		IMG_NAME="${IMG_NAME}-v${MAIN_VERION}.img"
 	else
 		IMG_NAME="${IMG_NAME}.img"
 	fi
