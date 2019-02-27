@@ -656,7 +656,7 @@ s32 hdmi_core_loop(void)
 		if (0 == (hdmi_hpd_mask & 0x100))
 			hdmi_hpd_event();
 
-		if (video_enable)
+		/*if (video_enable)*/
 			hdmi_core_set_video_enable(true);
 
 	case HDMI_State_HPD_Done:
