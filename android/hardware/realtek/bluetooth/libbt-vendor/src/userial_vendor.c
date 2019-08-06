@@ -272,7 +272,7 @@ void userial_ioctl_init_bt_wake(int fd)
 void userial_vendor_init(char *bt_device_node)
 {
     vnd_userial.fd = -1;
-    char value[100];
+    char value[PROPERTY_VALUE_MAX];
     snprintf(vnd_userial.port_name, VND_PORT_NAME_MAXLEN, "%s", \
             bt_device_node);
     if(rtkbt_transtype & RTKBT_TRANS_H5) {

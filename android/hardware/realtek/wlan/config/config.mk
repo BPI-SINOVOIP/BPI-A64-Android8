@@ -18,10 +18,7 @@ PRODUCT_COPY_FILES += \
     hardware/realtek/wlan/config/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     hardware/realtek/wlan/config/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     hardware/realtek/wlan/config/macprog.sh:$(TARGET_COPY_OUT_VENDOR)/xbin/macprog.sh \
-    device/softwinner/common/init.wireless.realtek.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.wireless.realtek.rc
-
-PRODUCT_COPY_FILES += \
-    $(TOP_DIR)device/softwinner/$(basename $(TARGET_DEVICE))/configs/init.wireless.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.wireless.rc
+    device/softwinner/common/init.wireless.realtek.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.wireless.rc
 
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,"wifi_efuse_*.map",$(TOP_DIR)device/softwinner/$(basename $(TARGET_DEVICE))/configs/,$(TARGET_COPY_OUT_VENDOR)/etc/wifi)

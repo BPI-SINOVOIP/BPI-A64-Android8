@@ -17,9 +17,7 @@
 ########################
 PRODUCT_COPY_FILES += \
     hardware/aw/wlan/config/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
-    hardware/aw/wlan/config/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf
+    hardware/aw/wlan/config/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
+    $(TOP_DIR)device/softwinner/common/init.wireless.broadcom.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.wireless.rc 
 ########################
 
-PRODUCT_COPY_FILES += \
-    $(TOP_DIR)device/softwinner/common/init.wireless.broadcom.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.wireless.broadcom.rc \
-    $(TOP_DIR)device/softwinner/$(basename $(TARGET_DEVICE))/configs/init.wireless.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.wireless.rc

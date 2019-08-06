@@ -1,6 +1,11 @@
 on boot
     insmod /system/vendor/modules/rtl_btlpm.ko
 
+    # Bluetooth
+    # UART device
+    chmod 0660 /dev/rtk_btusb
+    chown bluetooth net_bt_admin /dev/rtk_btusb
+
     # change back to bluetooth from system
     chown bluetooth net_bt_admin /data/misc/bluetooth
     mkdir /data/misc/bluedroid 0770 bluetooth net_bt_admin
@@ -23,12 +28,30 @@ on boot
     chown bluetooth net_bt_admin /data/misc/bluetooth
     setprop ro.bt.bdaddr_path "/data/misc/bluetooth/bdaddr"
 
+    # MAC Program
+    mkdir /data/misc/bluedroid 0770 bluetooth net_bt_admin
+    exec - root system -- /vendor/xbin/macprog.sh
+    chmod 775 /data/misc/wifi
 
     # to observe dnsmasq.leases file for dhcp information of soft ap.
     chown dhcp system /data/misc/dhcp
 
 # 1. realtek & eagle wifi service
-service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
+#service wpa_supplicant /system/vendor/bin/hw/wpa_supplicant \
+#    -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
+#    -I/vendor/etc/wifi/p2p_supplicant_overlay.conf \
+#    -e/data/misc/wifi/entropy.bin -N \
+#    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
+#    -I/vendor/etc/wifi/wpa_supplicant_overlay.conf \
+#    -O/data/misc/wifi/sockets \
+#    -g@android:wpa_wlan0
+#    socket wpa_wlan0 dgram 660 wifi wifi
+#    class main
+#    disabled
+#    oneshot
+
+# realtek & eagle wifi service
+service wpa_supplicant_realtek /system/vendor/bin/hw/wpa_supplicant \
     -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
     -I/vendor/etc/wifi/p2p_supplicant_overlay.conf \
     -e/data/misc/wifi/entropy.bin -N \

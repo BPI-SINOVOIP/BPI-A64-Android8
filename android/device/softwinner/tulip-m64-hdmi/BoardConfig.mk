@@ -60,6 +60,7 @@ ifeq ($(BOARD_WIFI_VENDOR), broadcom)
     WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 
     BOARD_USR_WIFI := ap6212
+    include hardware/aw/wlan/config/config.mk
     include hardware/aw/wlan/firmware/firmware.mk
 endif
 
