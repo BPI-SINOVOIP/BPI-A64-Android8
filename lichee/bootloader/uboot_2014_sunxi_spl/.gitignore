@@ -1,0 +1,8 @@
+*.o
+*.depend
+*.axf
+*.lds
+*.bin
+*.map
+*.log
+

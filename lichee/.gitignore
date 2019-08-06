@@ -1,0 +1,11 @@
+.buildconfig
+out/
+brandy/toolchain/
+tools/build/toolchain/
+tools/pack/out/
+tools/pack/*.img
+tools/product
+tools/pack/chips/sun50iw1p1/bin/u-boot-sun50iw1p1.bin
+buildroot/target/common/rootfs/sysroot.tar.gz
+buildroot/target/test/a1x-test.tar.gz
+buildroot/target/tools/host/usr/bin/mke2fs

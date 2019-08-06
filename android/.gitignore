@@ -1,0 +1,4 @@
+out/
+prebuilts/tools/darwin-x86_64/bazel/
+prebuilts/tools/linux-x86_64/bazel/
+tools/external/gradle/gradle-api-3.5-20170307000048+0000.jar
