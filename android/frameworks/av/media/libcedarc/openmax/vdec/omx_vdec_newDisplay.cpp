@@ -6373,6 +6373,7 @@ static inline int processRenderThreadCommand(omx_vdec* pSelf, CdcMessage* pMsg)
     {
        case RENDER_THREAD_CMD_START:
        case RENDER_THREAD_CMD_EXECUT:
+            ret = OMX_RESULT_EXECUT;
        case RENDER_THREAD_CMD_CONTINUE:
             break;
        case RENDER_THREAD_CMD_PAUSE:
@@ -6425,7 +6426,7 @@ static void* RenderThread(void* pThreadData)
                 tryPostSem(&pSelf->m_render_cmd_lock);
                 continue;
             }
-            else
+            else if(ret == OMX_RESULT_EXECUT)
             {
                 bPause = OMX_FALSE;
             }
@@ -6504,6 +6505,7 @@ static void* ComponentThread(void* pThreadData)
 
     int64_t         nTimeUs1;
     int64_t         nTimeUs2;
+    OMX_U32 nGetFbmBufInfoCount = 0;
 
     int nSemVal;
     int nRetSemGetValue;
@@ -6574,6 +6576,15 @@ process_command:
                         {
                             OmxSetOutEos(pSelf);
                         }
+
+                        nGetFbmBufInfoCount++;
+                        if(nGetFbmBufInfoCount > 3000)
+                        {
+                            logw("*** someting is error, trigger error!");
+                            pSelf->m_Callbacks.EventHandler(&pSelf->mOmxCmp, pSelf->m_pAppData,
+                                                            OMX_EventError, 0x01, 0, NULL);
+                        }
+
                         if(CdcMessageQueueTryGetMessage(pSelf->mqMainThread, &msg, 20) == 0)
                         {
                             logw("*** get new command when get video fbm-buf-info");

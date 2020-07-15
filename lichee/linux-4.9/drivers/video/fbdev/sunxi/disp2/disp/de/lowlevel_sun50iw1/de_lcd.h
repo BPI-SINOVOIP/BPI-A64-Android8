@@ -154,6 +154,7 @@ s32 tcon1_set_tv_mode(u32 sel, enum disp_output_type mode);
 s32 hmdi_src_sel(u32 sel);
 s32 tcon1_hdmi_color_remap(u32 sel, u32 onoff);
 s32 tcon1_yuv_range(u32 sel, u32 onoff);
+void tcon_show_builtin_patten(u32 sel, u32 patten);
 
 #endif
 

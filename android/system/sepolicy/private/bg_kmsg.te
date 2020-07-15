@@ -1,0 +1,2 @@
+typeattribute bg_kmsg coredomain;
+init_daemon_domain(bg_kmsg)

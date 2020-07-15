@@ -80,6 +80,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/* add by allwinner */
+import android.content.ContentResolver;
+import android.database.ContentObserver;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
+
 /**
  * Manages attached displays.
  * <p>
@@ -257,6 +263,44 @@ public final class DisplayManagerService extends SystemService {
 
     private final Injector mInjector;
 
+    /* add by allwinner */
+    private int mIsFullScreen;
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HDMI_FULLSCREEN), false, this);
+            update();
+        }
+
+        @Override public void onChange(boolean selfChange) {
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            try{
+                int isFullScreen = Settings.System.getInt(resolver,Settings.System.HDMI_FULLSCREEN);
+
+                if (mIsFullScreen != isFullScreen){
+                    Slog.v(TAG,"update:isFullScreen=" + isFullScreen);
+                    mIsFullScreen = isFullScreen;
+					android.util.Log.d("PS","update:isFullScreen=" + isFullScreen);
+                    synchronized (mSyncRoot) {
+                        scheduleTraversalLocked(false);
+                    }
+                }
+            }catch(SettingNotFoundException e){
+                Slog.e(TAG, Settings.System.HDMI_FULLSCREEN + " not found");
+            }
+        }
+    }
+
     public DisplayManagerService(Context context) {
         this(context, new Injector());
     }
@@ -352,6 +396,8 @@ public final class DisplayManagerService extends SystemService {
         IsystemReady = true;
 
         mHandler.sendEmptyMessage(MSG_REGISTER_ADDITIONAL_DISPLAY_ADAPTERS);
+        SettingsObserver observer = new SettingsObserver(new Handler());
+        observer.observe();
     }
 
     @VisibleForTesting
@@ -1132,7 +1178,8 @@ public final class DisplayManagerService extends SystemService {
                     + device.getDisplayDeviceInfoLocked());
             return;
         }
-        display.configureDisplayInTransactionLocked(device, info.state == Display.STATE_OFF);
+		android.util.Log.d("PS","DisplayManagerService mIsFullScreen " + mIsFullScreen);
+        display.configureDisplayInTransactionLocked(device, info.state == Display.STATE_OFF, mIsFullScreen);
 
         // Update the viewports if needed.
         if (!mDefaultViewport.valid

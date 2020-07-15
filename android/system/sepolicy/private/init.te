@@ -18,6 +18,8 @@ domain_trans(init, { rootfs toolbox_exec }, modprobe)
 # case where logpersistd is actually logcat -f in logd context (nee: logcatd)
 userdebug_or_eng(`
   domain_auto_trans(init, logcat_exec, logpersist)
+  allow init misc_logd_file:dir { remove_name };
+  allow init misc_logd_file:file { read unlink };
 ')
 
 # Creating files on sysfs is impossible so this isn't a threat

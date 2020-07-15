@@ -615,7 +615,7 @@ final class ProcessList {
      * restore from its cached state for running in the background when RAM is low.
      */
     long getCachedRestoreThresholdKb() {
-        return  ActivityManager.isLowRamDeviceStatic() ? mCachedRestoreLevel / 2 : mCachedRestoreLevel;
+        return mCachedRestoreLevel;
     }
 
     /**

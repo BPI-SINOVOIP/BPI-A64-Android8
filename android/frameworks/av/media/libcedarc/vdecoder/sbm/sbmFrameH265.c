@@ -562,7 +562,7 @@ static void detectWithStartCode(SbmFrame* pSbm)
         {
             if(supplyStreamData(pSbm) != 0)
             {
-                if(pDetectInfo->bCurFrameStartCodeFound == 1 && pSbm->nEosFlag == 1)
+                if(/*pDetectInfo->bCurFrameStartCodeFound == 1 &&*/ pSbm->nEosFlag == 1)
                 {
                     pDetectInfo->bCurFrameStartCodeFound = 0;
                     chooseFramePts(pDetectInfo);

@@ -110,6 +110,12 @@ exit:
 	return ret;
 }
 
+void disp_device_show_builtin_patten(struct disp_device *dispdev, u32 patten)
+{
+	if (dispdev)
+		disp_al_show_builtin_patten(dispdev->hwdev_index, patten);
+}
+
 u32 disp_device_usec_before_vblank(struct disp_device *dispdev)
 {
 	int cur_line;

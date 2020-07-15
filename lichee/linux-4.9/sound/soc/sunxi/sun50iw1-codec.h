@@ -2047,6 +2047,7 @@ struct gain_config {
 	u32 earpiecevol;
 	u32 maingain;
 	u32 headsetmicgain;
+	u32 adcinputgain;
 	u32 dac_digital_vol;
 };
 

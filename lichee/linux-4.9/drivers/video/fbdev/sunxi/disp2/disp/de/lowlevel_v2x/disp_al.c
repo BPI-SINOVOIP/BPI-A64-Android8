@@ -1016,9 +1016,9 @@ int disp_al_lcd_get_start_delay(u32 screen_id, struct disp_panel_para *panel)
 		lcd_start_delay = ((tcon0_get_cpu_tri2_start_delay(screen_id)+1)
 				   << 3) * (panel->lcd_dclk_freq)
 				   / (panel->lcd_ht * de_clk_rate);
+		if (panel->lcd_if == LCD_IF_DSI)
+			return dsi_get_start_delay(screen_id) + lcd_start_delay;
 	}
-	if (panel->lcd_if == LCD_IF_DSI)
-		return lcd_start_delay;
 #endif
 	return tcon_get_start_delay(screen_id,
 				    al_priv.tcon_type[screen_id]);
@@ -1584,4 +1584,9 @@ int disp_al_vdpo_disable(u32 screen_id)
 		tcon1_tv_clk_enable(screen_id, 0);
 	}
 	return 0;
+}
+
+void disp_al_show_builtin_patten(u32 hwdev_index, u32 patten)
+{
+	tcon_show_builtin_patten(hwdev_index, patten);
 }

@@ -580,6 +580,7 @@ static int log_store(int facility, int level,
 		memcpy(log_text(msg) + text_len, trunc_msg, trunc_msg_len);
 		msg->text_len += trunc_msg_len;
 	}
+	if (dict != NULL)
 	memcpy(log_dict(msg), dict, dict_len);
 	msg->dict_len = dict_len;
 	msg->facility = facility;
@@ -753,8 +754,13 @@ static ssize_t devkmsg_write(struct kiocb *iocb, struct iov_iter *from)
 
 	/* Ratelimit when not explicitly enabled. */
 	if (!(devkmsg_log & DEVKMSG_LOG_MASK_ON)) {
-		if (!___ratelimit(&user->rs, current->comm))
-			return ret;
+		/* allow android-init process write /dev/kmsg without ratelimit
+		 * add by jiangbin 18/06/10
+		 */
+		if ((current->pid != 1) || (strcmp(current->comm, "init"))) {
+			if (!___ratelimit(&user->rs, current->comm))
+				return ret;
+		}
 	}
 
 	buf = kmalloc(len+1, GFP_KERNEL);

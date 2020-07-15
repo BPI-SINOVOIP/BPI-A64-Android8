@@ -57,10 +57,10 @@ ifeq ($(BOARD_WIFI_VENDOR), broadcom)
     BOARD_HOSTAPD_DRIVER        := NL80211
     BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
     BOARD_WLAN_DEVICE           := bcmdhd
+    WIFI_DRIVER_MODULE_NAME     := "bcmdhd"
     WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 
     BOARD_USR_WIFI := ap6212
-    include hardware/aw/wlan/config/config.mk
     include hardware/aw/wlan/firmware/firmware.mk
 endif
 

@@ -1414,20 +1414,18 @@ IHEVCD_ERROR_T ihevcd_parse_sps(codec_t *ps_codec)
     for(; i < ps_sps->i1_sps_max_sub_layers; i++)
     {
         UEV_PARSE("max_dec_pic_buffering", value, ps_bitstrm);
+        if(value < 0 || (value + 1) > MAX_DPB_SIZE)
+        {
+            return IHEVCD_INVALID_PARAMETER;
+        }
         ps_sps->ai1_sps_max_dec_pic_buffering[i] = value + 1;
 
-        if(ps_sps->ai1_sps_max_dec_pic_buffering[i] > MAX_DPB_SIZE)
-        {
-            return IHEVCD_INVALID_PARAMETER;
-        }
-
         UEV_PARSE("num_reorder_pics", value, ps_bitstrm);
-        ps_sps->ai1_sps_max_num_reorder_pics[i] = value;
-
-        if(ps_sps->ai1_sps_max_num_reorder_pics[i] > ps_sps->ai1_sps_max_dec_pic_buffering[i])
+        if(value < 0 || value > ps_sps->ai1_sps_max_dec_pic_buffering[i])
         {
             return IHEVCD_INVALID_PARAMETER;
         }
+        ps_sps->ai1_sps_max_num_reorder_pics[i] = value;
 
         UEV_PARSE("max_latency_increase", value, ps_bitstrm);
         ps_sps->ai1_sps_max_latency_increase[i] = value;
@@ -1503,9 +1501,17 @@ IHEVCD_ERROR_T ihevcd_parse_sps(codec_t *ps_codec)
     ps_sps->i1_log2_diff_max_min_pcm_coding_block_size = 0;
 
     UEV_PARSE("max_transform_hierarchy_depth_inter", value, ps_bitstrm);
+    if(value < 0 || value > (ps_sps->i1_log2_ctb_size - ps_sps->i1_log2_min_transform_block_size))
+    {
+        return IHEVCD_INVALID_PARAMETER;
+    }
     ps_sps->i1_max_transform_hierarchy_depth_inter = value;
 
     UEV_PARSE("max_transform_hierarchy_depth_intra", value, ps_bitstrm);
+    if(value < 0 || value > (ps_sps->i1_log2_ctb_size - ps_sps->i1_log2_min_transform_block_size))
+    {
+        return IHEVCD_INVALID_PARAMETER;
+    }
     ps_sps->i1_max_transform_hierarchy_depth_intra = value;
 
     /* String has a d (enabled) in order to match with HM */
@@ -1553,9 +1559,11 @@ IHEVCD_ERROR_T ihevcd_parse_sps(codec_t *ps_codec)
 
     }
     UEV_PARSE("num_short_term_ref_pic_sets", value, ps_bitstrm);
+    if(value < 0 || value > MAX_STREF_PICS_SPS)
+    {
+        return IHEVCD_INVALID_PARAMETER;
+    }
     ps_sps->i1_num_short_term_ref_pic_sets = value;
-
-    ps_sps->i1_num_short_term_ref_pic_sets = CLIP3(ps_sps->i1_num_short_term_ref_pic_sets, 0, MAX_STREF_PICS_SPS);
 
     for(i = 0; i < ps_sps->i1_num_short_term_ref_pic_sets; i++)
         ihevcd_short_term_ref_pic_set(ps_bitstrm, &ps_sps->as_stref_picset[0], ps_sps->i1_num_short_term_ref_pic_sets, i, &ps_sps->as_stref_picset[i]);
@@ -1566,6 +1574,10 @@ IHEVCD_ERROR_T ihevcd_parse_sps(codec_t *ps_codec)
     if(ps_sps->i1_long_term_ref_pics_present_flag)
     {
         UEV_PARSE("num_long_term_ref_pics_sps", value, ps_bitstrm);
+        if(value < 0 || value > MAX_LTREF_PICS_SPS)
+        {
+            return IHEVCD_INVALID_PARAMETER;
+        }
         ps_sps->i1_num_long_term_ref_pics_sps = value;
 
         for(i = 0; i < ps_sps->i1_num_long_term_ref_pics_sps; i++)

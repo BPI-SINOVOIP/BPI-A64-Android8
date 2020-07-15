@@ -823,4 +823,8 @@ int disp_al_get_display_size(unsigned int screen_id, unsigned int *width, unsign
 
 	return 0;
 }
+void disp_al_show_builtin_patten(u32 hwdev_index, u32 patten)
+{
+	tcon_show_builtin_patten(hwdev_index, patten);
+}
 #endif

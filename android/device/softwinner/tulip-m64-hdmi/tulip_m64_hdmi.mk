@@ -99,8 +99,8 @@ PRODUCT_COPY_FILES += \
     device/softwinner/common/config/awbms_config:$(TARGET_COPY_OUT_VENDOR)/etc/awbms_config \
 
 # bootanimation
-PRODUCT_COPY_FILES += \
-    device/softwinner/tulip-m64-hdmi/media/bootanimation.zip:system/media/bootanimation.zip
+#PRODUCT_COPY_FILES += \
+#    device/softwinner/tulip-m64-hdmi/media/bootanimation.zip:system/media/bootanimation.zip
 
 # audio
 PRODUCT_COPY_FILES += \
@@ -119,8 +119,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.product.first_api_level=27
 
+# hdmi 1080P set 213
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=160
+    ro.sf.lcd_density=213
 
 # limit dex2oat threads to improve thermals
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -139,8 +140,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapminfree=512k \
     dalvik.vm.heapmaxfree=8m
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.lmk.downgrade_pressure=95
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    ro.lmk.downgrade_pressure=95
 
 # Reduces GC frequency of foreground apps by 50% (not recommanded for 512M devices)
 PRODUCT_PROPERTY_OVERRIDES += dalvik.vm.foreground-heap-growth-multiplier=2.0

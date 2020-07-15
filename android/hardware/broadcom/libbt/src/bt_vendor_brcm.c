@@ -148,14 +148,17 @@ static int op(bt_vendor_opcode_t opcode, void *param)
         case BT_VND_OP_POWER_CTRL:
             {
                 int *state = (int *) param;
-                upio_set_bluetooth_power(UPIO_BT_POWER_OFF);
-                if (*state == BT_VND_PWR_ON)
+		if (*state == BT_VND_PWR_OFF)
+		{
+		    ALOGW("NOTE: BT_VND_PWR_OFF now");
+                    upio_set_bluetooth_power(UPIO_BT_POWER_OFF);
+		    usleep(200000);
+		}
+                else if (*state == BT_VND_PWR_ON)
                 {
-                    ALOGW("NOTE: BT_VND_PWR_ON now forces power-off first");
+                    ALOGW("NOTE: BT_VND_PWR_ON now");
                     upio_set_bluetooth_power(UPIO_BT_POWER_ON);
-                } else {
-                    /* Make sure wakelock is released */
-                    hw_lpm_set_wake_state(false);
+		    usleep(500000);
                 }
             }
             break;

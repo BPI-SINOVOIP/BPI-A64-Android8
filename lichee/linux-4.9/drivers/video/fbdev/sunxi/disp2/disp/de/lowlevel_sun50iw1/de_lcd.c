@@ -1232,3 +1232,7 @@ s32 tcon_cmap(u32 sel, u32 mode, unsigned int lcd_cmap_tbl[2][3][4])
 	}
     return 0;
 }
+void tcon_show_builtin_patten(u32 sel, u32 patten)
+{
+	lcd_dev[sel]->tcon0_ctl.bits.src_sel = patten;
+}

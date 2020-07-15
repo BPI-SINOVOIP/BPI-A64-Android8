@@ -405,6 +405,11 @@ u32 dp_get_cur_line(u32 sel)
 	return edp_hal_get_cur_line(sel);
 }
 
+void dp_show_builtin_patten(u32 sel, u32 patten)
+{
+	return edp_hal_show_builtin_patten(sel, patten);
+}
+
 void dp_set_reg_base(u32 sel, uintptr_t base)
 {
 	edp_hal_set_reg_base(sel, base);

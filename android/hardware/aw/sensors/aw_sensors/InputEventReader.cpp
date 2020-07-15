@@ -50,11 +50,12 @@ InputEventCircularReader::~InputEventCircularReader()
 ssize_t InputEventCircularReader::fill(int fd)
 {
         size_t numEventsRead = 0;
-        if (mFreeSpace) {
+        if (mFreeSpace > 0) {
                 const ssize_t nread = read(fd, mHead, mFreeSpace * sizeof(input_event));
-                if (nread<0 || nread % sizeof(input_event)) {
+                if (nread <= 0 || nread % sizeof(input_event)) {
                         // we got a partial event!!
-                        return nread<0 ? -errno : -EINVAL;
+			ALOGE("sensor InputEventCircular read data frome fd fail\n");
+                        return nread < 0 ? -errno : -EINVAL;
                 }
 
                 numEventsRead = nread / sizeof(input_event);
@@ -68,7 +69,9 @@ ssize_t InputEventCircularReader::fill(int fd)
                                 mHead = mBuffer + s;
                         }
                 }
-        }
+        } else {
+		ALOGE("sensor InputEventCircular no free space for data\n");
+	}
 
         return numEventsRead;
 }

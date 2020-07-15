@@ -84,7 +84,7 @@ size = 16384
 ;------------------------------>
 [partition]
     name         = cache
-    size         = 1048576
+    size         = 1536000
     user_type    = 0x8000
 
 ;------------------------------>store encryptable

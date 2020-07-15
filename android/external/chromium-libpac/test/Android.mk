@@ -18,6 +18,6 @@ LOCAL_CFLAGS += \
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../src $(LOCAL_PATH)/ external/v8
 
-LOCAL_SHARED_LIBRARIES := libpac libutils liblog
+LOCAL_SHARED_LIBRARIES := libpac libutils liblog libandroid_runtime
 
 include $(BUILD_NATIVE_TEST)

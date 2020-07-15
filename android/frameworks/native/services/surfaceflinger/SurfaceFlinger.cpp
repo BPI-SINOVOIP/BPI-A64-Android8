@@ -344,7 +344,7 @@ void SurfaceFlinger::destroyDisplay(const sp<IBinder>& display) {
 }
 
 void SurfaceFlinger::createBuiltinDisplayLocked(DisplayDevice::DisplayType type) {
-    ALOGV("createBuiltinDisplayLocked(%d)", type);
+    ALOGD("createBuiltinDisplayLocked(%d)", type);
     ALOGW_IF(mBuiltinDisplays[type],
             "Overwriting display token for display type %d", type);
     mBuiltinDisplays[type] = new BBinder();
@@ -799,7 +799,30 @@ status_t SurfaceFlinger::getDisplayConfigs(const sp<IBinder>& display,
         info.ydpi = ydpi;
         info.fps = 1e9 / hwConfig->getVsyncPeriod();
         info.appVsyncOffset = vsyncPhaseOffsetNs;
-
+		if (type == DisplayDevice::DISPLAY_PRIMARY) {
+            char property[PROPERTY_VALUE_MAX];
+            if (property_get("ro.sf.rotation", property, NULL) > 0) {
+                switch (atoi(property)) {
+                    case 90:
+                        info.orientation = (info.orientation - 1 + 4) % 4;
+                        info.w = hwConfig->getHeight();
+                        info.h = hwConfig->getWidth();
+                        info.xdpi = ydpi;
+                        info.ydpi = xdpi;
+                        break;
+                    case 180:
+                        info.orientation = (info.orientation - 2 + 4) % 4;
+                        break;
+                    case 270:
+                        info.orientation = (info.orientation - 3 + 4) % 4;
+                        info.w = hwConfig->getHeight();
+                        info.h = hwConfig->getWidth();
+                        info.xdpi = ydpi;
+                        info.ydpi = xdpi;
+                        break;
+                }
+            }
+		}
         // This is how far in advance a buffer must be queued for
         // presentation at a given time.  If you want a buffer to appear
         // on the screen at time N, you must submit the buffer before
@@ -2122,7 +2145,24 @@ void SurfaceFlinger::handleTransactionLocked(uint32_t transactionFlags)
                                 || (state.viewport != draw[i].viewport)
                                 || (state.frame != draw[i].frame))
                         {
-                            disp->setProjection(state.orientation,
+							int orientation = state.orientation;
+						   	if (state.type == DisplayDevice::DISPLAY_PRIMARY) {
+                                char property[PROPERTY_VALUE_MAX];
+                            	if (property_get("ro.sf.rotation", property, NULL) > 0) {
+                                    switch (atoi(property)) {
+                                        case 90:
+                                            orientation = (state.orientation + 1) % 4;
+                                            break;
+                                        case 180:
+                                            orientation = (state.orientation + 2) % 4;
+                                            break;
+                                        case 270:
+                                            orientation = (state.orientation + 3) % 4;
+                                            break;
+                                    }
+                            	}
+						   	}
+                            disp->setProjection(orientation,
                                     state.viewport, state.frame);
                         }
                         if (state.width != draw[i].width || state.height != draw[i].height) {
@@ -3276,6 +3316,29 @@ void SurfaceFlinger::onInitializeDisplays() {
     d.viewport.makeInvalid();
     d.width = 0;
     d.height = 0;
+	char property[PROPERTY_VALUE_MAX];
+    if (property_get("ro.sf.rotation", property, NULL) > 0) {
+        sp<const DisplayDevice> hw(getDefaultDisplayDevice());
+        const uint32_t hw_w = hw->getWidth();
+        const uint32_t hw_h = hw->getHeight();
+        switch (atoi(property)) {
+            case 90:
+                d.frame = Rect(hw_h, hw_w);
+                d.viewport = Rect(hw_h, hw_w);
+                break;
+            case 180:
+                d.frame = Rect(hw_w, hw_h);
+                d.viewport = Rect(hw_w, hw_h);
+                break;
+            case 270:
+                d.frame = Rect(hw_h, hw_w);
+                d.viewport = Rect(hw_h, hw_w);
+                break;
+            default:
+                break;
+        }
+    }
+    
     displays.add(d);
     setTransactionState(state, displays, 0);
     setPowerModeInternal(getDisplayDevice(d.token), HWC_POWER_MODE_NORMAL,

@@ -39,5 +39,6 @@ struct list_head *disp_device_get_list_head(void);
  * @return     :pointer of disp_device; NULL if not found
  */
 struct disp_device *disp_device_get_from_priv(void *priv_data);
+void disp_device_show_builtin_patten(struct disp_device *dispdev, u32 patten);
 
 #endif

@@ -1,3 +1,6 @@
+#VIN open kmsg for debug
+subdir-ccflags-y := -DDEBUG
+
 obj-$(CONFIG_CSI_VIN) += modules/sensor/
 obj-$(CONFIG_CSI_VIN) += modules/actuator/
 obj-$(CONFIG_CSI_VIN) += vin_io.o

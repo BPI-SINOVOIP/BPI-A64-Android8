@@ -1042,6 +1042,7 @@ s32 disp_init_hdmi(struct disp_bsp_init_para *para)
 		hdmi->usec_before_vblank =
 			disp_device_usec_before_vblank;
 		hdmi->get_fps = disp_hdmi_get_fps;
+		hdmi->show_builtin_patten = disp_device_show_builtin_patten;
 
 		hdmi->init(hdmi);
 		disp_device_register(hdmi);

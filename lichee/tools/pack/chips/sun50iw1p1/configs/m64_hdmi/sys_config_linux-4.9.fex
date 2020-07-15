@@ -506,10 +506,10 @@ disp_init_enable         = 1
 disp_mode                = 0
 
 screen0_output_type      = 3
-screen0_output_mode      = 5
+screen0_output_mode      = 10
 
 screen1_output_type      = 3
-screen1_output_mode      = 5
+screen1_output_mode      = 10
 
 fb0_format               = 0
 fb0_width                = 0
@@ -627,7 +627,7 @@ pwm_positive        = port:PL10<7><0><default><default>
 [boot_disp]
 output_disp = 0
 output_type = 3
-output_mode = 5
+output_mode = 10
 
 ;--------------------------------------------------------------------------------
 ;csi (COMS Sensor Interface) configuration

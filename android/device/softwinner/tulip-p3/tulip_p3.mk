@@ -40,7 +40,6 @@ PRODUCT_PACKAGES += Launcher3Go
 
 #File Explorer
 PRODUCT_PACKAGES += \
-    ESFileExplorer \
     SoundRecorder
 
 #PRODUCT_NOT_USES_VENDORIMAGE := true

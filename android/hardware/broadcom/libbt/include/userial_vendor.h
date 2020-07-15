@@ -53,6 +53,8 @@
 #define USERIAL_BAUD_3M         14
 #define USERIAL_BAUD_4M         15
 #define USERIAL_BAUD_AUTO       16
+#define USERIAL_BAUD_2_5M       17
+#define USERIAL_BAUD_3_5M       18
 
 /**** Data Format ****/
 /* Stop Bits */

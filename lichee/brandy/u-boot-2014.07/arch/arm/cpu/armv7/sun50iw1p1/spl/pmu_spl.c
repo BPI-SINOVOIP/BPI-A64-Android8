@@ -56,7 +56,7 @@ static int axp_probe(void)
 	u8  acin_path;
 	u8  pmu_reason;
 
-	/* boot reason */
+	/* bpi, show boot reason */
 	if(axp_i2c_read(AXP81X_ADDR, BOOT_POWER81X_OTG_STATUS, &pmu_reason))
 	{
 		printf("axp read error\n");

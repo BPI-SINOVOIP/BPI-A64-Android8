@@ -500,8 +500,6 @@ s32 disp_tv_exit(struct disp_device *ptv)
 #endif
 	kfree(ptv);
 	kfree(ptvp);
-	ptv = NULL;
-	ptvp = NULL;
 	return 0;
 }
 
@@ -887,6 +885,7 @@ s32 disp_init_tv(void)
 		p_tv->set_gamma_tbl = disp_tv_set_gamma_tbl;
 		p_tv->is_in_safe_period = disp_device_is_in_safe_period;
 		p_tv->usec_before_vblank = disp_device_usec_before_vblank;
+		p_tv->show_builtin_patten = disp_device_show_builtin_patten;
 		p_tv->init(p_tv);
 
 		disp_device_register(p_tv);

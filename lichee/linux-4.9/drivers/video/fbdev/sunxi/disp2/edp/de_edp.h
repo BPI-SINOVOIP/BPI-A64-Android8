@@ -66,6 +66,7 @@ u32 dp_get_hpd_status(u32 sel);
 
 void dp_moudle_en(u32 sel, u32 en);
 s32 dp_hpd_enable(u32 sel, u32 lane_cnt, u64 bit_rate);
+void dp_show_builtin_patten(u32 sel, u32 patten);
 
 extern int training_aux_rd_interval_CR;
 extern int training_aux_rd_interval_EQ;

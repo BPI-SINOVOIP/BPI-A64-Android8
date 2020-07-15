@@ -597,12 +597,6 @@ final class ProcessRecord {
 
     void kill(String reason, boolean noisy) {
         if (!killedByAm) {
-            if(toShortString().indexOf("com.google.android")!=-1){
-                return;
-            }
-            if(toShortString().indexOf("com.android.vending")!=-1){
-                return;
-            }
             Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "kill");
             if (noisy) {
                 Slog.i(TAG, "Killing " + toShortString() + " (adj " + setAdj + "): " + reason);

@@ -554,6 +554,11 @@ s32 edp_get_start_delay(u32 sel)
 	return ret;
 }
 
+void edp_show_builtin_patten(u32 sel, u32 patten)
+{
+	dp_show_builtin_patten(sel, patten);
+}
+
 unsigned int edp_get_cur_line(u32 sel)
 {
 	u32 ret = 0;
@@ -648,6 +653,7 @@ static s32 edp_probe(struct platform_device *pdev)
 		edp_func.tv_irq_query = edp_irq_query;
 		edp_func.tv_get_startdelay = edp_get_start_delay;
 		edp_func.tv_get_cur_line = edp_get_cur_line;
+		edp_func.tv_show_builtin_patten = edp_show_builtin_patten;
 		ret = disp_set_edp_func(&edp_func);
 		if (ret) {
 			dev_err(&pdev->dev, "disp_set_edp_func edp%d fail!\n",

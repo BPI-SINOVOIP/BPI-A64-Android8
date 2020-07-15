@@ -64,6 +64,7 @@ typedef struct eventThreadContext {
 }eventThreadContext_t;
 
 int hdmifd = -1;
+static int hdmihotplug=0;
 eventThreadContext_t eventContext;
 #define EPOLL_COUNT 6
 static void *eventThreadLoop(void *user);
@@ -302,6 +303,7 @@ hotplugUeventParse(eventThreadContext_t *context, const char *msg)
 				read(hdmifd, &state, 1);
 				ALOGD("Receive %s hotplug state[%d]", switch_name, state-48);
 				callHotplug(context, display, state == '1'? 1 : 0);
+				hdmihotplug= (state == '1'? 1 : 0);
 			}
 		}
 		while (*msg++);
@@ -336,8 +338,10 @@ static void *eventThreadLoop(void *user)
 			for (int i = 0; i < context->numberDisplay; i++) {
 				display = context->display[i];
 				if (strcmp(context->display[0]->displayName, "hdmi")) {
-					if (!strcmp(display->displayName, "hdmi"))
+					if (!strcmp(display->displayName, "hdmi")){
 						callHotplug(context, display, state == '1'? 1 : 0);
+							hdmihotplug=1;
+						}
 				}
 			}
 	}
@@ -388,14 +392,14 @@ init_epoll:
 					== sizeof(cmd_esg)) {
 					switch(cmd_esg.cmd) {
 						case 1:// switch hdmi mode
-							ALOGD("chang hdmi[%d] mode[%d] from user",cmd_esg.disp, cmd_esg.data);
+							ALOGD("chang hdmi[%d] mode[%d] hdmihotplug[%d] from user",cmd_esg.disp, cmd_esg.data,hdmihotplug);
 							if (cmd_esg.disp != 1 ||
-								context->display[cmd_esg.disp]->default_mode == cmd_esg.data)
+								context->display[cmd_esg.disp]->default_mode == cmd_esg.data ||(hdmihotplug==0))
 								break;
 							callHotplug(context, context->display[cmd_esg.disp], 0);
 							context->display[cmd_esg.disp]->default_mode = cmd_esg.data;
-
-							callHotplug(context, context->display[cmd_esg.disp], 1);
+		//					if(hdmihotplug==1)
+								callHotplug(context, context->display[cmd_esg.disp], 1);
 						break;
 					case 2://3D
 						if (((enum display_3d_mode)cmd_esg.data != DISPLAY_3D_LEFT_RIGHT_HDMI) &&
@@ -411,7 +415,9 @@ init_epoll:
 
 						default:
 							ALOGD("not a right mesg");
+						break;
 					}
+					break;
 				}
 			}
 		}

@@ -1513,7 +1513,11 @@ KeyMaster_V2_Update(const keymaster_device_t* dev,
 
     keymaster_error_t err_type = KM_ERROR_OK;
     uint32_t in_params_size;
-    in_params_size = compute_param_set_length(in_params);
+    if(in_params) {
+        in_params_size = compute_param_set_length(in_params);
+    } else {
+        in_params_size = 0;
+    }
 
     uint32_t paramsize;
     paramsize = sizeof(TEE_params_expand) +

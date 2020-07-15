@@ -331,6 +331,7 @@ s32 disp_edp_set_func(struct disp_device *p_edp,
 	p_edpp->edp_func.tv_get_cur_line = func->tv_get_cur_line;
 	p_edpp->edp_func.tv_get_video_timing_info =
 	    func->tv_get_video_timing_info;
+	p_edpp->edp_func.tv_show_builtin_patten = func->tv_show_builtin_patten;
 
 	return 0;
 }
@@ -557,8 +558,6 @@ static s32 disp_edp_exit(struct disp_device *p_edp)
 	disp_edp_disable(p_edp);
 	kfree(p_edp);
 	kfree(p_edpp);
-	p_edp = NULL;
-	p_edpp = NULL;
 	return 0;
 }
 
@@ -1012,17 +1011,38 @@ static s32 disp_edp_pwm_enable(struct disp_device *edp)
 static s32 disp_edp_pwm_disable(struct disp_device *edp)
 {
 	struct disp_edp_private_data *edpp = disp_edp_get_priv(edp);
+	s32 ret = -1;
+	struct pwm_device *pwm_dev;
 
 	if (!edp || !edpp) {
 		DE_WRN("NULL hdl!\n");
 		return DIS_FAIL;
 	}
 
-	if (edpp->pwm_info.dev)
-		return disp_sys_pwm_disable(edpp->pwm_info.dev);
+	if (edpp->pwm_info.dev) {
+		ret = disp_sys_pwm_disable(edpp->pwm_info.dev);
+		pwm_dev = (struct pwm_device *)edpp->pwm_info.dev;
+		/*following is for reset pwm state purpose*/
+		disp_sys_pwm_config(edpp->pwm_info.dev,
+				    pwm_dev->state.duty_cycle - 1,
+				    pwm_dev->state.period);
+		disp_sys_pwm_set_polarity(edpp->pwm_info.dev,
+					  !edpp->pwm_info.polarity);
+		return ret;
+	}
+
 	DE_WRN("pwm device hdl is NULL\n");
 
 	return DIS_FAIL;
+}
+
+void disp_edp_show_builtin_patten(struct disp_device *edp, u32 patten)
+{
+	struct disp_edp_private_data *p_edpp = disp_edp_get_priv(edp);
+
+	if (p_edpp->edp_func.tv_show_builtin_patten)
+		p_edpp->edp_func.tv_show_builtin_patten(p_edpp->edp_index,
+							patten);
 }
 
 /**
@@ -1125,6 +1145,7 @@ s32 disp_init_edp(struct disp_bsp_init_para *para)
 		p_edp->pwm_disable = disp_edp_pwm_disable;
 		p_edp->power_enable = disp_edp_power_enable;
 		p_edp->power_disable = disp_edp_power_disable;
+		p_edp->show_builtin_patten = disp_edp_show_builtin_patten;
 		ret = p_edp->init(p_edp);
 		if (ret != 0) {
 			DE_INF("edp %d %d is not used\n", disp, hwdev_index);

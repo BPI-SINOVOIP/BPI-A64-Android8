@@ -916,6 +916,7 @@ static ssize_t regulator_print_state(char *buf, int state)
 		return sprintf(buf, "unknown\n");
 }
 
+/* bpi, add regulator enable/disable sysfs control */
 static ssize_t regulator_state_store(struct device *dev,
 					struct device_attribute *attr, const char *buf, size_t count)
 {

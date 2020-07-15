@@ -24,3 +24,5 @@ neverallow logpersist { app_data_file system_data_file }:dir_file_class_set writ
 #   -system_app # Smith.apk
 # } logpersist:process transition;
 neverallow * logpersist:process dyntransition;
+
+allow logpersist self:capability { dac_override dac_read_search };

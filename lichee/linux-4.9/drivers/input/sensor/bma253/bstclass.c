@@ -197,7 +197,9 @@ EXPORT_SYMBOL(bst_register_device);
  */
 void bst_unregister_device(struct bst_dev *dev)
 {
-	mutex_lock_interruptible(&bst_mutex);
+	int ret = mutex_lock_interruptible(&bst_mutex);
+	if (ret)
+		printk("mutex lock bst failed\n");
 	list_del_init(&dev->node);
 	mutex_unlock(&bst_mutex);
 	device_unregister(&dev->dev);

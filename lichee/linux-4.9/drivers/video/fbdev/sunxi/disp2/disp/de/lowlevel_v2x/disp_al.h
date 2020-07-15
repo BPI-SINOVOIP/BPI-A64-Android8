@@ -192,5 +192,6 @@ int disp_al_init_eink_ctrl_data_8(unsigned int disp, unsigned long wavedata_buf,
 		struct eink_timing_param *eink_timing_info, unsigned int i);
 int disp_al_init_eink_ctrl_data_16(unsigned int disp, unsigned int wavedata_buf,
 		struct eink_timing_param *eink_timing_info);
+void disp_al_show_builtin_patten(u32 hwdev_index, u32 patten);
 
 #endif

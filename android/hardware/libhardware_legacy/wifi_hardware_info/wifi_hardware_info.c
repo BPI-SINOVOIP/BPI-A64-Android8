@@ -39,6 +39,7 @@ struct wifi_hardware_info {
     unsigned long device_id;
     char *module_name;
     char *driver_name;
+    char *driver_module_name;
     char *vendor_name;
     char *fw_path_sta;
     char *fw_path_ap;
@@ -50,24 +51,40 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id   = 0x18179,
         .module_name = "rtl8189es",
         .driver_name = "8189es",
+        .driver_module_name = "8189es",
         .vendor_name = "realtek",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
         .fw_path_p2p = "P2P",
     },
+#ifdef WIFI_USE_RTL8723BS_VQ0
+    {
+        .device_id   = 0x1b723,
+        .module_name = "rtl8723bs_vq0",
+        .driver_name = "8723bs-vq0",
+        .driver_module_name = "8723bs_vq0",
+        .vendor_name = "realtek",
+        .fw_path_sta = "STA",
+        .fw_path_ap  = "AP",
+        .fw_path_p2p = "P2P",
+    },
+#else
     {
         .device_id   = 0x1b723,
         .module_name = "rtl8723bs",
         .driver_name = "8723bs",
+        .driver_module_name = "8723bs",
         .vendor_name = "realtek",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
         .fw_path_p2p = "P2P",
     },
+#endif
     {
         .device_id   = 0x1b703,
-        .module_name = "8723cs",
+        .module_name = "rtl8723cs",
         .driver_name = "8723cs",
+        .driver_module_name = "8723cs",
         .vendor_name = "realtek",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
@@ -77,6 +94,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id   = 0x1d723,
         .module_name = "rtl8723ds",
         .driver_name = "8723ds",
+        .driver_module_name = "8723ds",
         .vendor_name = "realtek",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
@@ -86,6 +104,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id    = 0x08179,
         .module_name  = "rtl8188etv",
         .driver_name  = "8188eu",
+        .driver_module_name  = "8188eu",
         .vendor_name  = "realtek",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
@@ -95,6 +114,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id    = 0x00179,
         .module_name  = "rtl8188eu",
         .driver_name  = "8188eu",
+        .driver_module_name  = "8188eu",
         .vendor_name  = "realtek",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
@@ -104,6 +124,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id    = 0x0818b,
         .module_name  = "rtl8192eu",
         .driver_name  = "8192eu",
+        .driver_module_name  = "8192eu",
         .vendor_name  = "realtek",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
@@ -113,6 +134,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id    = 0x0b720,
         .module_name  = "rtl8723bu",
         .driver_name  = "8723bu",
+        .driver_module_name  = "8723bu",
         .vendor_name  = "realtek",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
@@ -122,6 +144,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id   = 0x1f179,
         .module_name = "rtl8189fs",
         .driver_name = "8189fs",
+        .driver_module_name = "8189fs",
         .vendor_name = "realtek",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
@@ -131,6 +154,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id   = 0x1B822,
         .module_name = "rtl88x2bs",
         .driver_name = "88x2bs",
+        .driver_module_name = "88x2bs",
         .vendor_name = "realtek",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
@@ -140,6 +164,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id   = 0x1a9a6,
         .module_name = "ap6212",
         .driver_name = "bcmdhd",
+        .driver_module_name = "bcmdhd",
         .vendor_name = "broadcom",
         .fw_path_sta = "/system/vendor/modules/fw_bcm43438a0.bin",
         .fw_path_ap  = "/system/vendor/modules/fw_bcm43438a0_apsta.bin",
@@ -149,6 +174,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id   = 0x14356,
         .module_name = "ap6356s",
         .driver_name = "bcmdhd",
+        .driver_module_name = "bcmdhd",
         .vendor_name = "broadcom",
         .fw_path_sta = "/system/vendor/modules/fw_bcm4356a2_ag.bin",
         .fw_path_ap  = "/system/vendor/modules/fw_bcm4356a2_apsta.bin",
@@ -158,6 +184,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id   = 0x1a9bf,
         .module_name = "ap6255",
         .driver_name = "bcmdhd",
+        .driver_module_name = "bcmdhd",
         .vendor_name = "broadcom",
         .fw_path_sta = "/system/vendor/modules/fw_bcm43455c0_ag.bin",
         .fw_path_ap  = "/system/vendor/modules/fw_bcm43455c0_ag_apsta.bin",
@@ -167,6 +194,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id   = 0x12281,
         .module_name = "xr819",
         .driver_name = "xradio_wlan",
+        .driver_module_name = "xradio_wlan",
         .vendor_name = "xradio",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
@@ -176,6 +204,7 @@ static const struct wifi_hardware_info wifi_list[] = {
         .device_id   = 0x1050a,
         .module_name = "qca6174a",
         .driver_name = "qualcomm",
+        .driver_module_name = "qualcomm",
         .vendor_name = "atheros",
         .fw_path_sta = "STA",
         .fw_path_ap  = "AP",
@@ -185,7 +214,7 @@ static const struct wifi_hardware_info wifi_list[] = {
 };
 /* default select rtl8189es if get wifi_hardware_info failed */
 static struct wifi_hardware_info selected_wifi = {
-    0x18179, "rtl8189es", "8189es", "realtek", "STA", "AP", "P2P"
+    0x18179, "rtl8189es", "8189es", "8189es", "realtek", "STA", "AP", "P2P"
 };
 
 static const char realtek_wpa_supplicant_para[] =
@@ -557,10 +586,11 @@ static void get_wifi_hardware_info(struct wifi_hardware_info *wifiinfo)
 
     if (initialed == false) {
 
-#if defined(WIFI_VENDOR_NAME) && defined(WIFI_MODULE_NAME) && defined(WIFI_DRIVER_NAME)
+#if defined(WIFI_VENDOR_NAME) && defined(WIFI_MODULE_NAME) && defined(WIFI_DRIVER_NAME) && defined(WIFI_DRIVER_MODULE_NAME)
         wifiinfo->vendor_name = WIFI_VENDOR_NAME;
         wifiinfo->module_name = WIFI_MODULE_NAME;
         wifiinfo->driver_name = WIFI_DRIVER_NAME;
+        wifiinfo->driver_module_name = WIFI_DRIVER_MODULE_NAME;
 #if defined(WIFI_DRIVER_FW_PATH_STA)
         wifiinfo->fw_path_sta = WIFI_DRIVER_FW_PATH_STA;
 #endif
@@ -685,6 +715,12 @@ const char *get_wifi_driver_name()
 {
     get_wifi_hardware_info(&selected_wifi);
     return selected_wifi.driver_name;
+}
+
+const char *get_wifi_driver_module_name()
+{
+    get_wifi_hardware_info(&selected_wifi);
+    return selected_wifi.driver_module_name;
 }
 
 const char *get_fw_path_sta()

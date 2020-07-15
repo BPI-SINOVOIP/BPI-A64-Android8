@@ -847,7 +847,8 @@ static s32 disp_lcd_pin_cfg(struct disp_device *lcd, u32 bon)
 			    ((!strcmp(lcdp->lcd_cfg.lcd_pin_power[i], ""))
 			     ||
 			     (!strcmp(lcdp->lcd_cfg.lcd_pin_power[i], "none"))))
-				disp_sys_power_enable(lcdp->lcd_cfg.lcd_pin_power[i]);
+				disp_sys_power_enable(lcdp->lcd_cfg.
+						      lcd_pin_power[i]);
 		}
 	}
 
@@ -866,7 +867,8 @@ static s32 disp_lcd_pin_cfg(struct disp_device *lcd, u32 bon)
 			    ((!strcmp(lcdp->lcd_cfg.lcd_pin_power[i], ""))
 			     ||
 			     (!strcmp(lcdp->lcd_cfg.lcd_pin_power[i], "none"))))
-				disp_sys_power_disable(lcdp->lcd_cfg.lcd_pin_power[i]);
+				disp_sys_power_disable(lcdp->lcd_cfg.
+						       lcd_pin_power[i]);
 		}
 	}
 #endif
@@ -948,14 +950,25 @@ static s32 disp_lcd_pwm_enable(struct disp_device *lcd)
 static s32 disp_lcd_pwm_disable(struct disp_device *lcd)
 {
 	struct disp_lcd_private_data *lcdp = disp_lcd_get_priv(lcd);
+	s32 ret = -1;
+	struct pwm_device *pwm_dev;
 
 	if ((lcd == NULL) || (lcdp == NULL)) {
 		DE_WRN("NULL hdl!\n");
 		return DIS_FAIL;
 	}
 
-	if (disp_lcd_is_used(lcd) && lcdp->pwm_info.dev)
-		return disp_sys_pwm_disable(lcdp->pwm_info.dev);
+	if (disp_lcd_is_used(lcd) && lcdp->pwm_info.dev) {
+		ret = disp_sys_pwm_disable(lcdp->pwm_info.dev);
+		pwm_dev = (struct pwm_device *)lcdp->pwm_info.dev;
+		/*following is for reset pwm state purpose*/
+		disp_sys_pwm_config(lcdp->pwm_info.dev,
+				    pwm_dev->state.duty_cycle - 1,
+				    pwm_dev->state.period);
+		disp_sys_pwm_set_polarity(lcdp->pwm_info.dev,
+					  !lcdp->pwm_info.polarity);
+		return ret;
+	}
 	DE_WRN("pwm device hdl is NULL\n");
 
 	return DIS_FAIL;
@@ -1549,6 +1562,7 @@ static s32 disp_lcd_fake_enable(struct disp_device *lcd)
 	ret = cal_real_frame_period(lcd);
 	if (ret)
 		DE_WRN("cal_real_frame_period fail:%d\n", ret);
+	disp_sys_pwm_set_polarity(lcdp->pwm_info.dev, lcdp->pwm_info.polarity);
 	disp_al_lcd_cfg(lcd->hwdev_index, &lcdp->panel_info,
 		&lcdp->panel_extend_info_set);
 	lcdp->open_flow.func_num = 0;
@@ -2727,6 +2741,7 @@ s32 disp_init_lcd(struct disp_bsp_init_para *para)
 		lcd->get_fps = disp_lcd_get_fps;
 		lcd->set_color_temperature = disp_lcd_set_color_temperature;
 		lcd->get_color_temperature = disp_lcd_get_color_temperature;
+		lcd->show_builtin_patten = disp_device_show_builtin_patten;
 
 		lcd->init = disp_lcd_init;
 		lcd->exit = disp_lcd_exit;

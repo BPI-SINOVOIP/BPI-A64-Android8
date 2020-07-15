@@ -10,6 +10,11 @@ PRODUCT_COPY_FILES += \
     device/softwinner/tulip-common/init.sun50iw1p1.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.sun50iw1p1.usb.rc \
     device/softwinner/tulip-common/ueventd.sun50iw1p1.rc:root/ueventd.sun50iw1p1.rc
 
+
+ifneq ($(TARGET_BUILD_VARIANT), user)
+PRODUCT_COPY_FILES += device/softwinner/tulip-common/bg_kmsg.sh:system/bin/bg_kmsg.sh
+endif
+
 # video
 PRODUCT_COPY_FILES += \
     device/softwinner/tulip-common/configs/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \

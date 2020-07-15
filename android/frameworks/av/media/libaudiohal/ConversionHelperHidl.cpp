@@ -77,7 +77,7 @@ void ConversionHelperHidl::parametersToHal(
     for (size_t i = 0; i < parameters.size(); ++i) {
         params.add(String8(parameters[i].key.c_str()), String8(parameters[i].value.c_str()));
     }
-    values->setTo(params.keysToString());
+    values->setTo(params.toString());
 }
 
 ConversionHelperHidl::ConversionHelperHidl(const char* className)

@@ -695,7 +695,7 @@ static long get_allocated_vmalloc_memory() {
             vmalloc_allocated_size += size;
         }
     }
-    return vmalloc_allocated_size - 10*1024*1024;
+    return vmalloc_allocated_size - 18*1024*1024;
 }
 
 enum {

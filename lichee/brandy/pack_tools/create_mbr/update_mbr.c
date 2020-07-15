@@ -8,6 +8,7 @@
 #include "sunxi_mbr.h"
 #include <ctype.h>
 #include <unistd.h>
+#include "sparse_format.h"
 
 //#define DEBUG
 #ifdef DEBUG
@@ -30,18 +31,20 @@ __s32 check_dl_size(char *filename,int part_size);
 int get_file_name(char *path, char *name)
 {
 	char buffer[MAX_PATH];
+	char buffer_cwd[MAX_PATH];
 	int  i, length;
 	char *pt;
 
 	memset(buffer, 0, MAX_PATH);
+	memset(buffer_cwd, 0, MAX_PATH);
 	if(!IsFullName(path))
 	{
-	   if(getcwd(buffer, MAX_PATH ) == NULL)
+	   if (getcwd(buffer_cwd, MAX_PATH) == NULL)
 	   {
 			perror( "getcwd error" );
 			return -1;
 	   }
-	   sprintf(buffer, "%s/%s", buffer, path);
+	   sprintf(buffer, "%s/%s", buffer_cwd, path);
 	}
 	else
 	{
@@ -342,7 +345,7 @@ __s32 update_for_part_info(sunxi_mbr_t *mbr_info, sunxi_download_info *dl_map, _
 	memset(dl_map, 0, sizeof(sunxi_download_info));
 	//固定不变的信息
 	mbr_info->version = 0x00000200;
-	strcpy((char *)mbr_info->magic, SUNXI_MBR_MAGIC);
+	memcpy(mbr_info->magic, SUNXI_MBR_MAGIC, 8);
 	DBG("mbr magic %s\n", mbr_info->magic);
 	mbr_info->copy    = mbr_count;
 	if(!mbr_count)
@@ -350,7 +353,7 @@ __s32 update_for_part_info(sunxi_mbr_t *mbr_info, sunxi_download_info *dl_map, _
 		mbr_info->copy = SUNXI_MBR_COPY_NUM;
 	}
 	dl_map->version = 0x00000200;
-	strcpy((char *)dl_map->magic, SUNXI_MBR_MAGIC);
+	memcpy(mbr_info->magic, SUNXI_MBR_MAGIC, 8);
 	//根据分区情况会有变化的信息
 	udisk_exist = 0;
 	while(1)
@@ -611,7 +614,9 @@ __s32 update_dl_info_crc(sunxi_download_info *dl_map, FILE *dl_file)
 __s32 check_dl_size(char *filename,int part_size)
 {
 	FILE  *dl_file = NULL;
-	int dl_file_size =0;
+	uint dl_file_size = 0;
+	char pbuf[SPARSE_HEADER_DATA] = {0};
+	sparse_header_t *sparse_buf = NULL;
 
 	if (filename == NULL || part_size == 0)
 		return -1;
@@ -622,14 +627,19 @@ __s32 check_dl_size(char *filename,int part_size)
 		return -1;
 	}
 	fseek(dl_file, 0, SEEK_END);
-	dl_file_size = ftell(dl_file)/512;
+	dl_file_size = (ftell(dl_file) + 511)/512;
 	fseek(dl_file, 0, SEEK_SET);
+	fread(pbuf, 1, SPARSE_HEADER_DATA, dl_file);
+	sparse_buf = (sparse_header_t *)pbuf;
+	if (sparse_buf->magic == SPARSE_HEADER_MAGIC) {
+		dl_file_size = ((sparse_buf->blk_sz*sparse_buf->total_blks) + 511)/512;
+	}
 	fclose(dl_file);
 	if (dl_file_size > part_size )
 	{
 		ERR("dl file %s size too large\n",filename);
 		ERR("filename = %s \n",filename );
-		ERR("dl_file_size = %d sector\n",dl_file_size );
+		ERR("dl_file_size = %u sector\n", dl_file_size);
 		ERR("part_size = %d sector\n",part_size );
 		return -1;
 	}

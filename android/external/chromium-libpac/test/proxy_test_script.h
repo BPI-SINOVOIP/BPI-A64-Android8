@@ -78,6 +78,23 @@
   "function fn() {}\n" \
   "\n" \
 
+#define CHANGE_ELEMENT_KIND_JS \
+  "// PAC script with getter that changes element kind.\n" \
+  "	\n" \
+  "function FindProxyForURL(url, host) {\n" \
+  "  let arr = [];\n" \
+  "  arr[1000] = 0x1234;\n" \
+  "\n" \
+  "  arr.__defineGetter__(256, function () {\n" \
+  "    delete arr[256];\n" \
+  "    arr.unshift(1.1);\n" \
+  "  });\n" \
+  "\n" \
+  "  let results = Object.entries(arr);\n" \
+  "  let str = results.toString(); \n" \
+  "  return \"DIRECT\";\n" \
+  "}\n" \
+
 #define DIRECT_JS \
   "function FindProxyForURL(url, host) {\n" \
   "  return \"DIRECT\";\n" \

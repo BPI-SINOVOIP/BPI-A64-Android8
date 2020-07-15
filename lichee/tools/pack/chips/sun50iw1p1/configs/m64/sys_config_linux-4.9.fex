@@ -509,7 +509,7 @@ screen0_output_type      = 1
 screen0_output_mode      = 4
 
 screen1_output_type      = 3
-screen1_output_mode      = 5
+screen1_output_mode      = 10
 
 fb0_format               = 0
 fb0_width                = 0

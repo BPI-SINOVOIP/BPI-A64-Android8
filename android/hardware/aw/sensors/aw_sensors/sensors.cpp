@@ -285,6 +285,7 @@ int sensors_poll_context_t::pollEvents(sensors_event_t* data, int count)
 {
     int nbEvents = 0;
     int n = 0;
+    int noInCnt = 0;
         // check flush pending
     for (int i = 0; i < 10; i++) {
 		if(getFlushPending(i)) {
@@ -301,7 +302,7 @@ int sensors_poll_context_t::pollEvents(sensors_event_t* data, int count)
 
 	n = poll(mPollFds, sNumber, -1);
 	if (n<0) {
-				ALOGE(" AW poll() failed (%s)", strerror(errno));
+				ALOGE(" AW sensor poll() failed (%s)", strerror(errno));
 				return 0;
 	}
 	if (mPollFds[wake].revents & POLLIN) {
@@ -314,7 +315,6 @@ int sensors_poll_context_t::pollEvents(sensors_event_t* data, int count)
 	// read sensor event
 	for (int i = 0 ; (count >= 0) && (i < sNumber) ; i++) {
 		SensorBase* const sensor(mSensors[i]);
-
 #ifdef DEBUG_SENSOR
             ALOGE("AW count:%d, mPollFds[%d].revents:%d, hasPendingEvents():%d,sNumber:%d\n",
                     count, i, mPollFds[i].revents, sensor->hasPendingEvents(),sNumber);
@@ -324,10 +324,15 @@ int sensors_poll_context_t::pollEvents(sensors_event_t* data, int count)
 			if (nb < count) {
 				mPollFds[i].revents = 0;
 			}
+			if (nb <= 0)
+				ALOGE("AW sensor: %d  error readEvents return %d\n", i, nb);
 			count -= nb;
 			nbEvents += nb;
 			data += nb;
-		}
+		} else
+			noInCnt++;
+		if (noInCnt == sNumber)
+			ALOGE("AW sensor error no data pollin\n");
 	}
 	return nbEvents;
 }

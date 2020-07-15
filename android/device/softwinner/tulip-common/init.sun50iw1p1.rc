@@ -25,15 +25,12 @@ on fs
     mount_all /vendor/etc/fstab.sun50iw1p1
     swapon_all /vendor/etc/fstab.sun50iw1p1
     restorecon_recursive /persist
+    start console
 
 on late-fs
     # gpu
     insmod /vendor/modules/mali.ko
     write /sys/devices/platform/soc/cpu_budget_cooling/roomage "1152000 4 0 0 1152000 4 0 0"
-    # mkdir for optee
-    mkdir /data/tee 0770 system system
-    restorecon_recursive /data/tee
-
 on post-fs-data
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
@@ -64,3 +61,37 @@ on boot
 on post-fs-data
     # create file for audio dump data
     mkdir /data/audio_d 0777 audio audio
+
+    mkdir /data/tee 0770 system system
+    restorecon_recursive /data/tee
+
+# add background log(kmsg:logcat) collect(pre:cur)
+
+on property:persist.bg.logcollect=*
+	stop bg_kmsg
+	stop bg_logcat
+
+
+# loadpersist and sys-complete trigger , use only eng/userdebug- ro.debuggable=1
+on property:persist.bg.logcollect=1 && property:sys.boot_completed=1 && property:ro.debuggable=1
+	rm /data/misc/logd/pre_bg_kmsg.log
+	copy /data/misc/logd/cur_bg_kmsg.log /data/misc/logd/pre_bg_kmsg.log
+	rm /data/misc/logd/cur_bg_kmsg.log
+	start bg_kmsg
+
+	rm /data/misc/logd/pre_bg_logcat.log
+	copy /data/misc/logd/cur_bg_logcat.log /data/misc/logd/pre_bg_logcat.log
+	rm /data/misc/logd/cur_bg_logcat.log
+	start bg_logcat
+
+service bg_kmsg /system/bin/bg_kmsg.sh
+	class main
+	oneshot
+	disabled
+
+
+service bg_logcat /system/bin/logcat -f /data/misc/logd/cur_bg_logcat.log
+	class main
+	oneshot
+	disabled
+# end

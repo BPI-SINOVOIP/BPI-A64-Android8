@@ -1,4 +1,4 @@
-on boot
+on post-fs-data
     # MAC Program
     mkdir /data/misc/bluedroid 0770 bluetooth net_bt_admin
     exec - root system -- /vendor/xbin/macprog.sh

@@ -24,6 +24,7 @@ extern "C" {
 const char *get_wifi_vendor_name();
 const char *get_wifi_module_name();
 const char *get_wifi_driver_name();
+const char *get_wifi_driver_module_name();
 const char *get_fw_path_sta();
 const char *get_fw_path_ap();
 const char *get_fw_path_p2p();

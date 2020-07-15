@@ -30,6 +30,8 @@
 #include <linux/delay.h>
 #include <linux/irq.h>
 #include <linux/time.h>
+#include <linux/hrtimer.h>
+#include <linux/ktime.h>
 
 
 #ifdef CONFIG_HAS_EARLYSUSPEND
@@ -1487,6 +1489,9 @@ struct bma2x2_data {
 	struct timer_list	tap_timer;
 	int tap_time_period;
 #endif
+	struct hrtimer hr_timer;
+	struct work_struct wq_hrtimer;
+	ktime_t ktime;
 };
 
 #ifdef CONFIG_HAS_EARLYSUSPEND
@@ -4799,16 +4804,9 @@ static int bma2x2_read_accel_xyz(struct i2c_client *client,
 	return comres;
 }
 
-#ifndef CONFIG_BMA_ENABLE_NEWDATA_INT
-static void bma2x2_work_func(struct work_struct *work)
+static void report_sensor_data(struct bma2x2_data *bma2x2)
 {
-	struct bma2x2_data *bma2x2 = container_of((struct delayed_work *)work,
-			struct bma2x2_data, work);
-	static uint64_t startTime;
 	static struct bma2x2acc acc;
-	unsigned long setDelay;
-	unsigned long delay = msecs_to_jiffies(atomic_read(&bma2x2->delay)) - 1;
-
 	bma2x2_read_accel_xyz(bma2x2->bma2x2_client, bma2x2->sensor_type, &acc);
 	input_report_abs(bma2x2->input, ABS_X, acc.x);
 	input_report_abs(bma2x2->input, ABS_Y, acc.y);
@@ -4817,8 +4815,31 @@ static void bma2x2_work_func(struct work_struct *work)
 	mutex_lock(&bma2x2->value_mutex);
 	bma2x2->value = acc;
 	mutex_unlock(&bma2x2->value_mutex);
+}
 
-	uint64_t deltaTime = get_jiffies_64() - startTime;
+#ifndef CONFIG_BMA_ENABLE_NEWDATA_INT
+static void bma2x2_work_func(struct work_struct *work)
+{
+	struct bma2x2_data *bma2x2 = container_of((struct delayed_work *)work,
+			struct bma2x2_data, work);
+	static uint64_t startTime;
+	static struct bma2x2acc acc;
+	unsigned long setDelay;
+	uint64_t deltaTime;
+	unsigned long delay = msecs_to_jiffies(atomic_read(&bma2x2->delay)) - 1;
+
+	bma2x2_read_accel_xyz(bma2x2->bma2x2_client, bma2x2->sensor_type, &acc);
+#if 0
+	input_report_abs(bma2x2->input, ABS_X, acc.x);
+	input_report_abs(bma2x2->input, ABS_Y, acc.y);
+	input_report_abs(bma2x2->input, ABS_Z, acc.z);
+	input_sync(bma2x2->input);
+#endif
+	mutex_lock(&bma2x2->value_mutex);
+	bma2x2->value = acc;
+	mutex_unlock(&bma2x2->value_mutex);
+
+	deltaTime = get_jiffies_64() - startTime;
 	if (deltaTime > delay && deltaTime <= 2 * delay)
 		setDelay = 2 * delay - deltaTime;
 	else if (deltaTime > 2 * delay)
@@ -5016,7 +5037,7 @@ static ssize_t bma2x2_chip_id_show(struct device *dev,
 	struct i2c_client *client = to_i2c_client(dev);
 	struct bma2x2_data *bma2x2 = i2c_get_clientdata(client);
 
-	return sprintf(buf, "%d\n", bma2x2->chip_id);
+	return sprintf(buf, "%u\n", bma2x2->chip_id);
 
 }
 
@@ -5051,6 +5072,8 @@ static ssize_t bma2x2_delay_store(struct device *dev,
 	if (data > BMA2X2_MAX_DELAY)
 		data = BMA2X2_MAX_DELAY;
 	atomic_set(&bma2x2->delay, (unsigned int) data);
+	pr_info("bma2x2: delay store %d\n", atomic_read(&bma2x2->delay));
+	bma2x2->ktime = ktime_set(0, atomic_read(&bma2x2->delay) * NSEC_PER_MSEC);
 
 	return count;
 }
@@ -5077,23 +5100,30 @@ static void bma2x2_set_enable(struct device *dev, int enable)
 		if (pre_enable == 0) {
 			bma2x2_set_mode(bma2x2->bma2x2_client,
 					BMA2X2_MODE_NORMAL, BMA_ENABLED_INPUT);
-
-		#ifndef CONFIG_BMA_ENABLE_NEWDATA_INT
+	#ifndef CONFIG_BMA_ENABLE_NEWDATA_INT
+			atomic_set(&bma2x2->enable, 1);
+		#if 0
 			queue_delayed_work(bma2x2->workqueue, &bma2x2->work,
 				msecs_to_jiffies(atomic_read(&bma2x2->delay)));
-#endif
-			atomic_set(&bma2x2->enable, 1);
+		#else
+			bma2x2->ktime = ktime_set(0, atomic_read(&bma2x2->delay) * NSEC_PER_MSEC);
+			hrtimer_start(&bma2x2->hr_timer, bma2x2->ktime, HRTIMER_MODE_REL);
+		#endif
+	#endif
 		}
 
 	} else {
 		if (pre_enable == 1) {
 			bma2x2_set_mode(bma2x2->bma2x2_client,
 					BMA2X2_MODE_SUSPEND, BMA_ENABLED_INPUT);
-
 		#ifndef CONFIG_BMA_ENABLE_NEWDATA_INT
-			cancel_delayed_work_sync(&bma2x2->work);
-			flush_workqueue(bma2x2->workqueue);
-#endif
+			#if 0
+				cancel_delayed_work_sync(&bma2x2->work);
+				flush_workqueue(bma2x2->workqueue);
+			#else
+				hrtimer_cancel(&bma2x2->hr_timer);
+			#endif
+		#endif
 			atomic_set(&bma2x2->enable, 0);
 		}
 	}
@@ -6538,6 +6568,22 @@ static irqreturn_t bma2x2_irq_handler(int irq, void *handle)
 }
 #endif /* defined(BMA2X2_ENABLE_INT1)||defined(BMA2X2_ENABLE_INT2) */
 
+static void wq_func_hrtimer(struct work_struct  *work)
+{
+	struct bma2x2_data *bma2x2 = container_of((struct work_struct *)work,
+			struct bma2x2_data, wq_hrtimer);
+	report_sensor_data(bma2x2);
+}
+
+static enum hrtimer_restart my_hrtimer_callback(struct hrtimer *timer)
+{
+	struct bma2x2_data *bma2x2 = container_of((struct hrtimer *)timer,
+			struct bma2x2_data, hr_timer);
+	schedule_work(&bma2x2->wq_hrtimer);
+	hrtimer_forward_now(&bma2x2->hr_timer, bma2x2->ktime);
+	return HRTIMER_RESTART;
+}
+
 
 static int bma2x2_probe(struct i2c_client *client,
 		const struct i2c_device_id *id)
@@ -6546,11 +6592,10 @@ static int bma2x2_probe(struct i2c_client *client,
 	struct bma2x2_data *data;
 	struct input_dev *dev;
 	struct bst_dev  *dev_acc;
-	struct device_node *np = NULL;
-	int irq_number = 0;
-	struct gpio_config config;
-
 #if defined(BMA2X2_ENABLE_INT1) || defined(BMA2X2_ENABLE_INT2)
+	struct device_node *np = NULL;
+	int irq_number;
+	struct gpio_config config;
 	struct bosch_sensor_specific *pdata;
 #endif
 
@@ -6848,6 +6893,9 @@ static int bma2x2_probe(struct i2c_client *client,
 	setup_timer(&data->tap_timer, bma2x2_tap_timeout_handle,
 			(unsigned long)data);
 #endif
+	hrtimer_init(&data->hr_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+	data->hr_timer.function = my_hrtimer_callback;
+	INIT_WORK(&data->wq_hrtimer, wq_func_hrtimer);
 
 	dev_notice(&client->dev, "BMA2x2 driver probe successfully");
 
@@ -6905,9 +6953,12 @@ static void bma2x2_early_suspend(struct early_suspend *h)
 		bma2x2_set_mode(data->bma2x2_client,
 			BMA2X2_MODE_SUSPEND, BMA_ENABLED_INPUT);
 #ifndef CONFIG_BMA_ENABLE_NEWDATA_INT
+	#if 0
 		cancel_delayed_work_sync(&data->work);
 		flush_workqueue(data->workqueue);
-
+	#else
+		hrtimer_cancel(&data->hr_timer);
+	#endif
 #endif
 	}
 	mutex_unlock(&data->enable_mutex);
@@ -6923,8 +6974,12 @@ static void bma2x2_late_resume(struct early_suspend *h)
 		bma2x2_set_mode(data->bma2x2_client,
 			BMA2X2_MODE_NORMAL, BMA_ENABLED_INPUT);
 #ifndef CONFIG_BMA_ENABLE_NEWDATA_INT
+	#if 0
 		queue_delayed_work(data->workqueue, &data->work,
 				msecs_to_jiffies(atomic_read(&data->delay)));
+	#else
+		hrtimer_start(&data->hr_timer, data->ktime, HRTIMER_MODE_REL);
+	#endif
 #endif
 	}
 	mutex_unlock(&data->enable_mutex);
@@ -6967,19 +7022,26 @@ static int bma2x2_suspend(struct device *dev, pm_message_t mesg)
 {
 	struct i2c_client *client =  to_i2c_client(dev);
 	struct bma2x2_data *data = i2c_get_clientdata(client);
+	int err;
 
 	mutex_lock(&data->enable_mutex);
 	if (atomic_read(&data->enable) == 1) {
 		bma2x2_set_mode(data->bma2x2_client,
 			BMA2X2_MODE_SUSPEND, BMA_ENABLED_INPUT);
 #ifndef CONFIG_BMA_ENABLE_NEWDATA_INT
+	#if 0
 		cancel_delayed_work_sync(&data->work);
 		flush_workqueue(data->workqueue);
+	#else
+		hrtimer_cancel(&data->hr_timer);
+	#endif
 #endif
 	}
 	mutex_unlock(&data->enable_mutex);
 	if (gsensor_info.sensor_power_ldo != NULL) {
-		regulator_disable(gsensor_info.sensor_power_ldo);
+		err = regulator_disable(gsensor_info.sensor_power_ldo);
+		if (err)
+			printk("bma2x2 power down failed\n");
 		/* msleep(500); */
 	}
 	return 0;
@@ -6989,17 +7051,24 @@ static int bma2x2_resume(struct device *dev)
 {
 	struct i2c_client *client = to_i2c_client(dev);
 	struct bma2x2_data *data = i2c_get_clientdata(client);
+	int err;
 	if (gsensor_info.sensor_power_ldo != NULL) {
-		regulator_enable(gsensor_info.sensor_power_ldo);
+		err = regulator_enable(gsensor_info.sensor_power_ldo);
+		if (err)
+			printk("bma2x2 power on failed\n");
 		msleep(100);
-		}
+	}
 	mutex_lock(&data->enable_mutex);
 	if (atomic_read(&data->enable) == 1) {
 		bma2x2_set_mode(data->bma2x2_client,
 			BMA2X2_MODE_NORMAL, BMA_ENABLED_INPUT);
 #ifndef CONFIG_BMA_ENABLE_NEWDATA_INT
+	#if 0
 		queue_delayed_work(data->workqueue, &data->work,
 				msecs_to_jiffies(atomic_read(&data->delay)));
+	#else
+		hrtimer_start(&data->hr_timer, data->ktime, HRTIMER_MODE_REL);
+	#endif
 #endif
 	}
 	mutex_unlock(&data->enable_mutex);
@@ -7111,7 +7180,9 @@ static int __init BMA2X2_init(void)
 	twi_id = gsensor_info.twi_id;
 
 	if (gsensor_info.sensor_power_ldo != NULL) {
-		regulator_enable(gsensor_info.sensor_power_ldo);
+		err = regulator_enable(gsensor_info.sensor_power_ldo);
+		if (err)
+			printk("bma2x2 power on failed\n");
 		msleep(500);
 		}
 

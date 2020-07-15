@@ -2339,6 +2339,29 @@ class DatabaseHelper extends SQLiteOpenHelper {
             loadIntegerSetting(stmt, Settings.System.GESTURE_SCREENRECORD_ENABLE,
                     R.integer.def_gesture_screenrecord_enable);
 
+            /* add by @AllWinnerTech*/
+            loadIntegerSetting(stmt, Settings.System.HDMI_OUTPUT_MODE,
+                    R.integer.def_hdmi_output_mode);
+            loadIntegerSetting(stmt, Settings.System.HDMI_FULLSCREEN,
+                    R.integer.def_hdmi_fullscreen);
+            loadIntegerSetting(stmt, Settings.System.HDMI_WIDTH_SCALE,
+                    R.integer.def_hdmi_width_scale);
+            loadIntegerSetting(stmt, Settings.System.HDMI_HEIGHT_SCALE,
+                    R.integer.def_hdmi_height_scale);
+            loadIntegerSetting(stmt, Settings.System.ENHANCE_MODE,
+                    R.integer.def_enhance_mode);
+            loadIntegerSetting(stmt, Settings.System.ENHANCE_MODE_DEMO,
+                    R.integer.def_enhance_mode_demo);
+            loadIntegerSetting(stmt, Settings.System.SMART_BACKLIGHT,
+                    R.integer.def_smart_backlight);
+            loadIntegerSetting(stmt, Settings.System.SMART_BACKLIGHT_DEMO,
+                    R.integer.def_smart_backlight_demo);
+            loadIntegerSetting(stmt, Settings.System.READING_MODE,
+                    R.integer.def_reading_mode);
+            loadIntegerSetting(stmt, Settings.System.COLOR_TEMPERATURE_SCALE,
+                    R.integer.def_color_temperature_scale);
+            /* end @AllWinnerTech*/
+
             /*
              * IMPORTANT: Do not add any more upgrade steps here as the global,
              * secure, and system settings are no longer stored in a database

@@ -8,4 +8,24 @@
 
     <bool name="def_enable_pass_through">false</bool>
 
+    <integer name="def_hdmi_output_mode">10</integer>
+
+    <integer name="def_hdmi_fullscreen">0</integer>
+
+    <integer name="def_hdmi_width_scale">100</integer>
+
+    <integer name="def_hdmi_height_scale">100</integer>
+
+    <integer name="def_enhance_mode">0</integer>
+
+    <integer name="def_enhance_mode_demo">0</integer>
+
+    <integer name="def_smart_backlight">0</integer>
+
+    <integer name="def_smart_backlight_demo">0</integer>
+
+    <integer name="def_reading_mode">0</integer>
+
+    <integer name="def_color_temperature_scale">25</integer>
+
 </resources>

@@ -1102,6 +1102,17 @@ public class SurfaceView extends View implements ViewRootImpl.WindowStoppedCallb
                         String name, int w, int h, int format, int flags)
                        throws Exception {
             super(s, name, w, h, format, flags);
+
+			/*aw_modify:add hook for tencent-vedio-app
+			 *set opaque to avoid flicker(performance-question)
+			 *jiangbin-180812
+			 */
+			if(name.contains("com.tencent.qqlive")) {
+				Log.i(TAG,"aw-h-tencent-qqlive");
+				flags = flags | SurfaceControl.OPAQUE;
+			}
+			/*end*/
+
             mBackgroundControl = new SurfaceControl(s, "Background for - " + name, w, h,
                     PixelFormat.OPAQUE, flags | SurfaceControl.FX_SURFACE_DIM);
             mOpaque = (flags & SurfaceControl.OPAQUE) != 0;

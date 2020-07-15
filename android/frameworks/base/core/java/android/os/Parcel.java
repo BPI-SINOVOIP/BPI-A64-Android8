@@ -806,11 +806,19 @@ public final class Parcel {
             return;
         }
         Set<Map.Entry<String,Object>> entries = val.entrySet();
-        writeInt(entries.size());
+        int size = entries.size();
+        writeInt(size);
+
         for (Map.Entry<String,Object> e : entries) {
             writeValue(e.getKey());
             writeValue(e.getValue());
+            size--;
         }
+
+        if (size != 0) {
+            throw new BadParcelableException("Map size does not match number of entries!");
+        }
+
     }
 
     /**
@@ -1340,6 +1348,13 @@ public final class Parcel {
      * @see Parcelable
      */
     public final <T extends Parcelable> void writeTypedList(List<T> val) {
+        writeTypedList(val, 0);
+    }
+
+    /**
+     * @hide
+     */
+    public <T extends Parcelable> void writeTypedList(List<T> val, int parcelableFlags) {
         if (val == null) {
             writeInt(-1);
             return;
@@ -1348,13 +1363,7 @@ public final class Parcel {
         int i=0;
         writeInt(N);
         while (i < N) {
-            T item = val.get(i);
-            if (item != null) {
-                writeInt(1);
-                item.writeToParcel(this, 0);
-            } else {
-                writeInt(0);
-            }
+            writeTypedObject(val.get(i), parcelableFlags);
             i++;
         }
     }

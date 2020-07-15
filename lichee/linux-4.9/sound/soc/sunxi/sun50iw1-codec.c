@@ -422,6 +422,9 @@ static int codec_init(struct sunxi_codec *sunxi_internal_codec)
 	snd_soc_update_bits(sunxi_internal_codec->codec, MIC2_CTRL,
 		(0x7<<MIC2BOOST),
 		(sunxi_internal_codec->gain_config.headsetmicgain<<MIC2BOOST));
+	snd_soc_update_bits(sunxi_internal_codec->codec, ADC_CTRL,
+		(0x7 << ADCG),
+		(sunxi_internal_codec->gain_config.adcinputgain << ADCG));
 	snd_soc_update_bits(sunxi_internal_codec->codec, MIX_DAC_CTRL,
 		(0x1<<DACALEN), (1<<DACALEN));
 	snd_soc_update_bits(sunxi_internal_codec->codec, MIX_DAC_CTRL,
@@ -812,7 +815,7 @@ static int dmic_mux_ev(struct snd_soc_dapm_widget *w,
 static int set_src_function(struct snd_kcontrol *kcontrol,
 	struct snd_ctl_elem_value *ucontrol)
 {
-	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
+	struct snd_soc_codec *codec = snd_soc_component_to_codec(snd_kcontrol_chip(kcontrol));
 	/* struct sunxi_codec *sunxi_internal_codec = snd_soc_codec_get_drvdata(codec); */
 
 	src_function_en = ucontrol->value.integer.value[0];
@@ -2459,12 +2462,12 @@ static ssize_t store_audio_reg(struct device *dev, struct device_attribute *attr
 	int ret;
 	int rw_flag;
 	int reg_val_read;
-	int input_reg_val = 0;
+	unsigned int input_reg_val = 0;
 	int input_reg_group = 0;
-	int input_reg_offset = 0;
+	unsigned int input_reg_offset = 0;
 
 	ret = sscanf(buf, "%d,%d,0x%x,0x%x", &rw_flag, &input_reg_group, &input_reg_offset, &input_reg_val);
-	printk("ret:%d, reg_group:%d, reg_offset:%d, reg_val:0x%x\n", ret, input_reg_group, input_reg_offset, input_reg_val);
+	printk("ret:%d, reg_group:%d, reg_offset:0x%x, reg_val:0x%x\n", ret, input_reg_group, input_reg_offset, input_reg_val);
 
 	if (!(input_reg_group == 1 || input_reg_group == 2)) {
 		pr_err("not exist reg group\n");
@@ -2708,6 +2711,14 @@ static int sunxi_internal_codec_probe(struct platform_device *pdev)
 		goto err1;
 	} else {
 		sunxi_internal_codec->gain_config.headsetmicgain = temp_val;
+	}
+
+	ret = of_property_read_u32(node, "adcinputgain", &temp_val);
+	if (ret < 0) {
+		pr_err("[audio-codec]adcinputgain configurations missing or invalid.\n");
+		sunxi_internal_codec->gain_config.adcinputgain = 0x3;
+	} else {
+		sunxi_internal_codec->gain_config.adcinputgain = temp_val;
 	}
 
 	ret = of_property_read_u32(node, "adcagc_cfg", &temp_val);

@@ -131,5 +131,6 @@ extern __u32 tcon_div;
 extern s32 disp_delay_us(u32 us);
 extern s32 disp_delay_ms(u32 ms);
 extern int de_get_clk_rate(void);
+void tcon_show_builtin_patten(u32 sel, u32 patten);
 
 #endif

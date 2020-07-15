@@ -285,6 +285,8 @@
 (typeattributeset installd_service_26_0 (installd_service))
 (typeattributeset install_recovery_26_0 (install_recovery))
 (typeattributeset install_recovery_exec_26_0 (install_recovery_exec))
+(typeattributeset bg_kmsg_26_0 (bg_kmsg))
+(typeattributeset bg_kmsg_exec_26_0 (bg_kmsg_exec))
 (typeattributeset ion_device_26_0 (ion_device))
 (typeattributeset IProxyService_service_26_0 (IProxyService_service))
 (typeattributeset ipsec_service_26_0 (ipsec_service))

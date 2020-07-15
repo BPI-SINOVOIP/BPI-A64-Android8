@@ -273,6 +273,10 @@
 /system/etc/selinux/plat_and_mapping_sepolicy\.cil\.sha256 u:object_r:sepolicy_file:s0
 /system/bin/vr_hwc               u:object_r:vr_hwc_exec:s0
 /system/bin/adbd                 u:object_r:adbd_exec:s0
+/system/bin/bg_kmsg.sh u:object_r:bg_kmsg_exec:s0
+
+
+
 
 #############################
 # Vendor files

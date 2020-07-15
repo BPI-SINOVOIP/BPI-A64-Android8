@@ -16,7 +16,6 @@
 
 package com.android.server.am;
 
-import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.database.ContentObserver;
 import android.net.Uri;
@@ -274,7 +273,7 @@ final class ActivityManagerConstants extends ContentObserver {
                 Slog.e("ActivityManagerConstants", "Bad activity manager config settings", e);
             }
             MAX_CACHED_PROCESSES = mParser.getInt(KEY_MAX_CACHED_PROCESSES,
-                    ActivityManager.isLowRamDeviceStatic() ? 8 : DEFAULT_MAX_CACHED_PROCESSES);
+                    DEFAULT_MAX_CACHED_PROCESSES);
             BACKGROUND_SETTLE_TIME = mParser.getLong(KEY_BACKGROUND_SETTLE_TIME,
                     DEFAULT_BACKGROUND_SETTLE_TIME);
             FGSERVICE_MIN_SHOWN_TIME = mParser.getLong(KEY_FGSERVICE_MIN_SHOWN_TIME,

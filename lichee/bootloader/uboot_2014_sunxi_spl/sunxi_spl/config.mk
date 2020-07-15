@@ -3,6 +3,8 @@
 # Load generated board configuration
 sinclude $(OBJTREE)/include/autoconf.mk
 
+$(info "CROSS_COMPILE=$(CROSS_COMPILE)")
+
 boot0_toolchain_check=$(strip $(shell if [ -x $(CROSS_COMPILE)gcc ];  then  echo yes;  fi))
 ifneq ("$(boot0_toolchain_check)", "yes")
         $(info "gcc toolchain not exist")

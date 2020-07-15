@@ -713,7 +713,7 @@ static void axp_charging_monitor(struct work_struct *work)
 	struct power_supply_config psy_cfg = {};
 	static s32 pre_rest_vol;
 	static bool pre_bat_curr_dir;
-
+	static int pre_axp_usbvolflag;
 	axp_charger_update_state(chg_dev);
 
 	/* if no battery exist, then return */
@@ -772,6 +772,17 @@ static void axp_charging_monitor(struct work_struct *work)
 		pre_bat_curr_dir = chg_dev->bat_current_direction;
 		power_supply_changed(chg_dev->batt);
 	}
+	if (axp_usbvolflag != pre_axp_usbvolflag) {
+		AXP_DEBUG(AXP_SPLY, chg_dev->chip->pmu_num,
+				"axp_usbvolflag vol change: %d->%d\n",
+				pre_axp_usbvolflag, axp_usbvolflag);
+		pre_axp_usbvolflag = axp_usbvolflag;
+		if (timer_pending(&chg_dev->usb_status_timer))
+			del_timer_sync(&chg_dev->usb_status_timer);
+		mod_timer(&chg_dev->usb_status_timer,
+			jiffies + msecs_to_jiffies(5 * 1000));
+	}
+
 
 	/* reschedule for the next time */
 	schedule_delayed_work(&chg_dev->work, chg_dev->interval);

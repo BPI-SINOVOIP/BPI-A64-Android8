@@ -99,5 +99,6 @@ int disp_al_device_get_status(u32 screen_id);
 
 int disp_al_get_fb_info(unsigned int sel, struct disp_layer_info *info);
 int disp_al_get_display_size(unsigned int screen_id, unsigned int *width, unsigned int *height);
+void disp_al_show_builtin_patten(u32 hwdev_index, u32 patten);
 
 #endif

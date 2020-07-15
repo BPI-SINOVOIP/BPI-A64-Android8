@@ -31,6 +31,7 @@
 
 #include <cutils/compiler.h>
 #include <gui/ISurfaceComposer.h>
+#include <cutils/properties.h>
 #include <math.h>
 
 #include "GLES20RenderEngine.h"
@@ -173,9 +174,34 @@ void GLES20RenderEngine::setViewportAndProjection(
     size_t t = hwh - sourceCrop.top;
     size_t b = hwh - sourceCrop.bottom;
 
+    const mat4 rot90(0,-1,0,0, 1,0,0,0, 0,0,1,0, 0,0,0,1);
+    const mat4 rot270(0,1,0,0, -1,0,0,0, 0,0,1,0, 0,0,0,1);
+
     mat4 m;
     if (yswap) {
-        m = mat4::ortho(l, r, t, b, 0, 1);
+        // m = mat4::ortho(l, r, t, b, 0, 1);
+        char property[PROPERTY_VALUE_MAX];
+        property_get("ro.sf.rotation", property, 0);
+        switch (atoi(property)) {
+            case 90:
+                // ALOGD("----------90.\n");
+                m = mat4::ortho(l, r, t, b, 0, 1);
+                m = rot90 * m;
+                break;
+            case 180:
+                // ALOGD("----------180.\n");
+                m = mat4::ortho(r, l, b, t,0, 1);
+                break;
+            case 270:
+                // ALOGD("----------270.\n");
+                m = mat4::ortho(l, r, t, b, 0, 1);
+                m = rot270 * m;
+                break;
+            default:
+                // ALOGD("----------0.\n");
+                m = mat4::ortho(l, r, t, b, 0, 1);
+                break;
+        }
     } else {
         m = mat4::ortho(l, r, b, t, 0, 1);
     }

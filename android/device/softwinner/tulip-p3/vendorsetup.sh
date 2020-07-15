@@ -22,3 +22,4 @@
 
 add_lunch_combo tulip_p3-eng
 add_lunch_combo tulip_p3-user
+add_lunch_combo tulip_p3-userdebug

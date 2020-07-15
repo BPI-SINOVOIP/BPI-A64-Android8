@@ -1623,3 +1623,43 @@ s32 tcon_cmap(u32 sel, u32 mode, unsigned int lcd_cmap_tbl[2][3][4])
 	}
 	return 0;
 }
+
+s32 tcon1_black_src(u32 sel, u32 on_off, u32 color)
+{
+	lcd_dev[sel]->tcon_ceu_coef_rr.bits.value = 0x100;
+	lcd_dev[sel]->tcon_ceu_coef_rg.bits.value = 0;
+	lcd_dev[sel]->tcon_ceu_coef_rb.bits.value = 0;
+	lcd_dev[sel]->tcon_ceu_coef_rc.bits.value = 0;
+
+	lcd_dev[sel]->tcon_ceu_coef_gr.bits.value = 0;
+	lcd_dev[sel]->tcon_ceu_coef_gg.bits.value = 0x100;
+	lcd_dev[sel]->tcon_ceu_coef_gb.bits.value = 0;
+	lcd_dev[sel]->tcon_ceu_coef_gc.bits.value = 0;
+
+	lcd_dev[sel]->tcon_ceu_coef_br.bits.value = 0;
+	lcd_dev[sel]->tcon_ceu_coef_bg.bits.value = 0;
+	lcd_dev[sel]->tcon_ceu_coef_bb.bits.value = 0x100;
+	lcd_dev[sel]->tcon_ceu_coef_bc.bits.value = 0;
+	lcd_dev[sel]->tcon_ceu_coef_rv.bits.max = (color == 0) ? 0x000 :
+						(color == 1) ? 0x040 : 0x200;
+	lcd_dev[sel]->tcon_ceu_coef_rv.bits.min = (color == 0) ? 0x000 :
+						(color == 1) ? 0x040 : 0x200;
+	lcd_dev[sel]->tcon_ceu_coef_gv.bits.max = (color == 0) ? 0x000 :
+						(color == 1) ? 0x200 : 0x040;
+	lcd_dev[sel]->tcon_ceu_coef_gv.bits.min = (color == 0) ? 0x000 :
+						(color == 1) ? 0x200 : 0x040;
+	lcd_dev[sel]->tcon_ceu_coef_bv.bits.max = (color == 0) ? 0x000 :
+						(color == 1) ? 0x200 : 0x040;
+	lcd_dev[sel]->tcon_ceu_coef_bv.bits.min = (color == 0) ? 0x000 :
+						(color == 1) ? 0x200 : 0x040;
+	lcd_dev[sel]->tcon_ceu_ctl.bits.ceu_en = on_off ? 1 : 0;
+
+	return 0;
+}
+
+void tcon_show_builtin_patten(u32 sel, u32 patten)
+{
+	lcd_dev[sel]->tcon0_ctl.bits.src_sel = patten;
+}
+
+

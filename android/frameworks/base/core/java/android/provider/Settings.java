@@ -3946,6 +3946,29 @@ public final class Settings {
         /** @hide */
         private static final Validator SHOW_BATTERY_PERCENT_VALIDATOR = sBooleanValidator;
 
+        /* add by @AllWinnerTech*/
+        /** @hide */
+        public static final String HDMI_OUTPUT_MODE = "hdmi_output_mode";
+        /** @hide */
+        public static final String HDMI_FULLSCREEN = "hdmi_fullscreen";
+        /** @hide */
+        public static final String HDMI_WIDTH_SCALE = "hdmi_width_scale";
+        /** @hide */
+        public static final String HDMI_HEIGHT_SCALE = "hdmi_height_scale";
+        /**@hide*/
+        public static final String ENHANCE_MODE = "enhance_mode";
+        /**@hide*/
+        public static final String ENHANCE_MODE_DEMO = "enhance_mode_demo";
+        /**@hide*/
+        public static final String SMART_BACKLIGHT = "smart_backlight";
+        /**@hide*/
+        public static final String SMART_BACKLIGHT_DEMO = "smart_backlight_demo";
+        /** @hide */
+        public static final String READING_MODE = "reading_mode";
+        /** @hide */
+        public static final String COLOR_TEMPERATURE_SCALE = "color_temperature_scale";
+        /* end @AllWinnerTech*/
+
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
@@ -4014,6 +4037,16 @@ public final class Settings {
             AUDIO_OUTPUT_CHANNEL,
             AUDIO_MANAGE_POLICY,
             ENABLE_PASS_THROUGH,
+            HDMI_OUTPUT_MODE,
+            HDMI_FULLSCREEN,
+            HDMI_WIDTH_SCALE,
+            HDMI_HEIGHT_SCALE,
+            ENHANCE_MODE,
+            ENHANCE_MODE_DEMO,
+            SMART_BACKLIGHT,
+            SMART_BACKLIGHT_DEMO,
+            READING_MODE,
+            COLOR_TEMPERATURE_SCALE,
             /* end @AllWinnerTech*/
         };
 

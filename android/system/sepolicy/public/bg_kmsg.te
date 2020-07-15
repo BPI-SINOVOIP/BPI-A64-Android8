@@ -1,0 +1,17 @@
+type bg_kmsg, domain;
+type bg_kmsg_exec, exec_type, file_type;
+
+userdebug_or_eng(`
+	allow bg_kmsg self:capability dac_override;
+	allow bg_kmsg shell_exec:file rx_file_perms;
+	allow bg_kmsg system_file:file rx_file_perms;
+	allow bg_kmsg toolbox_exec:file rx_file_perms;
+
+	allow bg_kmsg misc_logd_file:file create_file_perms;
+	allow bg_kmsg misc_logd_file:dir rw_dir_perms;
+
+	allow bg_kmsg self:capability2 syslog;
+	allow bg_kmsg proc:file {read open};
+	allow bg_kmsg kernel:system syslog_mod;
+')
+

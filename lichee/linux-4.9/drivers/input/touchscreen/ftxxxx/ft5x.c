@@ -127,7 +127,6 @@ enum{
 
 #define dprintk(level_mask,fmt,arg...)    if(unlikely(debug_mask & level_mask)) \
         printk("***CTP***"fmt, ## arg)
-        
 module_param_named(debug_mask,debug_mask,int,S_IRUGO | S_IWUSR | S_IWGRP);
 /*********************************************************************************************/
 /*------------------------------------------------------------------------------------------*/
@@ -1701,6 +1700,7 @@ static int ft5x_ts_probe(struct i2c_client *client, const struct i2c_device_id *
 
 	set_bit(EV_ABS, input_dev->evbit);
 	set_bit(EV_KEY, input_dev->evbit);
+	set_bit(INPUT_PROP_DIRECT, input_dev->propbit);
 
 	input_dev->name	= CTP_NAME;		//dev_name(&client->dev)
 	err = input_register_device(input_dev);

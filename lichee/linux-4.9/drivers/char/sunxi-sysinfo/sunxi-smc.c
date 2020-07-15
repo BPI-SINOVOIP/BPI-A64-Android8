@@ -96,6 +96,11 @@ int sunxi_smc_writel(u32 value, phys_addr_t addr)
 }
 EXPORT_SYMBOL_GPL(sunxi_smc_writel);
 
+int sunxi_smc_probe_secure(void)
+{
+	return invoke_smc_fn(ARM_SVC_EFUSE_PROBE_SECURE_ENABLE, 0, 0, 0);
+}
+
 int sunxi_smc_copy_arisc_paras(phys_addr_t dest, phys_addr_t src, u32 len)
 {
 	struct arm_smccc_res res;
@@ -113,11 +118,11 @@ phys_addr_t sunxi_smc_get_teeaddr_paras(phys_addr_t resumeaddr)
 }
 /*optee smc*/
 #define ARM_SMCCC_STD_CALL		0
-#define ARM_SMCCC_FAST_CALL		1
+#define ARM_SMCCC_FAST_CALL		1U
 #define ARM_SMCCC_TYPE_SHIFT		31
 
 #define ARM_SMCCC_SMC_32		0
-#define ARM_SMCCC_SMC_64		1
+#define ARM_SMCCC_SMC_64		1U
 #define ARM_SMCCC_CALL_CONV_SHIFT	30
 
 #define ARM_SMCCC_OWNER_MASK		0x3F

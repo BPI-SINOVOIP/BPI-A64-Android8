@@ -122,6 +122,11 @@ nWidth=%d, nHeight=%d nAlignStride = %d",
            pFbmCreateInfo->nFrameNum,
            pFbmCreateInfo->nDecoderNeededMiniFrameNum,
            nWidth, nHeight, nAlignStride);
+    if(nWidth >= 7680 || nHeight >= 4320)
+    {
+        loge("width or height too large , can not create fbm buffer.");
+        return NULL;
+    }
 
     p = (Fbm*)malloc(sizeof(Fbm));
     if(p == NULL)

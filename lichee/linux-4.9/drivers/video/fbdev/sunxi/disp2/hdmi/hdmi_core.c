@@ -656,7 +656,7 @@ s32 hdmi_core_loop(void)
 		if (0 == (hdmi_hpd_mask & 0x100))
 			hdmi_hpd_event();
 
-		/*if (video_enable)*/
+		/*if (video_enable) bpi, fix hdmi hotplug issue*/
 			hdmi_core_set_video_enable(true);
 
 	case HDMI_State_HPD_Done:
@@ -827,6 +827,7 @@ u32 hdmi_core_get_csc_type(void)
 {
 	int csc = 1;
 
+	/*if (hdmi_edid_is_yuv() == 0) bpi, fix red screen issue when hdmi module load */
 	if ((hdmi_core_get_cts_enable() == 1) && (hdmi_edid_is_yuv() == 0))
 		csc = 0;
 

@@ -1037,6 +1037,7 @@ struct disp_device {
 				  unsigned int io_index, u32 direction);
 	int (*get_panel_info)(struct disp_device *dispdev,
 			       struct disp_panel_para *info);
+	void (*show_builtin_patten)(struct disp_device *dispdev, u32 patten);
 };
 
 /* manager */

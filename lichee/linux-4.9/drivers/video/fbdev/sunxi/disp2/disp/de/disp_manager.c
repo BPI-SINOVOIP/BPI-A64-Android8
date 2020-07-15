@@ -182,7 +182,7 @@ s32 __disp_config_transfer2inner(
 	config_inner->info.fb.eotf = DISP_EOTF_UNDEF;
 	config_inner->info.fb.fbd_en = 0;
 	config_inner->info.fb.metadata_buf = 0;
-	config_inner->info.fb.fd = 0;
+	config_inner->info.fb.fd = -911;
 	config_inner->info.fb.metadata_size = 0;
 	config_inner->info.fb.metadata_flag = 0;
 
@@ -1274,8 +1274,9 @@ disp_mgr_set_layer_config2(struct disp_manager *mgr,
 
 		if (lyr_cfg->config.enable == 0)
 			continue;
-
-		if (lyr_cfg->config.info.mode == LAYER_MODE_COLOR)
+		/*color mode and set_layer_config do no need to dma map*/
+		if (lyr_cfg->config.info.mode == LAYER_MODE_COLOR ||
+		    lyr_cfg->config.info.fb.fd == -911)
 			continue;
 
 		item = disp_dma_map(lyr_cfg->config.info.fb.fd);

@@ -81,14 +81,14 @@
 /* Driver Settings */
 #define CONFIG_STK_PS_ALS_USE_CHANGE_THRESHOLD
 #ifdef CONFIG_STK_PS_ALS_USE_CHANGE_THRESHOLD
-#define STK_ALS_CHANGE_THD	       20	/* The threshold to trigger ALS interrupt, unit: lux */
+#define STK_ALS_CHANGE_THD	       0	/* The threshold to trigger ALS interrupt, unit: lux */
 #endif
 
 #define STK_INT_PS_MODE			1	/* 1, 2, or 3	*/
 #define STK_POLL_PS
 /* ALS interrupt is valid only when STK_INT_PS_MODE = 1	or 4*/
 #define STK_POLL_ALS
-#define STK_TUNE0
+/* #define STK_TUNE0 */
 /*#define STK_DEBUG_PRINTF
 #define STK_ALS_FIR
 #define STK_IRS
@@ -2298,18 +2298,16 @@ static void stk_ps_poll_work_func(struct work_struct *work)
 		return;
 	near_far_state = (org_flag_reg & STK_FLG_NF_MASK) ? 1 : 0;
 	reading = stk3x1x_get_ps_reading(ps_data);
-	if (ps_data->ps_distance_last != near_far_state) {
-		ps_data->ps_distance_last = near_far_state;
-		dprintk(DEBUG_REPORT_ALS_DATA, "proximity data = %d\n", near_far_state);
-		input_report_abs(ps_data->ps_input_dev, ABS_DISTANCE, near_far_state);
-		input_sync(ps_data->ps_input_dev);
-		/*support wake lock for ps*/
-		/*wake_lock_timeout(&ps_data->ps_wakelock, 3*HZ);*/
+	ps_data->ps_distance_last = near_far_state;
+	dprintk(DEBUG_REPORT_ALS_DATA, "proximity data = %d\n", near_far_state);
+	input_report_abs(ps_data->ps_input_dev, ABS_DISTANCE, near_far_state);
+	input_sync(ps_data->ps_input_dev);
+	/*support wake lock for ps*/
+	/*wake_lock_timeout(&ps_data->ps_wakelock, 3*HZ);*/
 
 #ifdef STK_DEBUG_PRINTF
 	printk(KERN_INFO "%s: ps input event %d cm, ps code = %d\n", __func__, near_far_state, reading);
 #endif
-	}
 	ret = stk3x1x_set_flag(ps_data, org_flag_reg, disable_flag);
 	if (ret < 0)
 		goto err_i2c_rw;
@@ -2614,7 +2612,9 @@ static int stk3x1x_suspend(struct device *dev, pm_message_t mesg)
 	mutex_unlock(&ps_data->io_lock);
 
 	if (ls_sensor_info.sensor_power_ldo != NULL) {
-		regulator_disable(ls_sensor_info.sensor_power_ldo);
+		err = regulator_disable(ls_sensor_info.sensor_power_ldo);
+		if (err)
+			printk("stk power down failed\n");
 	}
 
 	return 0;
@@ -2627,8 +2627,10 @@ static int stk3x1x_resume(struct device *dev)
 	uint8_t disable_flag = 0;
 	uint8_t org_flag_reg;
 	int32_t ret;
+	int err;
 	int32_t near_far_state;
 	uint32_t reading;
+	struct stk3x1x_data *ps_data;
 	/*ended by guoying*/
 	#if 0
 	if (NORMAL_STANDBY == standby_type) {
@@ -2644,11 +2646,12 @@ static int stk3x1x_resume(struct device *dev)
 	return 0;
 	#endif
 	if (ls_sensor_info.sensor_power_ldo != NULL) {
-		regulator_enable(ls_sensor_info.sensor_power_ldo);
+		err = regulator_enable(ls_sensor_info.sensor_power_ldo);
+		if (err)
+			printk("stk power on failed\n");
 		msleep(100);
 		}
-	struct stk3x1x_data *ps_data =  i2c_get_clientdata(client);
-	int err;
+	ps_data =  i2c_get_clientdata(client);
 #ifndef STK_POLL_PS
 	/*struct i2c_client *client = to_i2c_client(dev);*/
 #endif
@@ -2838,7 +2841,6 @@ static int stk3x1x_probe(struct i2c_client *client,
 #ifdef STK_POLL_PS
 	wake_lock_init(&ps_data->ps_nosuspend_wl,WAKE_LOCK_SUSPEND, "stk_nosuspend_wakelock");
 #endif	*/
-	if (&stk3x1x_pfdata != NULL) {
 		plat_data = &stk3x1x_pfdata;
 		ps_data->als_transmittance = plat_data->transmittance;
 		ps_data->int_pin = plat_data->int_pin;
@@ -2846,10 +2848,6 @@ static int stk3x1x_probe(struct i2c_client *client,
 			printk(KERN_ERR "%s: Please set als_transmittance in platform data\n", __func__);
 			goto err_als_input_allocate;
 			}
-		} else {
-		printk(KERN_ERR "%s: no stk3x1x platform data!\n", __func__);
-		goto err_als_input_allocate;
-		}
 
 	ps_data->als_input_dev = input_allocate_device();
 	if (ps_data->als_input_dev == NULL) {
@@ -3107,7 +3105,9 @@ static int __init stk3x1x_init(void)
 	}
 	stk_ps_driver.detect = stk_detect;
 	if (ls_sensor_info.sensor_power_ldo != NULL) {
-		regulator_enable(ls_sensor_info.sensor_power_ldo);
+		ret = regulator_enable(ls_sensor_info.sensor_power_ldo);
+		if (ret)
+			printk("stk power on failed\n");
 		msleep(500);
 	}
 	return i2c_add_driver(&stk_ps_driver);

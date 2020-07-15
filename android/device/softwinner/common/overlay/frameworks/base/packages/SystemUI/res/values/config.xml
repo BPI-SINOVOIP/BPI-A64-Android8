@@ -22,7 +22,7 @@
 <resources>
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_default" translatable="false">
-        wifi,bt,dnd,flashlight,rotation,location,cell,airplane,cast,custom(com.android.systemui/com.softwinner.screenshot.ScreenshotTileService),custom(com.android.systemui/com.softwinner.screenrecord.ScreenrecordTileService)
+        wifi,bt,dnd,flashlight,rotation,cell,airplane,cast,custom(com.android.systemui/com.softwinner.screenshot.ScreenshotTileService),custom(com.android.systemui/com.softwinner.screenrecord.ScreenrecordTileService)
     </string>
 
 </resources>

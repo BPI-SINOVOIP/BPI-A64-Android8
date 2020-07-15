@@ -29,3 +29,5 @@ LOCAL_SHARED_LIBRARIES := libutils liblog libicuuc libicui18n
 LOCAL_CXX_STL := libc++
 
 include $(BUILD_SHARED_LIBRARY)
+
+include $(LOCAL_PATH)/test/Android.mk

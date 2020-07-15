@@ -404,14 +404,14 @@ static s32 sid_rd_soc_ver_from_ce(void)
 	bus_rst_reg = readl(ccu_base + 0x2c0);
 	ce_clk_reg  = readl(ccu_base + 0x09c);
 
-	if ((bus_clk_reg&(1<<5)) && (bus_rst_reg&(1<<5))
-			&& (ce_clk_reg&(1<<31))) {
+	if ((bus_clk_reg&(1U<<5)) && (bus_rst_reg&(1U<<5))
+			&& (ce_clk_reg&(1U<<31))) {
 		SID_DBG("The CE module is already enable.\n");
 	} else {
 		/* enable ce clock */
-		writel(bus_clk_reg | (1<<5), ccu_base + 0x060);
-		writel(bus_rst_reg | (1<<5), ccu_base + 0x2c0);
-		writel(ce_clk_reg | (1<<31), ccu_base + 0x09c);
+		writel(bus_clk_reg | (1U<<5), ccu_base + 0x060);
+		writel(bus_rst_reg | (1U<<5), ccu_base + 0x2c0);
+		writel(ce_clk_reg | (1U<<31), ccu_base + 0x09c);
 	}
 
 #if defined(CONFIG_ARCH_SUN8IW6)
@@ -502,9 +502,10 @@ static void sid_chipid_init(void)
 void sid_rd_soc_secure_status(void)
 {
 #if defined(CONFIG_TEE) && \
-	(defined(CONFIG_ARCH_SUN8IW7) || defined(CONFIG_ARCH_SUN50IW1) \
-	 || defined(CONFIG_ARCH_SUN8IW6))
+	(defined(CONFIG_ARCH_SUN8IW7) || defined(CONFIG_ARCH_SUN8IW6))
 	sunxi_soc_secure = 1;
+#elif defined(CONFIG_ARCH_SUN50IW1)
+	sunxi_soc_secure = sunxi_smc_probe_secure();
 #else
 	static s32 init_flag;
 	void __iomem *base = NULL;

@@ -126,25 +126,23 @@ int ProximitySensor::readEvents(sensors_event_t* data, int count)
                         processEvent(event->code, event->value);
                         mInputReader.next();
                 } else if (type == EV_SYN) {
-                        int64_t time = timevalToNano(event->time);
+			int64_t time = timevalToNano(event->time);
+			if (mPendingMask) {
+				mPendingMask = 0;
+				mPendingEvent.timestamp = time;
 
-            if (mPendingMask) {
-                mPendingMask = 0;
-                mPendingEvent.timestamp = time;
+				*data++ = mPendingEvent;
+				count--;
+				numEventReceived++;
+			} else
+				ALOGE("ProximitySensor sensor error no data but sync event\n");
 
-                if (mEnabled) {
-                    *data++ = mPendingEvent;
-                    count--;
-                    numEventReceived++;
-                }
-            }
-
-                        if (!mPendingMask) {
+			if (!mPendingMask) {
                                 mInputReader.next();
                         }
 
                 } else {
-                        ALOGE("AccelSensor: unknown event (type=%d, code=%d)",
+                        ALOGE("ProximitySensor: unknown event (type=%d, code=%d)",
                                 type, event->code);
                         mInputReader.next();
                 }

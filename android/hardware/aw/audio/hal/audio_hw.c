@@ -15,7 +15,7 @@
  */
 
 #define LOG_TAG "audio_hw_primary"
-#define LOG_NDEBUG 0
+//#define LOG_NDEBUG 0
 
 #include <errno.h>
 #include <pthread.h>
@@ -303,6 +303,7 @@ static inline void print_sunxi_stream_in(const struct sunxi_stream_in *in)
 static uint32_t out_get_sample_rate(const struct audio_stream *stream)
 {
     struct sunxi_stream_out *out = (struct sunxi_stream_out *)stream;
+    ALOGV("out_set_sample_rate: %d", out->sample_rate);
 
     return out->sample_rate;
 }
@@ -326,7 +327,7 @@ static size_t out_get_buffer_size(const struct audio_stream *stream)
 static audio_channel_mask_t out_get_channels(const struct audio_stream *stream)
 {
     struct sunxi_stream_out *out = (struct sunxi_stream_out *)stream;
-    //ALOGV("out_get_channels: return %d", out->channel_mask);
+    ALOGV("out_get_channels: %#x", out->channel_mask);
     char val[PROPERTY_VALUE_MAX];
     property_get("vts.native_server.on", val, "0");
     if (strcmp(val, "0") == 0) {
@@ -338,8 +339,8 @@ static audio_channel_mask_t out_get_channels(const struct audio_stream *stream)
 
 static audio_format_t out_get_format(const struct audio_stream *stream)
 {
-    //ALOGV("out_get_format");
     struct sunxi_stream_out *out = (struct sunxi_stream_out *)stream;
+    ALOGV("out_get_format: %#x", out->format);
 
     return out->format;
 }
@@ -347,7 +348,7 @@ static audio_format_t out_get_format(const struct audio_stream *stream)
 static int out_set_format(struct audio_stream *stream, audio_format_t format)
 {
     UNUSED(stream);
-    ALOGV("out_set_format: %d",format);
+    ALOGV("out_set_format: %#x",format);
 
     return -ENOSYS;
 }
@@ -454,7 +455,7 @@ static void select_devices(struct sunxi_audio_device *adev)
     int out_pdev = 0;
     int in_pdev = 0;
 
-    ALOGD("select_devices:mode(%#x),out_devices(%#x),in_devices(%#x),"
+    ADLOG("select_devices:mode(%#x),out_devices(%#x),in_devices(%#x),"
           "active_output(%p),active_input(%p).",
           adev->mode, adev->out_devices, adev->in_devices,
           adev->active_output, adev->active_input);
@@ -519,7 +520,6 @@ static void select_devices(struct sunxi_audio_device *adev)
 
 static int out_set_parameters(struct audio_stream *stream, const char *kvpairs)
 {
-    ALOGV("out_set_parameters");
     struct sunxi_stream_out *out = (struct sunxi_stream_out *)stream;
     struct sunxi_audio_device *adev = out->dev;
     struct str_parms *parms;
@@ -586,7 +586,7 @@ static int out_set_volume(struct audio_stream_out *stream, float left,
 
 int start_output_stream(struct sunxi_stream_out *out)
 {
-    ALOGV("start_output_stream");
+    ALOGD("start_output_stream");
     int ret = 0;
     struct sunxi_audio_device *adev = out->dev;
     int platform_device;
@@ -640,6 +640,8 @@ int start_output_stream(struct sunxi_stream_out *out)
     platform_plugins_process_start_stream(adev->platform,
                                           ON_START_OUTPUT_STREAM,
                                           out->config);
+    ADLOG("+++++++++++++++ start_output_stream: pcm sample_rate: %d,pcm fmt: 0x%08x,pcm channels: %d",
+            out->config.rate, out->config.format, out->config.channels);
 
     out->pcm = pcm_open(out->card, out->port, PCM_OUT | PCM_MONOTONIC,
                         &out->config);
@@ -662,6 +664,7 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
     size_t frame_size = audio_stream_out_frame_size(stream);
     size_t out_frames = bytes / frame_size;
     ssize_t ret = 0;
+    ALOGV("out_write");
 
     pthread_mutex_lock(&out->lock);
     if (out->standby) {
@@ -787,8 +790,8 @@ static int out_get_presentation_position(const struct audio_stream_out *stream,
 /** audio_stream_in implementation **/
 static uint32_t in_get_sample_rate(const struct audio_stream *stream)
 {
-    ALOGV("in_get_sample_rate");
     struct sunxi_stream_in *in = (struct sunxi_stream_in *)stream;
+    ALOGV("in_get_sample_rate: %d", in->sample_rate);
 
     return in->sample_rate;
 }
@@ -819,7 +822,7 @@ static size_t in_get_buffer_size(const struct audio_stream *stream)
 
 static audio_channel_mask_t in_get_channels(const struct audio_stream *stream)
 {
-    //ALOGV("in_get_channels");
+    ALOGV("in_get_channels");
     struct sunxi_stream_in *in = (struct sunxi_stream_in *)stream;
 
     return in->channel_mask;
@@ -828,7 +831,7 @@ static audio_channel_mask_t in_get_channels(const struct audio_stream *stream)
 static audio_format_t in_get_format(const struct audio_stream *stream)
 {
     UNUSED(stream);
-    //ALOGV("in_get_format");
+    ALOGV("in_get_format");
 
     return AUDIO_FORMAT_PCM_16_BIT;
 }
@@ -836,6 +839,7 @@ static audio_format_t in_get_format(const struct audio_stream *stream)
 static int in_set_format(struct audio_stream *stream, audio_format_t format)
 {
     UNUSED(stream); UNUSED(format);
+    ALOGV("in_set_format");
 
     return -ENOSYS;
 }
@@ -860,7 +864,7 @@ static int in_standby(struct audio_stream *stream)
     struct sunxi_stream_in *in = (struct sunxi_stream_in *)stream;
     struct sunxi_audio_device *adev = in->dev;
     int status = 0;
-    ALOGV("%s: enter", __func__);
+    ALOGD("%s: enter", __func__);
 
     pthread_mutex_lock(&in->lock);
     pthread_mutex_lock(&adev->lock);
@@ -941,7 +945,7 @@ static int in_set_parameters(struct audio_stream *stream, const char *kvpairs)
     int ret, val = 0;
     int status = 0;
 
-    ALOGV("%s: enter: kvpairs=%s", __func__, kvpairs);
+    ALOGD("%s: enter: kvpairs=%s", __func__, kvpairs);
     parms = str_parms_create_str(kvpairs);
 
     /* in stream routing */
@@ -970,6 +974,7 @@ static char * in_get_parameters(const struct audio_stream *stream,
                                 const char *keys)
 {
     UNUSED(stream); UNUSED(keys);
+    ALOGV("start_input_stream");
 
     return strdup("");
 }
@@ -977,13 +982,14 @@ static char * in_get_parameters(const struct audio_stream *stream,
 static int in_set_gain(struct audio_stream_in *stream, float gain)
 {
     UNUSED(stream); UNUSED(gain);
+    ALOGV("in_set_gain");
 
     return 0;
 }
 
 int start_input_stream(struct sunxi_stream_in *in)
 {
-    ALOGV("start_input_stream");
+    ALOGD("start_input_stream");
     int ret = 0;
     struct sunxi_audio_device *adev = in->dev;
     int platform_device;
@@ -1002,6 +1008,8 @@ int start_input_stream(struct sunxi_stream_in *in)
 
     update_debug_flag();
     print_sunxi_stream_in(in);
+    ADLOG("+++++++++++++++ start_input_stream: pcm sample_rate: %d,pcm fmt: 0x%08x,pcm channels: %d",
+        in->config.rate, in->config.format, in->config.channels);
 
     in->pcm = pcm_open(in->card, in->port, PCM_IN | PCM_MONOTONIC, &in->config);
     if (!pcm_is_ready(in->pcm)) {
@@ -1069,6 +1077,7 @@ static ssize_t in_read(struct audio_stream_in *stream, void* buffer,
     size_t frames = bytes / audio_stream_in_frame_size(stream);
     int i;
     int ret = -1;
+    ALOGV("in_read");
 
     pthread_mutex_lock(&in->lock);
 
@@ -1155,6 +1164,8 @@ static int in_add_audio_effect(const struct audio_stream *stream,
                                effect_handle_t effect)
 {
     UNUSED(stream); UNUSED(effect);
+    ALOGV("in_add_audio_effect");
+
     return 0;
 }
 
@@ -1162,6 +1173,8 @@ static int in_remove_audio_effect(const struct audio_stream *stream,
                                   effect_handle_t effect)
 {
     UNUSED(stream); UNUSED(effect);
+    ALOGV("in_remove_audio_effect");
+
     return 0;
 }
 
@@ -1174,7 +1187,7 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
                                    const char *address __unused)
 {
     UNUSED(handle);
-    ALOGV("adev_open_output_stream");
+    ALOGD("adev_open_output_stream");
 
     struct sunxi_audio_device *adev = (struct sunxi_audio_device *)dev;
     struct sunxi_stream_out *out;
@@ -1229,7 +1242,7 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
     } else {
         out->format = config->format;
         out->sample_rate = config->sample_rate;
-        ALOGD("+++++++++++++++ channel_mask: add out-get-channel_mask for vts!!");
+        ALOGV("+++++++++++++++ channel_mask: add out-get-channel_mask for vts!!");
         out->channel_mask_vts = config->channel_mask;
         out->channel_mask = AUDIO_CHANNEL_OUT_STEREO;
     }
@@ -1245,7 +1258,7 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
     config->channel_mask    = out_get_channels(&out->stream.common);
     config->sample_rate     = out_get_sample_rate(&out->stream.common);
 
-    ALOGV("+++++++++++++++ adev_open_output_stream: req_sample_rate: %d, fmt: %x, channel_mask: %d",
+    ADLOG("+++++++++++++++ adev_open_output_stream: req_sample_rate: %d, fmt: 0x%08x, channel_mask: 0x%08x",
         config->sample_rate, config->format, config->channel_mask);
 
     platform_plugins_process(adev->platform, ON_OPEN_OUTPUT_STREAM);
@@ -1275,7 +1288,7 @@ static void adev_close_output_stream(struct audio_hw_device *dev,
 
 static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
 {
-    ALOGV("adev_set_parameters, %s", kvpairs);
+    ALOGD("adev_set_parameters, %s", kvpairs);
     struct sunxi_audio_device *adev = (struct sunxi_audio_device *)dev;
     struct sunxi_stream_out *out = adev->active_output;
 
@@ -1386,7 +1399,7 @@ static int adev_set_mode(struct audio_hw_device *dev, audio_mode_t mode)
 
 static int adev_set_mic_mute(struct audio_hw_device *dev, bool state)
 {
-    ALOGD("%s: state %d\n", __func__, state);
+    ALOGV("%s: state %d\n", __func__, state);
     struct sunxi_audio_device *adev = (struct sunxi_audio_device *)dev;
 
     pthread_mutex_lock(&adev->lock);
@@ -1480,11 +1493,11 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
                                   audio_source_t source __unused)
 {
     UNUSED(handle);
-    ALOGV("adev_open_input_stream...");
+    ALOGD("adev_open_input_stream...");
 
     struct sunxi_audio_device *adev = (struct sunxi_audio_device *)dev;
     struct sunxi_stream_in *in;
-    int channel_count = popcount(config->channel_mask);
+    int channel_count = audio_channel_count_from_in_mask(config->channel_mask);
     int ret;
 
     in = (struct sunxi_stream_in *)calloc(1, sizeof(struct sunxi_stream_in));
@@ -1524,6 +1537,8 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
 
     memcpy(&in->config, &in_pcm_config, sizeof(struct pcm_config));
     in->config.channels = channel_count;
+    ADLOG("+++++++++++++++ adev_open_input_stream: req_sample_rate: %d, fmt: 0x%08x, channel_mask: 0x%08x",
+        config->sample_rate, config->format, config->channel_mask);
 
     *stream_in = &in->stream;
 
@@ -1607,7 +1622,7 @@ static int adev_close(hw_device_t *device)
 static int adev_open(const hw_module_t* module, const char* name,
                      hw_device_t** device)
 {
-    ALOGV("adev_open: %s", name);
+    ALOGD("adev_open: %s", name);
 
     struct sunxi_audio_device *adev;
     int ret;

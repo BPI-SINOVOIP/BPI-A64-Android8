@@ -438,8 +438,6 @@ static s32 disp_vga_exit(struct disp_device *vga)
 
 	kfree(vga);
 	kfree(vgap);
-	vga = NULL;
-	vgap = NULL;
 	return 0;
 }
 
@@ -795,6 +793,7 @@ s32 disp_init_vga(void)
 		vga->get_status = disp_device_get_status;
 		vga->is_in_safe_period = disp_device_is_in_safe_period;
 		vga->usec_before_vblank = disp_device_usec_before_vblank;
+		vga->show_builtin_patten = disp_device_show_builtin_patten;
 		vga->init(vga);
 		disp_device_register(vga);
 		disp++;

@@ -45,10 +45,24 @@
 using android::base::StringPrintf;
 using android::base::unique_fd;
 
+
+bool set_autohogplug_enable(bool enable);
+
+bool get_autohogplug_enable();
+
+
 int Loop::dumpState(SocketClient *c) {
     int i;
     int fd;
     char filename[256];
+
+	bool need_reset_autohotplug = false;
+	if(get_autohogplug_enable()) {
+		if(set_autohogplug_enable(0)) {
+			need_reset_autohotplug = true;
+		}
+	}
+
 
     for (i = 0; i < LOOP_MAX; i++) {
         struct loop_info64 li;
@@ -62,7 +76,7 @@ int Loop::dumpState(SocketClient *c) {
             } else {
                 continue;
             }
-            return -1;
+            goto ERROR;
         }
 
         rc = ioctl(fd, LOOP_GET_STATUS64, &li);
@@ -74,7 +88,7 @@ int Loop::dumpState(SocketClient *c) {
         if (rc < 0) {
             SLOGE("Unable to get loop status for %s (%s)", filename,
                  strerror(errno));
-            return -1;
+            goto ERROR;
         }
         char *tmp = NULL;
         asprintf(&tmp, "%s %d %lld:%lld %llu %lld:%lld %lld 0x%x {%s} {%s}", filename, li.lo_number,
@@ -84,7 +98,16 @@ int Loop::dumpState(SocketClient *c) {
         c->sendMsg(0, tmp, false);
         free(tmp);
     }
+	if(need_reset_autohotplug) {
+		set_autohogplug_enable(1);
+	}
     return 0;
+
+ERROR:
+	if(need_reset_autohotplug) {
+		set_autohogplug_enable(1);
+	}
+	return -1;
 }
 
 int Loop::lookupActive(const char *id, char *buffer, size_t len) {
@@ -93,6 +116,13 @@ int Loop::lookupActive(const char *id, char *buffer, size_t len) {
     char filename[256];
 
     memset(buffer, 0, len);
+
+	bool need_reset_autohotplug = false;
+	if(get_autohogplug_enable()) {
+		if(set_autohogplug_enable(0)) {
+			need_reset_autohotplug = true;
+		}
+	}
 
     for (i = 0; i < LOOP_MAX; i++) {
         struct loop_info64 li;
@@ -106,7 +136,7 @@ int Loop::lookupActive(const char *id, char *buffer, size_t len) {
             } else {
                 continue;
             }
-            return -1;
+            goto ERROR;
         }
 
         rc = ioctl(fd, LOOP_GET_STATUS64, &li);
@@ -119,7 +149,7 @@ int Loop::lookupActive(const char *id, char *buffer, size_t len) {
         if (rc < 0) {
             SLOGE("Unable to get loop status for %s (%s)", filename,
                  strerror(errno));
-            return -1;
+            goto ERROR;
         }
         if (!strncmp((const char*) li.lo_crypt_name, id, LO_NAME_SIZE)) {
             break;
@@ -128,16 +158,33 @@ int Loop::lookupActive(const char *id, char *buffer, size_t len) {
 
     if (i == LOOP_MAX) {
         errno = ENOENT;
-        return -1;
+        goto ERROR;
     }
     strlcpy(buffer, filename, len);
-    return 0;
+	if(need_reset_autohotplug) {
+		set_autohogplug_enable(1);
+	}
+
+	return 0;
+
+ERROR:
+	if(need_reset_autohotplug) {
+		set_autohogplug_enable(1);
+	}
+	return -1;
 }
 
 int Loop::create(const char *id, const char *loopFile, char *loopDeviceBuffer, size_t len) {
     int i;
     int fd;
     char filename[256];
+
+	bool need_reset_autohotplug = false;
+	if(get_autohogplug_enable()) {
+		if(set_autohogplug_enable(0)) {
+			need_reset_autohotplug = true;
+		}
+	}
 
     for (i = 0; i < LOOP_MAX; i++) {
         struct loop_info64 li;
@@ -168,7 +215,7 @@ int Loop::create(const char *id, const char *loopFile, char *loopDeviceBuffer, s
                     setfscreatecon(NULL);
                 }
                 errno = sverrno;
-                return -1;
+               goto ERROR;
             }
         }
         if (secontext) {
@@ -178,7 +225,7 @@ int Loop::create(const char *id, const char *loopFile, char *loopDeviceBuffer, s
 
         if ((fd = open(filename, O_RDWR | O_CLOEXEC)) < 0) {
             SLOGE("Unable to open %s (%s)", filename, strerror(errno));
-            return -1;
+            goto ERROR;
         }
 
         rc = ioctl(fd, LOOP_GET_STATUS64, &li);
@@ -190,14 +237,14 @@ int Loop::create(const char *id, const char *loopFile, char *loopDeviceBuffer, s
         if (rc < 0) {
             SLOGE("Unable to get loop status for %s (%s)", filename,
                  strerror(errno));
-            return -1;
+            goto ERROR;
         }
     }
 
     if (i == LOOP_MAX) {
         SLOGE("Exhausted all loop devices");
         errno = ENOSPC;
-        return -1;
+        goto ERROR;
     }
 
     strlcpy(loopDeviceBuffer, filename, len);
@@ -207,14 +254,14 @@ int Loop::create(const char *id, const char *loopFile, char *loopDeviceBuffer, s
     if ((file_fd = open(loopFile, O_RDWR | O_CLOEXEC)) < 0) {
         SLOGE("Unable to open %s (%s)", loopFile, strerror(errno));
         close(fd);
-        return -1;
+        goto ERROR;
     }
 
     if (ioctl(fd, LOOP_SET_FD, file_fd) < 0) {
         SLOGE("Error setting up loopback interface (%s)", strerror(errno));
         close(file_fd);
         close(fd);
-        return -1;
+       goto ERROR;
     }
 
     struct loop_info64 li;
@@ -227,13 +274,22 @@ int Loop::create(const char *id, const char *loopFile, char *loopDeviceBuffer, s
         SLOGE("Error setting loopback status (%s)", strerror(errno));
         close(file_fd);
         close(fd);
-        return -1;
+       goto ERROR;
     }
 
     close(fd);
     close(file_fd);
+	if(need_reset_autohotplug) {
+		set_autohogplug_enable(1);
+	}
 
     return 0;
+
+ERROR:
+	if(need_reset_autohotplug) {
+		set_autohogplug_enable(1);
+	}
+	return -1;
 }
 
 int Loop::create(const std::string& target, std::string& out_device) {
@@ -380,3 +436,58 @@ int Loop::lookupInfo(const char *loopDevice, struct asec_superblock *sb, unsigne
     memcpy(sb, &buffer, sizeof(struct asec_superblock));
     return 0;
 }
+
+
+
+
+/*author:jiangbin,fix-block-mq wait-deadlock with disable autohotplug*/
+
+#define AUTOHOTPLUG_ENABLE "/sys/kernel/autohotplug/enable"
+
+bool get_autohogplug_enable() {
+
+	SLOGD("get- %s",AUTOHOTPLUG_ENABLE);
+    char buf[64];
+    int len;
+    int fd = open(AUTOHOTPLUG_ENABLE, O_RDONLY);
+    if (fd < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        SLOGE("Error opening %s: %s\n", AUTOHOTPLUG_ENABLE, buf);
+        return false;
+    }
+    len = read(fd, buf, strlen("0"));
+    if (len < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        SLOGE("Error read %s\n", AUTOHOTPLUG_ENABLE);
+		close(fd);
+		return false;
+    }
+    close(fd);
+	return !strncmp(buf, "1", strlen("1"));
+}
+
+
+bool set_autohogplug_enable(bool enable) {
+
+	SLOGD("set- %s %d",AUTOHOTPLUG_ENABLE,enable);
+    char buf[64];
+    int len;
+    int fd = open(AUTOHOTPLUG_ENABLE, O_WRONLY);
+    if (fd < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        SLOGE("Error opening %s: %s\n", AUTOHOTPLUG_ENABLE, buf);
+        return false;
+    }
+    len = write(fd, enable?"1":"0", strlen("0"));
+    if (len < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        SLOGE("Error writing to %s: %s\n", AUTOHOTPLUG_ENABLE, buf);
+		close(fd);
+		return false;
+    }
+    close(fd);
+
+	return true;
+
+}
+/*end-change*/

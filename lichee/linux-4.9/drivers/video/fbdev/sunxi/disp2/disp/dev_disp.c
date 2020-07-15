@@ -22,7 +22,7 @@ struct disp_drv_info g_disp_drv;
 /* alloc based on 4K byte */
 #define MY_BYTE_ALIGN(x) (((x + (4*1024-1)) >> 12) << 12)
 
-static u32 suspend_output_type[DISP_SCREEN_NUM] = {0};
+static u32 suspend_output_type[4] = {0};
 /*
  * 0:normal;
  * suspend_status&1 != 0:in early_suspend;
@@ -89,7 +89,7 @@ static ssize_t disp_sys_show(struct device *dev,
 
 	num_screens = bsp_disp_feat_get_num_screens();
 	for (screen_id = 0; screen_id < num_screens; screen_id++) {
-		int width = 0, height = 0;
+		u32 width = 0, height = 0;
 		int fps = 0;
 		struct disp_health_info info;
 
@@ -117,25 +117,25 @@ static ssize_t disp_sys_show(struct device *dev,
 				dispdev->get_bright(dispdev), fps / 10,
 				fps % 10);
 		} else if (dispdev->type == DISP_OUTPUT_TYPE_HDMI) {
-			unsigned int mode = dispdev->get_mode(dispdev);
+			int mode = dispdev->get_mode(dispdev);
 
 			count += sprintf(buf + count,
 					 "\thdmi output mode(%d)\tfps:%d.%d",
 					 mode, fps / 10, fps % 10);
 		} else if (dispdev->type == DISP_OUTPUT_TYPE_TV) {
-			unsigned int mode = dispdev->get_mode(dispdev);
+			int mode = dispdev->get_mode(dispdev);
 
 			count += sprintf(buf + count,
 					 "\ttv output mode(%d)\tfps:%d.%d",
 					 mode, fps / 10, fps % 10);
 		} else if (dispdev->type == DISP_OUTPUT_TYPE_VGA) {
-			unsigned int mode = dispdev->get_mode(dispdev);
+			int mode = dispdev->get_mode(dispdev);
 
 			count += sprintf(buf + count,
 					 "\tvga output mode(%d)\tfps:%d.%d",
 					 mode, fps / 10, fps % 10);
 		}  else if (dispdev->type == DISP_OUTPUT_TYPE_VDPO) {
-			unsigned int mode = dispdev->get_mode(dispdev);
+			int mode = dispdev->get_mode(dispdev);
 
 			count += sprintf(buf + count,
 					 "\tvdpo output mode(%d)\tfps:%d.%d",
@@ -198,7 +198,7 @@ static DEVICE_ATTR(sys, 0660,
 static ssize_t disp_disp_show(struct device *dev,
 			      struct device_attribute *attr, char *buf)
 {
-	return sprintf(buf, "%d\n", g_disp);
+	return sprintf(buf, "%u\n", g_disp);
 }
 
 static ssize_t disp_disp_store(struct device *dev,
@@ -230,7 +230,7 @@ static DEVICE_ATTR(disp, 0660,
 static ssize_t disp_enhance_mode_show(struct device *dev,
 				      struct device_attribute *attr, char *buf)
 {
-	return sprintf(buf, "%d\n", g_enhance_mode);
+	return sprintf(buf, "%u\n", g_enhance_mode);
 }
 
 static ssize_t disp_enhance_mode_store(struct device *dev,
@@ -611,7 +611,7 @@ static DEVICE_ATTR(enhance_denoise, 0660,
 static ssize_t disp_cvbs_enhance_show(struct device *dev,
 				      struct device_attribute *attr, char *buf)
 {
-	return sprintf(buf, "%d\n", g_cvbs_enhance_mode);
+	return sprintf(buf, "%u\n", g_cvbs_enhance_mode);
 }
 
 static ssize_t disp_cvbs_enhance_store(struct device *dev,
@@ -757,7 +757,7 @@ static ssize_t disp_yres_show(struct device *dev,
 	int num_screens = 2;
 	struct disp_manager *mgr = NULL;
 	struct disp_device *dispdev = NULL;
-	u32 width = 0, height;
+	u32 width = 0, height = 0;
 
 	num_screens = bsp_disp_feat_get_num_screens();
 	if (g_disp < num_screens)
@@ -772,8 +772,35 @@ static ssize_t disp_yres_show(struct device *dev,
 	return sprintf(buf, "%d\n", height);
 }
 
+static ssize_t disp_colorbar_store(struct device *dev,
+				   struct device_attribute *attr,
+				   const char *buf, size_t count)
+{
+	int err;
+	unsigned int val;
+	unsigned int num_screens;
+	struct disp_manager *mgr = NULL;
+
+	err = kstrtou32(buf, 10, &val);
+	if (err) {
+		pr_warn("Invalid size\n");
+		return err;
+	}
+
+	num_screens = bsp_disp_feat_get_num_screens();
+
+	if (g_disp < num_screens)
+		mgr = g_disp_drv.mgr[g_disp];
+
+	if (mgr && mgr->device && mgr->device->show_builtin_patten)
+		mgr->device->show_builtin_patten(mgr->device, val);
+
+	return count;
+}
+
 static DEVICE_ATTR(xres, 0660, disp_xres_show, NULL);
 static DEVICE_ATTR(yres, 0660, disp_yres_show, NULL);
+static DEVICE_ATTR(colorbar, 0660, NULL, disp_colorbar_store);
 
 static struct attribute *disp_attributes[] = {
 	&dev_attr_sys.attr,
@@ -790,6 +817,7 @@ static struct attribute *disp_attributes[] = {
 	&dev_attr_color_temperature.attr,
 	&dev_attr_xres.attr,
 	&dev_attr_yres.attr,
+	&dev_attr_colorbar.attr,
 	NULL
 };
 
@@ -932,7 +960,7 @@ static s32 parser_disp_init_para(const struct device_node *np,
 		init_para->using_device_config[0] = true;
 	}
 
-	if (DISP_SCREEN_NUM > 1) {
+#if DISP_SCREEN_NUM > 1
 		/* screen1 */
 		if (of_property_read_u32(np,
 					 "screen1_output_type",
@@ -1026,8 +1054,7 @@ static s32 parser_disp_init_para(const struct device_node *np,
 			init_para->output_aspect_ratio[1] = value;
 			init_para->using_device_config[1] = true;
 		}
-	}
-
+#endif
 	/* fb0 */
 	init_para->buffer_num[0] = 2;
 	if (of_property_read_u32(np, "fb0_buffer_num", &value) == 0)
@@ -1052,7 +1079,7 @@ static s32 parser_disp_init_para(const struct device_node *np,
 	init_para->fb_height[0] = value;
 
 	/* fb1 */
-	if (DISP_SCREEN_NUM > 1) {
+#if DISP_SCREEN_NUM > 1
 		init_para->buffer_num[1] = 2;
 
 		if (of_property_read_u32(np, "fb1_buffer_num", &value) == 0)
@@ -1066,7 +1093,7 @@ static s32 parser_disp_init_para(const struct device_node *np,
 
 		if (of_property_read_u32(np, "fb1_height", &value) == 0)
 			init_para->fb_height[1] = value;
-	}
+#endif
 
 	__inf("====display init para begin====\n");
 	__inf("b_init:%d\n", init_para->b_init);
@@ -1153,11 +1180,8 @@ s32 disp_tv_register(struct disp_tv_func *func)
 }
 EXPORT_SYMBOL(disp_tv_register);
 
-static void resume_proc(unsigned disp)
+static void resume_proc(unsigned disp, struct disp_manager *mgr)
 {
-	struct disp_manager *mgr = NULL;
-
-	mgr = g_disp_drv.mgr[disp];
 	if (!mgr || !mgr->device)
 		return;
 
@@ -1167,13 +1191,15 @@ static void resume_proc(unsigned disp)
 
 static void resume_work_0(struct work_struct *work)
 {
-	resume_proc(0);
+	resume_proc(0, g_disp_drv.mgr[0]);
 }
 
+#if DISP_SCREEN_NUM > 1
 static void resume_work_1(struct work_struct *work)
 {
-	resume_proc(1);
+	resume_proc(1, g_disp_drv.mgr[1]);
 }
+#endif
 
 int disp_device_set_config(struct disp_init_para *init,
 					unsigned int screen_id)
@@ -1536,8 +1562,9 @@ static s32 disp_init(struct platform_device *pdev)
 	__inf("%s !\n", __func__);
 
 	INIT_WORK(&g_disp_drv.resume_work[0], resume_work_0);
-	if (DISP_SCREEN_NUM > 1)
-		INIT_WORK(&g_disp_drv.resume_work[1], resume_work_1);
+#if DISP_SCREEN_NUM > 1
+	INIT_WORK(&g_disp_drv.resume_work[1], resume_work_1);
+#endif
 	/* INIT_WORK(&g_disp_drv.resume_work[2], resume_work_2); */
 	INIT_WORK(&g_disp_drv.start_work, start_work);
 	INIT_LIST_HEAD(&g_disp_drv.sync_proc_list.list);
@@ -1607,7 +1634,7 @@ static s32 disp_init(struct platform_device *pdev)
 		g_disp_drv.disp_init.output_aspect_ratio[para->boot_info.disp];
 
 	if (para->boot_info.sync == 1) {
-		__wrn("smooth display screen:%d type:%d\n", para->boot_info.disp,
+		__wrn("smooth display screen:%d type:%d", para->boot_info.disp,
 		      para->boot_info.type);
 		g_disp_drv.disp_init.disp_mode = para->boot_info.disp;
 		g_disp_drv.disp_init.output_type[para->boot_info.disp] =

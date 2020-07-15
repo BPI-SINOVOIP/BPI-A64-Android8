@@ -5,3 +5,4 @@ allow shell sysfs_zram:dir search;
 allow shell sysfs_zram:file { read getattr open };
 allow shell hal_memtrack_default:binder call;
 allow shell untrusted_app_25:process getsched;
+set_prop(shell, system_prop)

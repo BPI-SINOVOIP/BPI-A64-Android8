@@ -14,10 +14,11 @@
 # limitations under the License.
 #
 
+include hardware/aw/wlan/config/config.mk
 include hardware/aw/wlan/firmware/broadcom/ap6212/device-bcm.mk
-#include hardware/aw/wlan/firmware/broadcom/ap6356s/device-bcm.mk
-#include hardware/aw/wlan/firmware/broadcom/ap6255/device-bcm.mk
-#include hardware/aw/wlan/firmware/broadcom/ap6210/device-bcm.mk
-#include hardware/aw/wlan/firmware/broadcom/ap6330/device-bcm.mk
-#include hardware/aw/wlan/firmware/broadcom/ap6335/device-bcm.mk
+include hardware/aw/wlan/firmware/broadcom/ap6356s/device-bcm.mk
+include hardware/aw/wlan/firmware/broadcom/ap6255/device-bcm.mk
+include hardware/aw/wlan/firmware/broadcom/ap6210/device-bcm.mk
+include hardware/aw/wlan/firmware/broadcom/ap6330/device-bcm.mk
+include hardware/aw/wlan/firmware/broadcom/ap6335/device-bcm.mk
 

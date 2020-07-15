@@ -262,13 +262,18 @@ int AccelSensor::readEvents(sensors_event_t* data, int count) {
                 return -EINVAL;
 
         ssize_t n = mInputReader.fill(data_fd);
-        if (n < 0)
-                return n;
-
+        if (n < 0) {
+		ALOGE(" sensor AceelSensor readEvents fill buffer failed\n");
+		return n;
+	}
         int numEventReceived = 0;
         input_event const* event;
+	ssize_t dataAvailable = 0;
+	dataAvailable = mInputReader.readEvent(&event);
+	if (dataAvailable <= 0)
+		ALOGE("sensor no sensor data available\n");
 
-        while (count && mInputReader.readEvent(&event)) {
+        while (count && dataAvailable) {
                 int type = event->type;
 
                 if ((type == EV_ABS) || (type == EV_REL) || (type == EV_KEY)) {
@@ -276,28 +281,26 @@ int AccelSensor::readEvents(sensors_event_t* data, int count) {
                         mInputReader.next();
                 } else if (type == EV_SYN) {
                         int64_t time = timevalToNano(event->time);
-
-            if (mPendingMask) {
-                mPendingMask = 0;
-                mPendingEvent.timestamp = time;
-
-                if (mEnabled) {
-                    *data++ = mPendingEvent;
-                    mAccData = mPendingEvent;
-                    count--;
-                    numEventReceived++;
-                }
-            }
+			if (mPendingMask) {
+				mPendingMask = 0;
+				mPendingEvent.timestamp = time;
+				*data++ = mPendingEvent;
+				mAccData = mPendingEvent;
+				count--;
+				numEventReceived++;
+			} else
+				ALOGE("AccelSensor error no data but sync event\n");
 
                         if (!mPendingMask) {
                                 mInputReader.next();
                         }
-
                 } else {
                         ALOGE("AccelSensor: unknown event (type=%d, code=%d)",
                                 type, event->code);
                         mInputReader.next();
-                }
+		}
+
+		dataAvailable = mInputReader.readEvent(&event);
         }
 
         return numEventReceived;
@@ -332,6 +335,11 @@ void AccelSensor::processEvent(int code, int value) {
                         mPendingMask = 1;
                         mPendingEvent.acceleration.z = value * direct_z ;
                         break;
+
+		default:
+			ALOGE("AccelSensor: unknown code (value=%d, code=%d)\n",
+			                                      value, code);
+			break;
         }
 
 #ifdef DEBUG_SENSOR

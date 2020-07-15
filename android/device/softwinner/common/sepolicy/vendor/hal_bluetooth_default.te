@@ -10,6 +10,8 @@ allow hal_bluetooth_default tmpfs:dir { write };
 allow hal_bluetooth_default bluetooth_data_file:dir search;
 allow hal_bluetooth_default bluetooth_data_file:file open;
 allow hal_bluetooth_default bluetooth_data_file:file read;
+allow hal_bluetooth_default bluetooth_logs_data_file:dir { write search create add_name remove_name};
+allow hal_bluetooth_default bluetooth_logs_data_file:file {open read write create rename unlink getattr};
 allow hal_bluetooth_default proc:file open;
 allow hal_bluetooth_default proc:file write;
 

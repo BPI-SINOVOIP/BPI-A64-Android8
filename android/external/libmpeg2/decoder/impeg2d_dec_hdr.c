@@ -167,10 +167,6 @@ IMPEG2D_ERROR_CODES_T impeg2d_dec_seq_hdr(dec_state_t *ps_dec)
             /* This is the first time we are reading the resolution */
             ps_dec->u2_horizontal_size = u2_width;
             ps_dec->u2_vertical_size = u2_height;
-            if (0 == ps_dec->u4_frm_buf_stride)
-            {
-                ps_dec->u4_frm_buf_stride  = (UWORD32) (u2_width);
-            }
         }
         else
         {
@@ -193,6 +189,11 @@ IMPEG2D_ERROR_CODES_T impeg2d_dec_seq_hdr(dec_state_t *ps_dec)
 
                 return e_error;
             }
+            else if((ps_dec->u2_horizontal_size < MIN_WIDTH)
+                            || (ps_dec->u2_vertical_size < MIN_HEIGHT))
+            {
+                return IMPEG2D_UNSUPPORTED_DIMENSIONS;
+            }
             else
             {
                 /* The resolution has changed */
@@ -210,6 +211,11 @@ IMPEG2D_ERROR_CODES_T impeg2d_dec_seq_hdr(dec_state_t *ps_dec)
         return e_error;
     }
 
+    if((ps_dec->u2_horizontal_size < MIN_WIDTH)
+                    || (ps_dec->u2_vertical_size < MIN_HEIGHT))
+    {
+        return IMPEG2D_UNSUPPORTED_DIMENSIONS;
+    }
 
     /*------------------------------------------------------------------------*/
     /* Flush the following as they are not being used                         */

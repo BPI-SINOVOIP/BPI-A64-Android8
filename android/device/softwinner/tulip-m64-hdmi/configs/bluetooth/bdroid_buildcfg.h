@@ -20,7 +20,7 @@
 #ifdef BLUETOOTH_RTK
 
 /*
-#define BTM_DEF_LOCAL_NAME   "Realtek Bluetooth"
+#define BTM_DEF_LOCAL_NAME   "bananapi"
  */
 
 // SERVICE_CLASS:0x1A (Bit17 -Networking,Bit19 - Capturing,Bit20 -Object Transfer)
@@ -74,7 +74,7 @@
 #define KERNEL_MISSING_CLOCK_BOOTTIME_ALARM TRUE
 
 #else
-#define BTM_DEF_LOCAL_NAME "BPI-M64"
+#define BTM_DEF_LOCAL_NAME "bananapi"
 #define BTA_DM_COD {0x20, BTM_COD_MAJOR_AUDIO, BTM_COD_MINOR_SET_TOP_BOX}
 
 #define BLE_VND_INCLUDED TRUE

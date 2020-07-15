@@ -326,8 +326,7 @@ static void sensor_try_format(struct v4l2_subdev *sd,
 	u32 code = MEDIA_BUS_FMT_YUYV8_2X8;
 
 	if (fmt->pad == SENSOR_PAD_SOURCE) {
-		if ((sd->entity.stream_count > 0 || info->use_current_win) &&
-		    info->current_wins != NULL) {
+		if ((info->use_current_win) && (info->current_wins != NULL)) {
 			code = info->fmt->mbus_code;
 			*ws = info->current_wins;
 			*sf = info->fmt;

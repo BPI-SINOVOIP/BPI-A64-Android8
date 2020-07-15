@@ -103,7 +103,7 @@ int wifi_change_driver_state(const char *state) {
 }
 #endif
 
-int is_wifi_driver_loaded(const char* wifi_driver_name) {
+int is_wifi_driver_loaded(const char *wifi_driver_module_name) {
   char driver_status[PROPERTY_VALUE_MAX];
 #ifdef WIFI_DRIVER_MODULE_PATH
   FILE *proc;
@@ -127,7 +127,7 @@ int is_wifi_driver_loaded(const char* wifi_driver_name) {
     return 0;
   }
   while ((fgets(line, sizeof(line), proc)) != NULL) {
-    if (strncmp(line, wifi_driver_name, strlen(wifi_driver_name)) == 0) {
+    if (strncmp(line, wifi_driver_module_name, strlen(wifi_driver_module_name)) == 0) {
       fclose(proc);
       return 1;
     }
@@ -145,7 +145,8 @@ int wifi_load_driver(int mode) {
   char module_path[128] = {0};
   char module_arg[128] = {0};
   const char *wifi_driver_name = get_wifi_driver_name();
-  if (is_wifi_driver_loaded(wifi_driver_name)) {
+  const char *wifi_driver_module_name = get_wifi_driver_module_name();
+  if (is_wifi_driver_loaded(wifi_driver_module_name)) {
     return 0;
   }
   LOG(ERROR) << "wifi_load_driver: Start to insmod " << wifi_driver_name << ".ko";
@@ -171,7 +172,7 @@ int wifi_load_driver(int mode) {
       if (!fp) {
         LOG(INFO) << "Failed to fopen file: /proc/net/dev";
         property_set(DRIVER_PROP_NAME, "failed");
-        rmmod(wifi_driver_name);
+        rmmod(wifi_driver_module_name);
         return -1;
       }
       fread(tmp_buf, sizeof(tmp_buf), 1, fp);
@@ -187,13 +188,13 @@ int wifi_load_driver(int mode) {
 
       LOG(INFO) << "Timeout, register net device wlan0 failed.";
       property_set(DRIVER_PROP_NAME, "timeout");
-      rmmod(wifi_driver_name);
+      rmmod(wifi_driver_module_name);
       return -1;
   }
 #endif
 Success:
 #ifdef WIFI_DRIVER_STATE_CTRL_PARAM
-  if (is_wifi_driver_loaded(wifi_driver_name)) {
+  if (is_wifi_driver_loaded(wifi_driver_module_name)) {
     return 0;
   }
 
@@ -204,16 +205,16 @@ Success:
 }
 
 int wifi_unload_driver() {
-  const char* wifi_driver_name = get_wifi_driver_name();
-  if (!is_wifi_driver_loaded(wifi_driver_name)) {
+  const char* wifi_driver_module_name = get_wifi_driver_module_name();
+  if (!is_wifi_driver_loaded(wifi_driver_module_name)) {
     return 0;
   }
   usleep(200000); /* allow to finish interface down */
 #ifdef WIFI_DRIVER_MODULE_PATH
-  if (rmmod(wifi_driver_name) == 0) {
+  if (rmmod(wifi_driver_module_name) == 0) {
     int count = 20; /* wait at most 10 seconds for completion */
     while (count-- > 0) {
-      if (!is_wifi_driver_loaded(wifi_driver_name)) break;
+      if (!is_wifi_driver_loaded(wifi_driver_module_name)) break;
       usleep(500000);
     }
     usleep(500000); /* allow card removal */
@@ -225,7 +226,7 @@ int wifi_unload_driver() {
     return -1;
 #else
 #ifdef WIFI_DRIVER_STATE_CTRL_PARAM
-  if (is_wifi_driver_loaded(wifi_driver_name)) {
+  if (is_wifi_driver_loaded(wifi_driver_module_name)) {
     if (wifi_change_driver_state(WIFI_DRIVER_STATE_OFF) < 0) return -1;
   }
 #endif

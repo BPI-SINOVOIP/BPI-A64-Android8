@@ -56,6 +56,8 @@ import com.android.systemui.plugins.statusbar.phone.NavGesture.GestureHelper;
 import com.android.systemui.stackdivider.Divider;
 import com.android.systemui.statusbar.policy.DeadZone;
 import com.android.systemui.statusbar.policy.KeyButtonDrawable;
+import android.graphics.Point;
+
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -69,6 +71,8 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
     final static boolean SLIPPERY_WHEN_DISABLED = true;
 
     final static boolean ALTERNATE_CAR_MODE_UI = false;
+    //check the display is horizontal or perpendicular,fix the horizontal display can not show NavigationBar when Zoom In Display size
+    private boolean mScreenDirection = false;
 
     final Display mDisplay;
     View mCurrentView = null;
@@ -201,7 +205,10 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
 
         mDisplay = ((WindowManager) context.getSystemService(
                 Context.WINDOW_SERVICE)).getDefaultDisplay();
-
+		Point p = new Point();
+		mDisplay.getRealSize(p);
+		mScreenDirection = p.x > p.y;
+		Log.v(TAG, String.format("Screen size = (%d,%d),Direction = %s", p.x, p.y, mScreenDirection?"horizontal":"perpendicular"));
         mVertical = false;
         mShowMenu = false;
 
@@ -569,11 +576,18 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
     }
 
     private void updateRotatedViews() {
-        mRotatedViews[Surface.ROTATION_0] =
+	if(mScreenDirection){
+            mRotatedViews[Surface.ROTATION_270] =
+                mRotatedViews[Surface.ROTATION_90] = findViewById(R.id.rot0);
+            mRotatedViews[Surface.ROTATION_0] =
+                mRotatedViews[Surface.ROTATION_180] = findViewById(R.id.rot90);
+        }
+        else{
+            mRotatedViews[Surface.ROTATION_0] =
                 mRotatedViews[Surface.ROTATION_180] = findViewById(R.id.rot0);
-        mRotatedViews[Surface.ROTATION_270] =
+            mRotatedViews[Surface.ROTATION_270] =
                 mRotatedViews[Surface.ROTATION_90] = findViewById(R.id.rot90);
-
+        }
         updateCurrentView();
     }
 
@@ -588,7 +602,10 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         }
         mCurrentView = mRotatedViews[rot];
         mCurrentView.setVisibility(View.VISIBLE);
-        mNavigationInflaterView.setAlternativeOrder(rot == Surface.ROTATION_90);
+        if(mScreenDirection)
+            mNavigationInflaterView.setAlternativeOrder(rot == Surface.ROTATION_0 || rot == Surface.ROTATION_180);
+        else
+            mNavigationInflaterView.setAlternativeOrder(rot == Surface.ROTATION_90);
         for (int i = 0; i < mButtonDispatchers.size(); i++) {
             mButtonDispatchers.valueAt(i).setCurrentView(mCurrentView);
         }

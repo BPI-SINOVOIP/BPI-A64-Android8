@@ -520,6 +520,8 @@ function clkernel()
 
 function cldragonboard()
 {
+	local tooldir=${LICHEE_OUT_DIR}/gcc-linaro-5.3.1-2016.05/dragonboard/gcc-arm
+	[ ! -d ${tooldir} ] && return
 	mk_info "clean dragonboard ..."
 
 	prepare_dragonboard_toolchain

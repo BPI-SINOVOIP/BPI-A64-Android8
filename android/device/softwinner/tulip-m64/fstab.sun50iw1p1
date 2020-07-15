@@ -6,7 +6,7 @@
 #/dev/block/by-name/system               /system      ext4    ro,barrier=1      wait
 #/dev/block/by-name/vendor               /vendor      ext4    ro,barrier=1      wait
 /dev/block/by-name/cache                /cache       ext4    noatime,nosuid,nodev,barrier=1,data=ordered,nomblk_io_submit,noauto_da_alloc,errors=panic wait,check,formattable
-/dev/block/by-name/UDISK                /data        f2fs    noatime,nosuid,nodev,discard                                                              wait,check,formattable,quota,encryptable=/dev/block/by-name/metadata
+/dev/block/by-name/UDISK                /data        f2fs    noatime,nosuid,nodev,discard                                                              wait,check,formattable,quota,forceencrypt=/dev/block/by-name/metadata
 /dev/block/by-name/boot                 /boot        emmc    defaults                                                                                  defaults
 /dev/block/by-name/recovery             /recovery    emmc    defaults                                                                                  defaults
 /dev/block/by-name/misc                 /misc        emmc    defaults                                                                                  defaults

@@ -68,5 +68,8 @@ endif
 ifeq ($(TARGET_PRODUCT), gce_x86_phone)
     include $(LOCAL_PATH)/conf/google/gce_x86/Android.mk
 endif
+ifneq ($(filter tulip_m64%,$(TARGET_PRODUCT)),)
+    include $(LOCAL_PATH)/conf/allwinner/m64/Android.mk
+endif
 
 endif # BOARD_HAVE_BLUETOOTH_BCM

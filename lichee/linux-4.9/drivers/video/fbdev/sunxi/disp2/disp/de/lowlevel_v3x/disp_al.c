@@ -663,10 +663,9 @@ int disp_al_lcd_get_start_delay(u32 screen_id, struct disp_panel_para *panel)
 		lcd_start_delay = ((tcon0_get_cpu_tri2_start_delay(screen_id)+1)
 				  << 3) * (panel->lcd_dclk_freq)
 				  / (panel->lcd_ht*de_clk_rate);
+		if (panel->lcd_if == LCD_IF_DSI)
+			return dsi_get_start_delay(screen_id)+lcd_start_delay;
 	}
-	if (panel->lcd_if == LCD_IF_DSI)
-		return dsi_get_start_delay(screen_id)+lcd_start_delay;
-	else
 #endif
 	return tcon_get_start_delay(screen_id,
 				    al_priv.tcon_type[screen_id]);
@@ -1084,7 +1083,7 @@ int disp_init_al(struct disp_bsp_init_para *para)
 #if defined(SUPPORT_HDMI)
 		if (para->boot_info.type == DISP_OUTPUT_TYPE_HDMI) {
 			tcon_id = tcon_id - 1;
-			if ((tcon_id >= 0) && (tcon_id <= DEVICE_NUM))
+			if ((tcon_id >= 0) && (tcon_id < DEVICE_NUM))
 				al_priv.tcon_type[tcon_id] = 1;
 			else {
 				pr_err("%s-Error: error tcon id:%d\n",
@@ -1150,3 +1149,7 @@ bool disp_al_get_direct_show_state(unsigned int disp)
 	return false;
 }
 
+void disp_al_show_builtin_patten(u32 hwdev_index, u32 patten)
+{
+	tcon_show_builtin_patten(hwdev_index, patten);
+}

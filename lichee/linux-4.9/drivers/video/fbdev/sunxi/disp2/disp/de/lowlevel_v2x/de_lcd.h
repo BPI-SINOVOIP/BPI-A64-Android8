@@ -125,6 +125,7 @@ s32 tcon_set_sync_pol(u32 sel, u32 ver_pol, u32 hor_pol);
 s32 get_tcon_type_by_de_index(u32 de_index);
 s32 tcon_vdpo_clk_enable(u32 sel, u32 en);
 s32 vdpo_src_sel(u32 sel, u32 src);
+void tcon_show_builtin_patten(u32 sel, u32 patten);
 
 #if defined(SUPPORT_DSI)
 extern __u32 dsi_pixel_bits[4];

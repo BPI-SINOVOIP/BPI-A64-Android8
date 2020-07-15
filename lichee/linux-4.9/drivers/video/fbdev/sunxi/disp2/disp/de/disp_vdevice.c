@@ -884,6 +884,7 @@ struct disp_device *disp_vdevice_register(struct disp_vdevice_init_data *data)
 	vdevice->get_status = disp_device_get_status;
 	vdevice->is_in_safe_period = disp_device_is_in_safe_period;
 	vdevice->usec_before_vblank = disp_device_usec_before_vblank;
+	vdevice->show_builtin_patten = disp_device_show_builtin_patten;
 
 	vdevice->priv_data = (void *)vdevicep;
 	vdevice->init(vdevice);

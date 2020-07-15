@@ -137,8 +137,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapminfree=512k \
     dalvik.vm.heapmaxfree=8m
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.lmk.downgrade_pressure=95
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    ro.lmk.downgrade_pressure=95
 
 # Reduces GC frequency of foreground apps by 50% (not recommanded for 512M devices)
 PRODUCT_PROPERTY_OVERRIDES += dalvik.vm.foreground-heap-growth-multiplier=2.0

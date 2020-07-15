@@ -75,7 +75,7 @@ static size_t tee_fs_get_absolute_filename(char *file, char *out,
 	/* Safe to cast since we have checked that sizes are OK */
 	return (size_t)s;
 }
-
+#ifdef CREATE_TEE_DIR
 static int do_mkdir(const char *path, mode_t mode)
 {
 	struct stat st;
@@ -113,19 +113,20 @@ static int mkpath(const char *path, mode_t mode)
 	free(subpath);
 	return status;
 }
-
+#endif
 int tee_supp_fs_init(void)
 {
 	size_t n;
+#ifdef CREATE_TEE_DIR
 	mode_t mode = 0700;
-
+#endif
 	n = snprintf(tee_fs_root, sizeof(tee_fs_root), "%s/tee/", TEE_FS_PARENT_PATH);
 	if (n >= sizeof(tee_fs_root))
 		return -1;
-
+#ifdef CREATE_TEE_DIR
 	if (mkpath(tee_fs_root, mode) != 0)
 		return -1;
-
+#endif
 	return 0;
 }
 
